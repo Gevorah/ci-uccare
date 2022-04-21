@@ -17,13 +17,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import co.edu.icesi.dev.uccareapp.transport.Application;
-import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
-import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderdetailRepository;
+import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderheaderRepository;
-import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderdetailService;
-import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderdetailServiceImp;
+import co.edu.icesi.dev.uccareapp.transport.repository.VendorRepository;
 import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderService;
 import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderServiceImp;
 
@@ -38,8 +36,8 @@ public class PurchaseorderheaderTest {
     PurchaseorderheaderService purchaseorderheaderservice;
 
     @Autowired
-    public PurchaseorderheaderTest(PurchaseorderdetailRepository purchaseorderdetailrepository, PurchaseorderheaderRepository purchaseorderheaderrepository) {
-        this.purchaseorderheaderservice = new PurchaseorderheaderServiceImp(purchaseorderheaderrepository, vendorrepository, employeerepository)
+    public PurchaseorderheaderTest(PurchaseorderheaderRepository purchaseorderheaderrepository, VendorRepository vendorrepository, EmployeeRepository employeerepository) {
+        this.purchaseorderheaderservice = new PurchaseorderheaderServiceImp(purchaseorderheaderrepository, vendorrepository, employeerepository);
     }
 
     @BeforeAll
@@ -63,7 +61,7 @@ public class PurchaseorderheaderTest {
             purchaseorderheader.setOrderdate(Timestamp.from(Instant.now()));
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
 
-            assertTrue(purchaseorderhe);
+            assertTrue(purchaseorderheaderservice.savePurchaseorderheader(purchaseorderheader));
         }
 
     }

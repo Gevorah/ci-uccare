@@ -59,8 +59,6 @@ public class VendorServiceImp implements VendorService {
         editvendor.setPreferredvendorstatus(vendor.getPreferredvendorstatus());
         editvendor.setPurchasingwebserviceurl(vendor.getPurchasingwebserviceurl());
         
-        vendorrepository.save(editvendor);
-        
         return true;
     }
 

@@ -7,18 +7,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import co.edu.icesi.dev.uccareapp.transport.Application;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
@@ -30,6 +31,7 @@ import co.edu.icesi.dev.uccareapp.transport.service.VendorServiceImp;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class VendorTest {
     @Autowired
     private VendorRepository vendorrepository;
@@ -46,20 +48,42 @@ public class VendorTest {
     }
 
     @BeforeAll
-    public static void setUp() {
-        System.out.println("SETUP");
-    }
+    public void setUp() {
+        System.out.println("--------->SETUP<---------");
 
-    @BeforeEach
-    public void beforeEach() {
         Businessentity businessentity = new Businessentity();
         businessentity.setBusinessentityid(1);
         businessentityrepository.save(businessentity);
+
+        Vendor vendor = new Vendor();
+        vendor.setBusinessentityid(1);
+        vendor.setCreditrating(1);
+        vendor.setPurchasingwebserviceurl("https");
+        vendor.setName("test");
+        vendorservice.saveVendor(vendor);
+    }
+
+    @AfterAll
+    public void afterAll() {
+        System.out.println("--------->DESTROY<---------");
+        
+        //Iterator<Businessentity> t = businessentityrepository.findAll().iterator();
+        //while(t.hasNext()) System.out.print(t.next().getBusinessentityid());
+        businessentityrepository.deleteAll();
+        
+        //Iterator<Vendor> t = vendorrepository.findAll().iterator();
+        //while(t.hasNext()) System.out.print(t.next().getBusinessentityid());
+        vendorrepository.deleteAll();
     }
 
     @Nested
     @DisplayName("Save Cases")
     public class Save {
+        @BeforeEach
+        public void BeforeEach() {
+            vendorrepository.deleteAll();
+        }
+
         @Test
         @DisplayName("save vendor test 1")
         public void saveVendorTest1() {
@@ -140,14 +164,6 @@ public class VendorTest {
         @Test
         @DisplayName("edit vendor test 1")
         public void editVendorTest1() {
-        	Vendor editvendor = new Vendor();
-            editvendor.setBusinessentityid(1);
-            editvendor.setCreditrating(1);
-            editvendor.setPurchasingwebserviceurl("https");
-            editvendor.setName("test");
-
-            vendorservice.saveVendor(editvendor);
-            
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(1);
@@ -160,45 +176,26 @@ public class VendorTest {
         @Test
         @DisplayName("edit vendor test 2")
         public void editVendorTest2() {
-        	Vendor editvendor = new Vendor();
-            editvendor.setBusinessentityid(1);
-            editvendor.setCreditrating(1);
-            editvendor.setPurchasingwebserviceurl("https");
-            editvendor.setName("test");
-
-            vendorservice.saveVendor(editvendor);
-            
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(3);
             vendor.setCreditrating(1);
             vendor.setPurchasingwebserviceurl("https");
             vendor.setName("test");
 
-            // IllegalArgumentException thrown =
-            // assertThrows(IllegalArgumentException.class, () -> {
-            // vendorservice.editVendor(vendor); });
-            // assertEquals("", thrown.getMessage());
+            NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
+                vendorservice.editVendor(vendor); 
+            });
+            assertEquals("Vendor is null or doesn't exist", thrown.getMessage());
         }
 
         @Test
         @DisplayName("edit vendor test 3")
         public void editVendorTest3() {
-        	Vendor editvendor = new Vendor();
-            editvendor.setBusinessentityid(1);
-            editvendor.setCreditrating(1);
-            editvendor.setPurchasingwebserviceurl("https");
-            editvendor.setName("test");
-
-            vendorservice.saveVendor(editvendor);
-            
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(-1);
             vendor.setPurchasingwebserviceurl("https");
             vendor.setName("test");
-            
-            Iterator<Vendor> t = vendorrepository.findAll().iterator();
-            while(t.hasNext()) System.out.println(t.next().getBusinessentityid());
             
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 vendorservice.editVendor(vendor);
@@ -209,14 +206,6 @@ public class VendorTest {
         @Test
         @DisplayName("edit vendor test 4")
         public void editVendorTest4() {
-        	Vendor editvendor = new Vendor();
-            editvendor.setBusinessentityid(1);
-            editvendor.setCreditrating(1);
-            editvendor.setPurchasingwebserviceurl("https");
-            editvendor.setName("test");
-
-            vendorservice.saveVendor(editvendor);
-            
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(1);
@@ -227,20 +216,11 @@ public class VendorTest {
                 vendorservice.editVendor(vendor);
             });
             assertEquals("URL must start with 'https'", thrown.getMessage());
-
         }
 
         @Test
         @DisplayName("edit vendor test 5")
         public void editVendorTest5() {
-        	Vendor editvendor = new Vendor();
-            editvendor.setBusinessentityid(1);
-            editvendor.setCreditrating(1);
-            editvendor.setPurchasingwebserviceurl("https");
-            editvendor.setName("test");
-
-            vendorservice.saveVendor(editvendor);
-            
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(1);
@@ -252,16 +232,5 @@ public class VendorTest {
             });
             assertEquals("Fill the name field", thrown.getMessage());
         }
-    }
-
-    @AfterEach
-    public void afterEach() {
-        //businessentityrepository.deleteAll();
-        vendorrepository.deleteAll();
-    }
-
-    @AfterAll
-    public static void afterAll() {
-        System.out.println("DESTROY");
     }
 }
