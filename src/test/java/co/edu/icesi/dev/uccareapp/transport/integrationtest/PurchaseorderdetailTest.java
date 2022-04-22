@@ -7,10 +7,12 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +30,7 @@ import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderdetailServiceIm
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PurchaseorderdetailTest { 
     @Autowired
     PurchaseorderdetailRepository purchaseorderdetailrepository;
@@ -43,20 +46,48 @@ public class PurchaseorderdetailTest {
         this.purchaseorderdetailservice = new PurchaseorderdetailServiceImp(purchaseorderdetailrepository, purchaseorderheaderrepository);
     }
 
-    @BeforeEach
-    public void breforeEach() {
+    @BeforeAll
+    public void breforeAll() {
+        System.out.println("--------->SETUP<---------");
+
         Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
         purchaseorderheader.setPurchaseorderid(1);
         purchaseorderheaderrepository.save(purchaseorderheader);
+
+        PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+        purchaseorderdetailPK.setPurchaseorderid(1);
+        purchaseorderdetailPK.setPurchaseorderdetailid(1);
+        
+        Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
+        purchaseorderdetail.setId(purchaseorderdetailPK);
+        //purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository.findById(1).get());
+        System.out.println(purchaseorderheaderrepository.findById(1).get().getPurchaseorderid());
+        purchaseorderdetail.setOrderqty(1);
+        purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
+        purchaseorderdetailrepository.save(purchaseorderdetail);
+    }
+
+    @AfterAll
+    public void afterAll() {
+        System.out.println("--------->DESTROY<---------");
+        
+        purchaseorderdetailrepository.deleteAll();
+        purchaseorderheaderrepository.deleteAll();
     }
 
     @Nested
     @DisplayName("Save Cases")
     class Save {
+        @BeforeEach
+        public void beforeEach() {
+            purchaseorderdetailrepository.deleteAll();
+        }
+        
         @Test
         @DisplayName("save purchaseorderdetail test 1")
         public void savePurchaseorderdetailtest1() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
@@ -73,11 +104,15 @@ public class PurchaseorderdetailTest {
         @DisplayName("save purchaseorderdetail test 2")
         public void savePurchaseorderdetailtest2() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
+
+            Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
+            purchaseorderheader.setPurchaseorderid(3);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
             purchaseorderdetail.setId(purchaseorderdetailPK);
-            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository.findById(3).get());
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheader);
             purchaseorderdetail.setOrderqty(1);
             purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
             
@@ -92,6 +127,7 @@ public class PurchaseorderdetailTest {
         @DisplayName("save purchaseorderdetail test 3")
         public void savePurchaseorderdetailtest3() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
@@ -109,6 +145,7 @@ public class PurchaseorderdetailTest {
         @DisplayName("save purchaseorderdetail test 4")
         public void savePurchaseorderdetailtest4() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
@@ -128,17 +165,5 @@ public class PurchaseorderdetailTest {
     @DisplayName("Edit Cases")
     class Edit {
         
-    }
-
-    @AfterEach
-    public void afterEach() {
-        purchaseorderdetailrepository.deleteAll();
-        //purchaseorderheaderrepository.deleteAll();
-    }
-
-    
-    @AfterAll
-    public static void afterAll() {
-        System.out.println("DESTROY");
     }
 }

@@ -48,7 +48,7 @@ public class VendorTest {
     }
 
     @BeforeAll
-    public void setUp() {
+    public void beforeAll() {
         System.out.println("--------->SETUP<---------");
 
         Businessentity businessentity = new Businessentity();
@@ -68,11 +68,11 @@ public class VendorTest {
         System.out.println("--------->DESTROY<---------");
         
         //Iterator<Businessentity> t = businessentityrepository.findAll().iterator();
-        //while(t.hasNext()) System.out.print(t.next().getBusinessentityid());
+        //while(t.hasNext()) System.out.println(t.next().getBusinessentityid());
         businessentityrepository.deleteAll();
         
         //Iterator<Vendor> t = vendorrepository.findAll().iterator();
-        //while(t.hasNext()) System.out.print(t.next().getBusinessentityid());
+        //while(t.hasNext()) System.out.println(t.next().getBusinessentityid());
         vendorrepository.deleteAll();
     }
 

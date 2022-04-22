@@ -24,7 +24,7 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
     public boolean savePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail)
             throws NullPointerException, IllegalArgumentException {
         if (purchaseorderdetail == null || purchaseorderdetailrepository
-                .existsById(purchaseorderdetail.getId().getPurchaseorderdetailid()))
+                .existsById(purchaseorderdetail.getId()))
             throw new NullPointerException("Purchaseorderdetail is null or already exists");
 
         if (!purchaseorderheaderrepository
@@ -44,7 +44,7 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
     public boolean editPurchaseorderdetail(Purchaseorderdetail purchaseorderdetail)
             throws NullPointerException, IllegalArgumentException {
         if (purchaseorderdetail == null ||
-                !purchaseorderdetailrepository.existsById(purchaseorderdetail.getId().getPurchaseorderdetailid()))
+                !purchaseorderdetailrepository.existsById(purchaseorderdetail.getId()))
             throw new NullPointerException("Purchaseorderdetail is null or doesn't exist");
 
         if (!purchaseorderheaderrepository
@@ -56,13 +56,13 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
             throw new IllegalArgumentException("unitprice must be greater than 0");
 
         Purchaseorderdetail editpurchaseorderdetail = purchaseorderdetailrepository
-                .findById(purchaseorderdetail.getId().getPurchaseorderdetailid()).get();
+                .findById(purchaseorderdetail.getId()).get();
         editpurchaseorderdetail.setDuedate(purchaseorderdetail.getDuedate());
         editpurchaseorderdetail.setModifieddate(purchaseorderdetail.getModifieddate());
         editpurchaseorderdetail.setOrderqty(purchaseorderdetail.getOrderqty());
         editpurchaseorderdetail.setProductid(purchaseorderdetail.getProductid());
-        editpurchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository
-                .findById(purchaseorderdetail.getPurchaseorderheader().getPurchaseorderid()).get());
+        //editpurchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository
+        //        .findById(purchaseorderdetail.getPurchaseorderheader().getPurchaseorderid()).get());
         editpurchaseorderdetail.setReceivedqty(purchaseorderdetail.getReceivedqty());
         editpurchaseorderdetail.setRejectedqty(purchaseorderdetail.getReceivedqty());
         editpurchaseorderdetail.setUnitprice(purchaseorderdetail.getUnitprice());
