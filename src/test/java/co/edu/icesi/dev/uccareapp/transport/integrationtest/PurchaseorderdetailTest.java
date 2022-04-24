@@ -60,8 +60,6 @@ public class PurchaseorderdetailTest {
         
         Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
         purchaseorderdetail.setId(purchaseorderdetailPK);
-        //purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository.findById(1).get());
-        System.out.println(purchaseorderheaderrepository.findById(1).get().getPurchaseorderid());
         purchaseorderdetail.setOrderqty(1);
         purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
         purchaseorderdetailrepository.save(purchaseorderdetail);
@@ -118,7 +116,7 @@ public class PurchaseorderdetailTest {
             
             
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
-                purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
+                purchaseorderdetailservice.savePurchaseorderdetail(purchaseorderdetail);
             });
             assertEquals("Purchaseorderheader doesn't exist", thrown.getMessage());
         }
@@ -137,7 +135,7 @@ public class PurchaseorderdetailTest {
             purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
             
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-                purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
+                purchaseorderdetailservice.savePurchaseorderdetail(purchaseorderdetail);
             });
             assertEquals("orderqty must be greater than 0", thrown.getMessage());
         }
@@ -155,7 +153,7 @@ public class PurchaseorderdetailTest {
             purchaseorderdetail.setUnitprice(new BigDecimal("-0.1"));
             
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-                purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
+                purchaseorderdetailservice.savePurchaseorderdetail(purchaseorderdetail);
             });
             assertEquals("unitprice must be greater than 0", thrown.getMessage());
         }
@@ -164,6 +162,81 @@ public class PurchaseorderdetailTest {
     @Nested
     @DisplayName("Edit Cases")
     class Edit {
-        
+        @Test
+        @DisplayName("edit purchaseorderdetail test 1")
+        public void editPurchaseorderdetailtest1() {
+            PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderdetailid(1);
+
+            Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
+            purchaseorderdetail.setId(purchaseorderdetailPK);
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository.findById(1).get());
+            System.out.println(purchaseorderheaderrepository.findById(1).get().getPurchaseorderid());
+            purchaseorderdetail.setOrderqty(1);
+            purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
+            
+            assertTrue(purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail));
+        }
+
+        @Test
+        @DisplayName("edit purchaseorderdetail test 2")
+        public void editPurchaseorderdetailtest2() {
+            PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderdetailid(1);
+
+            Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
+            purchaseorderheader.setPurchaseorderid(3);
+
+            Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
+            purchaseorderdetail.setId(purchaseorderdetailPK);
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheader);
+            purchaseorderdetail.setOrderqty(1);
+            purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
+            
+            
+            NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
+                purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
+            });
+            assertEquals("Purchaseorderheader doesn't exist", thrown.getMessage());
+        }
+
+        @Test
+        @DisplayName("edit purchaseorderdetail test 3")
+        public void editPurchaseorderdetailtest3() {
+            PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderdetailid(1);
+
+            Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
+            purchaseorderdetail.setId(purchaseorderdetailPK);
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository.findById(1).get());
+            purchaseorderdetail.setOrderqty(-1);
+            purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
+            
+            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+                purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
+            });
+            assertEquals("orderqty must be greater than 0", thrown.getMessage());
+        }
+        @Test
+        @DisplayName("edit purchaseorderdetail test 4")
+        public void editPurchaseorderdetailtest4() {
+            PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderdetailid(1);
+
+            Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
+            purchaseorderdetail.setId(purchaseorderdetailPK);
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderrepository.findById(1).get());
+            purchaseorderdetail.setOrderqty(1);
+            purchaseorderdetail.setUnitprice(new BigDecimal("-0.1"));
+            
+            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+                purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
+            });
+            assertEquals("unitprice must be greater than 0", thrown.getMessage());
+        }
     }
 }

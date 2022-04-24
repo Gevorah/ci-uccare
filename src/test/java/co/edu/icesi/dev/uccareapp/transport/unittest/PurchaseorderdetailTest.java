@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import co.edu.icesi.dev.uccareapp.transport.Application;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
@@ -49,10 +50,15 @@ public class PurchaseorderdetailTest {
     }
 
     @BeforeAll
-    public static void setUp() {
-        System.out.println("SETUP");
+    public static void breforeAll() {
+        System.out.println("--------->SETUP<---------");
     }
 
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("--------->DESTROY<---------");
+    }
+    
     @Nested
     @DisplayName("Save Cases")
     class Save {
@@ -74,10 +80,10 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             assertTrue(purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get()));
-            assertEquals(optpurchaseorderdetail, purchaseorderdetailrepository.findById(1));
+            assertEquals(optpurchaseorderdetail, purchaseorderdetailrepository.findById(purchaseorderdetailPK));
         }
         
         @Test
@@ -98,7 +104,7 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
                 purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get());
@@ -124,7 +130,7 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(-1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get());
@@ -150,7 +156,7 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("-0.1"));
 
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get());
@@ -181,11 +187,11 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetailrepository.existsById(1)).thenReturn(true);
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.existsById(purchaseorderdetailPK)).thenReturn(true);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             assertTrue(purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get()));
-            assertEquals(optpurchaseorderdetail, purchaseorderdetailrepository.findById(1));
+            assertEquals(optpurchaseorderdetail, purchaseorderdetailrepository.findById(purchaseorderdetailPK));
         }
         
         @Test
@@ -208,9 +214,9 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetailrepository.existsById(1)).thenReturn(true);
+            when(purchaseorderdetailrepository.existsById(purchaseorderdetailPK)).thenReturn(true);
             when(purchaseorderheaderrepository.existsById(1)).thenReturn(true);
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
                 purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get());
@@ -238,9 +244,9 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(-1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetailrepository.existsById(1)).thenReturn(true);
+            when(purchaseorderdetailrepository.existsById(purchaseorderdetailPK)).thenReturn(true);
             when(purchaseorderheaderrepository.existsById(1)).thenReturn(true);
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get());
@@ -268,19 +274,14 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("-0.1"));
 
-            when(purchaseorderdetailrepository.existsById(1)).thenReturn(true);
+            when(purchaseorderdetailrepository.existsById(purchaseorderdetailPK)).thenReturn(true);
             when(purchaseorderheaderrepository.existsById(1)).thenReturn(true);
-            when(purchaseorderdetailrepository.findById(1)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailrepository.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get());
             });
             assertEquals("unitprice must be greater than 0", thrown.getMessage());
         }
-    }
-
-    @AfterAll
-    public static void afterAll() {
-        System.out.println("DESTROY");
     }
 }

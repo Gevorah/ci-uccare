@@ -43,8 +43,13 @@ public class ShipmethodTest {
     }
 
     @BeforeAll
-    public static void setUp() {
-        System.out.println("SETUP");
+    public static void breforeAll() {
+        System.out.println("--------->SETUP<---------");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("--------->DESTROY<---------");
     }
 
     @Nested
@@ -195,10 +200,5 @@ public class ShipmethodTest {
             });
             assertEquals("name must have at least 4 chars", thrown.getMessage());
         }
-    }
-
-    @AfterAll
-    public static void afterAll() {
-        System.out.println("DESTROY");
     }
 }

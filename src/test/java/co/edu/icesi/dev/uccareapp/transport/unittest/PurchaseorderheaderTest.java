@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import co.edu.icesi.dev.uccareapp.transport.Application;
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
@@ -55,8 +56,13 @@ public class PurchaseorderheaderTest {
     }
 
     @BeforeAll
-    public static void setUp() {
-        System.out.println("SETUP");
+    public static void breforeAll() {
+        System.out.println("--------->SETUP<---------");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("--------->DESTROY<---------");
     }
 
     @Nested
@@ -405,10 +411,5 @@ public class PurchaseorderheaderTest {
             });
             assertEquals("subtotal must be greater than 0", thrown.getMessage());
         }
-    }
-
-    @AfterAll
-    public static void afterAll() {
-        System.out.println("DESTROY");
     }
 }

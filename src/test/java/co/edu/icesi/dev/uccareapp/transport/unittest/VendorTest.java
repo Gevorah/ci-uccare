@@ -47,8 +47,13 @@ public class VendorTest {
     }
 
     @BeforeAll
-    public static void setUp() {
-        System.out.println("SETUP");
+    public static void breforeAll() {
+        System.out.println("--------->SETUP<---------");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("--------->DESTROY<---------");
     }
 
     @Nested
@@ -274,10 +279,5 @@ public class VendorTest {
             });
             assertEquals("Fill the name field", thrown.getMessage());
         }
-    }
-
-    @AfterAll
-    public static void afterAll() {
-        System.out.println("DESTROY");
     }
 }

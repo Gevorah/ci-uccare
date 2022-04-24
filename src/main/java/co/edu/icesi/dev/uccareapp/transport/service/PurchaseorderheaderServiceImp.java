@@ -26,18 +26,13 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
     @Override
     public boolean savePurchaseorderheader(Purchaseorderheader purchaseorderheader) throws NullPointerException, IllegalArgumentException {
         if (purchaseorderheader == null ||
-                purchaseorderheader.getVendor() == null ||
-                purchaseorderheader.getEmployeeid() == null)
-            throw new NullPointerException();
-        else if (purchaseorderheaderrepository.existsById(purchaseorderheader.getPurchaseorderid()))
-            throw new IllegalArgumentException();
+                purchaseorderheaderrepository.existsById(purchaseorderheader.getPurchaseorderid()))
+            throw new NullPointerException("Purchaseorderheader is null or already exists");
 
-        if (!vendorrepository.existsById(purchaseorderheader.getVendor().getBusinessentityid()))
-            throw new NullPointerException("Vendor doesn't exist");
         if (!employeerepository.existsById(purchaseorderheader.getEmployeeid()))
             throw new NullPointerException("employeeid doesn't correspond to an existing Employee");
-        if (purchaseorderheader.getOrderdate().before(Timestamp.from(Instant.now().minusMillis(100000))) ||
-                purchaseorderheader.getOrderdate().after(Timestamp.from(Instant.now().plusMillis(100000))))
+        if (purchaseorderheader.getOrderdate().before(Timestamp.from(Instant.now().minusSeconds(100))) ||
+                purchaseorderheader.getOrderdate().after(Timestamp.from(Instant.now().plusSeconds(100))))
             throw new IllegalArgumentException("orderdate must be actual");
         if (purchaseorderheader.getSubtotal().signum() != 1)
             throw new IllegalArgumentException("subtotal must be greater than 0");
@@ -53,8 +48,6 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
                 !purchaseorderheaderrepository.existsById(purchaseorderheader.getPurchaseorderid()))
             throw new NullPointerException("Purchaseorderheader is null or doesn't exist");
 
-        if (!vendorrepository.existsById(purchaseorderheader.getVendor().getBusinessentityid()))
-            throw new NullPointerException("Vendor doesn't exist");
         if (!employeerepository.existsById(purchaseorderheader.getEmployeeid()))
             throw new NullPointerException("employeeid doesn't correspond to an existing Employee");
         if (purchaseorderheader.getOrderdate().before(Timestamp.from(Instant.now().minusMillis(10000))) ||
