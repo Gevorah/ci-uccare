@@ -69,8 +69,8 @@ public class PurchaseorderdetailTest {
     public void afterAll() {
         System.out.println("--------->DESTROY<---------");
         
-        purchaseorderdetailrepository.deleteAll();
-        purchaseorderheaderrepository.deleteAll();
+        //purchaseorderdetailrepository.deleteAll();
+        //purchaseorderheaderrepository.deleteAll();
     }
 
     @Nested

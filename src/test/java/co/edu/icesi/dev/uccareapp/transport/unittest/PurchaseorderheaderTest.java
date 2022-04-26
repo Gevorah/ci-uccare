@@ -71,11 +71,6 @@ public class PurchaseorderheaderTest {
         @Test
         @DisplayName("save purchaseorderheader 1")
         public void savePurchaseorderheaderTest1() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
             Employee employee = new Employee();
             employee.setBusinessentityid(2);
 
@@ -83,7 +78,7 @@ public class PurchaseorderheaderTest {
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
+             
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
             optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
@@ -93,43 +88,10 @@ public class PurchaseorderheaderTest {
             assertTrue(purchaseorderheaderservice.savePurchaseorderheader(optpurchaseorderheader.get()));
             assertEquals(optpurchaseorderheader, purchaseorderheaderrepository.findById(1));
         }
-
+        
         @Test
         @DisplayName("save purchaseorderheader 2")
         public void savePurchaseorderheaderTest2() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(3);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
-            Employee employee = new Employee();
-            employee.setBusinessentityid(2);
-
-            when(employeerepository.existsById(2)).thenReturn(true);
-
-            Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
-            optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
-            optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
-            optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
-
-            when(purchaseorderheaderrepository.findById(1)).thenReturn(optpurchaseorderheader);
-
-            NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
-                purchaseorderheaderservice.savePurchaseorderheader(optpurchaseorderheader.get());
-            });
-            assertEquals("Vendor doesn't exist", thrown.getMessage());
-        }
-        
-        @Test
-        @DisplayName("save purchaseorderheader 3")
-        public void savePurchaseorderheaderTest3() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
             Employee employee = new Employee();
             employee.setBusinessentityid(3);
 
@@ -137,7 +99,6 @@ public class PurchaseorderheaderTest {
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
             optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
@@ -151,13 +112,8 @@ public class PurchaseorderheaderTest {
         }
         
         @Test
-        @DisplayName("save purchaseorderheader 4")
-        public void savePurchaseorderheaderTest4() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
+        @DisplayName("save purchaseorderheader 3")
+        public void savePurchaseorderheaderTest3() {
             Employee employee = new Employee();
             employee.setBusinessentityid(2);
 
@@ -165,9 +121,8 @@ public class PurchaseorderheaderTest {
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().minusMillis(100000000)));
+            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().minusSeconds(3600)));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
 
             when(purchaseorderheaderrepository.findById(1)).thenReturn(optpurchaseorderheader);
@@ -177,15 +132,33 @@ public class PurchaseorderheaderTest {
             });
             assertEquals("orderdate must be actual", thrown.getMessage());
         }
+        
+        @Test
+        @DisplayName("save purchaseorderheader 4")
+        public void savePurchaseorderheaderTest4() {
+            Employee employee = new Employee();
+            employee.setBusinessentityid(2);
+
+            when(employeerepository.existsById(2)).thenReturn(true);
+
+            Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
+            optpurchaseorderheader.get().setPurchaseorderid(1);
+            optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
+            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().plusSeconds(3600)));
+            optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
+
+            when(purchaseorderheaderrepository.findById(1)).thenReturn(optpurchaseorderheader);
+
+            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+                purchaseorderheaderservice.savePurchaseorderheader(optpurchaseorderheader.get());
+            });
+            assertEquals("orderdate must be actual", thrown.getMessage());
+        }
+
         
         @Test
         @DisplayName("save purchaseorderheader 5")
         public void savePurchaseorderheaderTest5() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
             Employee employee = new Employee();
             employee.setBusinessentityid(2);
 
@@ -193,36 +166,6 @@ public class PurchaseorderheaderTest {
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
-            optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().plusMillis(100000000)));
-            optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
-
-            when(purchaseorderheaderrepository.findById(1)).thenReturn(optpurchaseorderheader);
-
-            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-                purchaseorderheaderservice.savePurchaseorderheader(optpurchaseorderheader.get());
-            });
-            assertEquals("orderdate must be actual", thrown.getMessage());
-        }
-
-        
-        @Test
-        @DisplayName("save purchaseorderheader 6")
-        public void savePurchaseorderheaderTest6() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
-            Employee employee = new Employee();
-            employee.setBusinessentityid(2);
-
-            when(employeerepository.existsById(2)).thenReturn(true);
-
-            Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
-            optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
             optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("-0.1"));
@@ -242,11 +185,6 @@ public class PurchaseorderheaderTest {
         @Test
         @DisplayName("edit purchaseorderheader 1")
         public void editPurchaseorderheaderTest1() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
             Employee employee = new Employee();
             employee.setBusinessentityid(2);
 
@@ -254,7 +192,6 @@ public class PurchaseorderheaderTest {
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
             optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
@@ -269,48 +206,13 @@ public class PurchaseorderheaderTest {
         @Test
         @DisplayName("edit purchaseorderheader 2")
         public void editPurchaseorderheaderTest2() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(3);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
-            Employee employee = new Employee();
-            employee.setBusinessentityid(2);
-
-            when(employeerepository.existsById(2)).thenReturn(true);
-
-            Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
-            optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
-            optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
-            optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
-
-            when(purchaseorderheaderrepository.existsById(1)).thenReturn(true);
-            when(purchaseorderheaderrepository.findById(1)).thenReturn(optpurchaseorderheader);
-
-            NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
-                purchaseorderheaderservice.editPurchaseorderheader(optpurchaseorderheader.get());
-            });
-            assertEquals("Vendor doesn't exist", thrown.getMessage());
-        }
-        
-        @Test
-        @DisplayName("edit purchaseorderheader 3")
-        public void editPurchaseorderheaderTest3() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
             Employee employee = new Employee();
             employee.setBusinessentityid(3);
 
             when(employeerepository.existsById(2)).thenReturn(true);
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
-            optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
+            optpurchaseorderheader.get().setPurchaseorderid(1);          
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
             optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
@@ -325,23 +227,17 @@ public class PurchaseorderheaderTest {
         }
         
         @Test
-        @DisplayName("edit purchaseorderheader 4")
-        public void editPurchaseorderheaderTest4() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
+        @DisplayName("edit purchaseorderheader 3")
+        public void editPurchaseorderheaderTest3() {
             Employee employee = new Employee();
             employee.setBusinessentityid(2);
 
             when(employeerepository.existsById(2)).thenReturn(true);
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
-            optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
+            optpurchaseorderheader.get().setPurchaseorderid(1);            
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().minusMillis(100000000)));
+            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().minusSeconds(3600)));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
 
             when(purchaseorderheaderrepository.existsById(1)).thenReturn(true);
@@ -352,15 +248,34 @@ public class PurchaseorderheaderTest {
             });
             assertEquals("orderdate must be actual", thrown.getMessage());
         }
+        
+        @Test
+        @DisplayName("edit purchaseorderheader 4")
+        public void editPurchaseorderheaderTest4() {
+            Employee employee = new Employee();
+            employee.setBusinessentityid(2);
+
+            when(employeerepository.existsById(2)).thenReturn(true);
+
+            Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
+            optpurchaseorderheader.get().setPurchaseorderid(1);            
+            optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
+            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().plusSeconds(3600)));
+            optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
+
+            when(purchaseorderheaderrepository.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderrepository.findById(1)).thenReturn(optpurchaseorderheader);
+
+            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+                purchaseorderheaderservice.editPurchaseorderheader(optpurchaseorderheader.get());
+            });
+            assertEquals("orderdate must be actual", thrown.getMessage());
+        }
+
         
         @Test
         @DisplayName("edit purchaseorderheader 5")
         public void editPurchaseorderheaderTest5() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
             Employee employee = new Employee();
             employee.setBusinessentityid(2);
 
@@ -368,37 +283,6 @@ public class PurchaseorderheaderTest {
 
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
-            optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now().plusMillis(100000000)));
-            optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
-
-            when(purchaseorderheaderrepository.existsById(1)).thenReturn(true);
-            when(purchaseorderheaderrepository.findById(1)).thenReturn(optpurchaseorderheader);
-
-            IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-                purchaseorderheaderservice.editPurchaseorderheader(optpurchaseorderheader.get());
-            });
-            assertEquals("orderdate must be actual", thrown.getMessage());
-        }
-
-        
-        @Test
-        @DisplayName("edit purchaseorderheader 6")
-        public void editPurchaseorderheaderTest6() {
-            Vendor vendor = new Vendor();
-            vendor.setBusinessentityid(1);
-
-            when(vendorrepository.existsById(1)).thenReturn(true);
-
-            Employee employee = new Employee();
-            employee.setBusinessentityid(2);
-
-            when(employeerepository.existsById(2)).thenReturn(true);
-
-            Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
-            optpurchaseorderheader.get().setPurchaseorderid(1);
-            optpurchaseorderheader.get().setVendor(vendor);
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
             optpurchaseorderheader.get().setOrderdate(Timestamp.from(Instant.now()));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("-0.1"));
