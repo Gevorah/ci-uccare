@@ -1,8 +1,11 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderdetailRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderheaderRepository;
 
@@ -70,6 +73,21 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
         purchaseorderdetailrepository.save(editpurchaseorderdetail);
 
         return true;
+    }
+
+    @Override
+    public Optional<Purchaseorderdetail> findById(PurchaseorderdetailPK id) {
+        return purchaseorderdetailrepository.findById(id);
+    }
+
+    @Override
+    public Iterable<Purchaseorderdetail> findAll() {
+        return purchaseorderdetailrepository.findAll();
+    }
+
+    @Override
+    public void delete(Purchaseorderdetail purchaseorderdetail) {
+        purchaseorderdetailrepository.delete(purchaseorderdetail);
     }
 
 }

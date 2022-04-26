@@ -1,5 +1,7 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +57,21 @@ public class ShipmethodServiceImp implements ShipmethodService {
         shipmethodrepository.save(editshipmethod);
         
         return true;
+    }
+
+    @Override
+    public Optional<Shipmethod> findById(Integer id) {
+        return shipmethodrepository.findById(id);
+    }
+
+    @Override
+    public Iterable<Shipmethod> findAll() {
+        return shipmethodrepository.findAll();
+    }
+
+    @Override
+    public void delete(Shipmethod shipmethod) {
+        shipmethodrepository.delete(shipmethod);
     }
 
 }

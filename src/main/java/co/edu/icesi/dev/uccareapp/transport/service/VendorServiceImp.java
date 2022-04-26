@@ -1,7 +1,10 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.VendorRepository;
@@ -60,6 +63,21 @@ public class VendorServiceImp implements VendorService {
         editvendor.setPurchasingwebserviceurl(vendor.getPurchasingwebserviceurl());
         
         return true;
+    }
+
+    @Override
+    public Optional<Vendor> findById(Integer id) {
+        return vendorrepository.findById(id);
+    }
+
+    @Override
+    public Iterable<Vendor> findAll() {
+        return vendorrepository.findAll();
+    }
+
+    @Override
+    public void delete(Vendor vendor) {
+        vendorrepository.delete(vendor);
     }
 
 }

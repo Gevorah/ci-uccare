@@ -2,6 +2,8 @@ package co.edu.icesi.dev.uccareapp.transport.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
@@ -72,6 +74,21 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
         purchaseorderheaderrepository.save(editpurchaseorderheader);
         
         return true;
+    }
+
+    @Override
+    public Optional<Purchaseorderheader> findById(Integer id) {
+        return purchaseorderheaderrepository.findById(id);
+    }
+
+    @Override
+    public Iterable<Purchaseorderheader> findAll() {
+        return purchaseorderheaderrepository.findAll();
+    }
+
+    @Override
+    public void delete(Purchaseorderheader purchaseorderheader) {
+        purchaseorderheaderrepository.delete(purchaseorderheader);
     }
 
 }
