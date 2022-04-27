@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
-import co.edu.icesi.dev.uccareapp.transport.model.hr.UserApp;
+import co.edu.icesi.dev.uccareapp.transport.model.login.UserApp;
 import co.edu.icesi.dev.uccareapp.transport.repository.UserRepository;
 
 @SpringBootApplication

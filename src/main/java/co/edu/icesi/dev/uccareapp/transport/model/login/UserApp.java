@@ -1,4 +1,4 @@
-package co.edu.icesi.dev.uccareapp.transport.model.hr;
+package co.edu.icesi.dev.uccareapp.transport.model.login;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +15,7 @@ public class UserApp {
 
     private String password;
 
-    private Boolean type;
+    private UserType type;
 
     public UserApp() {
     }
@@ -28,7 +28,7 @@ public class UserApp {
         return password;
     }
 
-    public Boolean getType() {
+    public UserType getType() {
         return type;
     }
     
@@ -40,7 +40,7 @@ public class UserApp {
         this.password = password;
     }
 
-    public void setType(Boolean type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 }

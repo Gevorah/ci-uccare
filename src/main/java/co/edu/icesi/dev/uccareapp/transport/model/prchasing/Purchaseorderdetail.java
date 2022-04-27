@@ -6,13 +6,9 @@ import java.sql.Timestamp;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 
 /**
  * The persistent class for the purchaseorderdetail database table.
@@ -25,10 +21,6 @@ public class Purchaseorderdetail implements Serializable {
 
 	@EmbeddedId
 	private PurchaseorderdetailPK id;
-	/*@Id
-	@SequenceGenerator(name = "VENDOR_BUSINESSENTITYID_GENERATOR", allocationSize = 1, sequenceName = "VENDOR_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VENDOR_BUSINESSENTITYID_GENERATOR")
-	private Integer id;*/
 
 	private Timestamp duedate;
 

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.edu.icesi.dev.uccareapp.transport.model.hr.UserApp;
+import co.edu.icesi.dev.uccareapp.transport.model.login.UserApp;
 import co.edu.icesi.dev.uccareapp.transport.repository.UserRepository;
 
 @Service
