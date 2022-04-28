@@ -9,8 +9,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private LoggingAccessDeniedHandler accessDeniedHandler;
+    @Autowired
+    private LoggingAccessDeniedHandler accessDeniedHandler;
 
 //	@Autowired
 //	private MyCustomUserDetailsService userDetailsService;
@@ -33,11 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		return new BCryptPasswordEncoder(11);
 //	}
 
-	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeRequests().antMatchers("/**").authenticated().anyRequest().permitAll().and().formLogin().and().logout()
-				.invalidateHttpSession(true).clearAuthentication(true)
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
-				.permitAll().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-	}
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        //httpSecurity.antMatcher("/**").authorizeRequests()
+        //	.antMatchers("/vendors").hasAnyRole("").
+        //	.anyRequest().authenticated();
+        httpSecurity.authorizeRequests().antMatchers("/index").authenticated().anyRequest().permitAll().and().formLogin().and().logout()
+                .invalidateHttpSession(true).clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
+                .permitAll().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+    }
 }
