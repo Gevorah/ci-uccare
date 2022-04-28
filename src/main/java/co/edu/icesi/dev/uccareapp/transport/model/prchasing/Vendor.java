@@ -19,144 +19,144 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @NamedQuery(name = "Vendor.findAll", query = "SELECT v FROM Vendor v")
 public class Vendor implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@SequenceGenerator(name = "VENDOR_BUSINESSENTITYID_GENERATOR", allocationSize = 1, sequenceName = "VENDOR_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VENDOR_BUSINESSENTITYID_GENERATOR")
-	private Integer businessentityid;
+    @Id
+    @SequenceGenerator(name = "VENDOR_BUSINESSENTITYID_GENERATOR", allocationSize = 1, sequenceName = "VENDOR_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VENDOR_BUSINESSENTITYID_GENERATOR")
+    private Integer businessentityid;
 
-	private String accountnumber;
+    private String accountnumber;
 
-	private String activeflag;
+    private String activeflag;
 
-	private Integer creditrating;
+    private Integer creditrating;
 
-	private Timestamp modifieddate;
+    private Timestamp modifieddate;
 
-	private String name;
+    private String name;
 
-	private String preferredvendorstatus;
+    private String preferredvendorstatus;
 
-	private String purchasingwebserviceurl;
+    private String purchasingwebserviceurl;
 
-	// bi-directional many-to-one association to Productvendor
-	@OneToMany(mappedBy = "vendor")
-	private List<Productvendor> productvendors;
+    // bi-directional many-to-one association to Productvendor
+    @OneToMany(mappedBy = "vendor")
+    private List<Productvendor> productvendors;
 
-	// bi-directional many-to-one association to Purchaseorderheader
-	@OneToMany(mappedBy = "vendor")
-	private List<Purchaseorderheader> purchaseorderheaders;
+    // bi-directional many-to-one association to Purchaseorderheader
+    @OneToMany(mappedBy = "vendor")
+    private List<Purchaseorderheader> purchaseorderheaders;
+    
+    public Vendor() {
+    }
 
-	public Vendor() {
-	}
+    public Productvendor addProductvendor(Productvendor productvendor) {
+        getProductvendors().add(productvendor);
+        productvendor.setVendor(this);
 
-	public Productvendor addProductvendor(Productvendor productvendor) {
-		getProductvendors().add(productvendor);
-		productvendor.setVendor(this);
+        return productvendor;
+    }
 
-		return productvendor;
-	}
+    public Purchaseorderheader addPurchaseorderheader(Purchaseorderheader purchaseorderheader) {
+        getPurchaseorderheaders().add(purchaseorderheader);
+        purchaseorderheader.setVendor(this);
 
-	public Purchaseorderheader addPurchaseorderheader(Purchaseorderheader purchaseorderheader) {
-		getPurchaseorderheaders().add(purchaseorderheader);
-		purchaseorderheader.setVendor(this);
+        return purchaseorderheader;
+    }
 
-		return purchaseorderheader;
-	}
+    public String getAccountnumber() {
+        return this.accountnumber;
+    }
 
-	public String getAccountnumber() {
-		return this.accountnumber;
-	}
+    public String getActiveflag() {
+        return this.activeflag;
+    }
 
-	public String getActiveflag() {
-		return this.activeflag;
-	}
+    public Integer getBusinessentityid() {
+        return this.businessentityid;
+    }
 
-	public Integer getBusinessentityid() {
-		return this.businessentityid;
-	}
+    public Integer getCreditrating() {
+        return this.creditrating;
+    }
 
-	public Integer getCreditrating() {
-		return this.creditrating;
-	}
+    public Timestamp getModifieddate() {
+        return this.modifieddate;
+    }
 
-	public Timestamp getModifieddate() {
-		return this.modifieddate;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getPreferredvendorstatus() {
+        return this.preferredvendorstatus;
+    }
 
-	public String getPreferredvendorstatus() {
-		return this.preferredvendorstatus;
-	}
+    public List<Productvendor> getProductvendors() {
+        return this.productvendors;
+    }
 
-	public List<Productvendor> getProductvendors() {
-		return this.productvendors;
-	}
+    public List<Purchaseorderheader> getPurchaseorderheaders() {
+        return this.purchaseorderheaders;
+    }
 
-	public List<Purchaseorderheader> getPurchaseorderheaders() {
-		return this.purchaseorderheaders;
-	}
+    public String getPurchasingwebserviceurl() {
+        return this.purchasingwebserviceurl;
+    }
 
-	public String getPurchasingwebserviceurl() {
-		return this.purchasingwebserviceurl;
-	}
+    public Productvendor removeProductvendor(Productvendor productvendor) {
+        getProductvendors().remove(productvendor);
+        productvendor.setVendor(null);
 
-	public Productvendor removeProductvendor(Productvendor productvendor) {
-		getProductvendors().remove(productvendor);
-		productvendor.setVendor(null);
+        return productvendor;
+    }
 
-		return productvendor;
-	}
+    public Purchaseorderheader removePurchaseorderheader(Purchaseorderheader purchaseorderheader) {
+        getPurchaseorderheaders().remove(purchaseorderheader);
+        purchaseorderheader.setVendor(null);
 
-	public Purchaseorderheader removePurchaseorderheader(Purchaseorderheader purchaseorderheader) {
-		getPurchaseorderheaders().remove(purchaseorderheader);
-		purchaseorderheader.setVendor(null);
+        return purchaseorderheader;
+    }
 
-		return purchaseorderheader;
-	}
+    public void setAccountnumber(String accountnumber) {
+        this.accountnumber = accountnumber;
+    }
 
-	public void setAccountnumber(String accountnumber) {
-		this.accountnumber = accountnumber;
-	}
+    public void setActiveflag(String activeflag) {
+        this.activeflag = activeflag;
+    }
 
-	public void setActiveflag(String activeflag) {
-		this.activeflag = activeflag;
-	}
+    public void setBusinessentityid(Integer businessentityid) {
+        this.businessentityid = businessentityid;
+    }
 
-	public void setBusinessentityid(Integer businessentityid) {
-		this.businessentityid = businessentityid;
-	}
+    public void setCreditrating(Integer creditrating) {
+        this.creditrating = creditrating;
+    }
 
-	public void setCreditrating(Integer creditrating) {
-		this.creditrating = creditrating;
-	}
+    public void setModifieddate(Timestamp modifieddate) {
+        this.modifieddate = modifieddate;
+    }
 
-	public void setModifieddate(Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setPreferredvendorstatus(String preferredvendorstatus) {
+        this.preferredvendorstatus = preferredvendorstatus;
+    }
 
-	public void setPreferredvendorstatus(String preferredvendorstatus) {
-		this.preferredvendorstatus = preferredvendorstatus;
-	}
+    public void setProductvendors(List<Productvendor> productvendors) {
+        this.productvendors = productvendors;
+    }
 
-	public void setProductvendors(List<Productvendor> productvendors) {
-		this.productvendors = productvendors;
-	}
+    public void setPurchaseorderheaders(List<Purchaseorderheader> purchaseorderheaders) {
+        this.purchaseorderheaders = purchaseorderheaders;
+    }
 
-	public void setPurchaseorderheaders(List<Purchaseorderheader> purchaseorderheaders) {
-		this.purchaseorderheaders = purchaseorderheaders;
-	}
-
-	public void setPurchasingwebserviceurl(String purchasingwebserviceurl) {
-		this.purchasingwebserviceurl = purchasingwebserviceurl;
-	}
+    public void setPurchasingwebserviceurl(String purchasingwebserviceurl) {
+        this.purchasingwebserviceurl = purchasingwebserviceurl;
+    }
 
 }

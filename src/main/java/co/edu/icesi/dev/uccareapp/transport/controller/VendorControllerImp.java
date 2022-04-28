@@ -32,7 +32,7 @@ public class VendorControllerImp implements VendorController {
 		return "vendors/index";
 	}
 
-	@GetMapping("/vendors/save-vendor")
+	@GetMapping("/vendors/add-vendor")
 	public String showSaveForm(Model model) {
 		model.addAttribute("vendor", new Vendor());
 		return "vendors/add-vendor";
