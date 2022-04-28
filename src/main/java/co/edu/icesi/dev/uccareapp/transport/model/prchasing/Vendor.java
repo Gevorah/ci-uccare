@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
+import org.hibernate.validator.constraints.URL;
 
 /**
  * The persistent class for the vendor database table.
@@ -30,14 +34,17 @@ public class Vendor implements Serializable {
 
     private String activeflag;
 
+    @Positive
     private Integer creditrating;
 
     private Timestamp modifieddate;
 
+    @NotNull
     private String name;
 
     private String preferredvendorstatus;
 
+    @URL(protocol = "https")
     private String purchasingwebserviceurl;
 
     // bi-directional many-to-one association to Productvendor

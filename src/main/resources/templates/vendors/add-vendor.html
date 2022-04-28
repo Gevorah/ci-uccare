@@ -27,23 +27,6 @@
           <form action="#" th:action="@{/vendors/add/}" th:object="${vendor}" method="post">
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="businessentityid" class="col-form-label">Id</label>
-                <select th:field="*{businessentityid}">
-                  <option
-                    th:each="b : ${businessentities}"
-                    th:value="${b.id}"
-                    class="form-control"
-                    th:text="${b.name}"
-                    th:selected="${vendor.businessentityid=b.id}"
-                  ></option>
-                </select>
-                <span
-                  th:if="${#fields.hasErrors('businessentityid')}"
-                  th:errors="*{businessentityid}"
-                  class="text-danger"
-                ></span>
-              </div>
-              <div class="form-group col-md-6">
                 <label for="accountnumber" class="col-form-label">Account</label>
                 <input
                   type="text"
@@ -80,7 +63,7 @@
                   th:field="*{creditrating}"
                   class="form-control"
                   id="creditrating"
-                  placeholder="0.1"
+                  placeholder="10"
                 />
                 <span
                   th:if="${#fields.hasErrors('creditrating')}"
@@ -130,6 +113,23 @@
                 <span
                   th:if="${#fields.hasErrors('purchasingwebserviceurl')}"
                   th:errors="*{purchasingwebserviceurl}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="businessentityid" class="col-form-label">Id</label>
+                <select th:field="*{businessentityid}">
+                  <option
+                    th:each="b : ${businessentities}"
+                    th:value="${b.businessentityid}"
+                    th:text="${b.businessentityid}"
+                    class="form-control"
+                    th:selected="${vendor.businessentityid=b.businessentityid}"
+                  ></option>
+                </select>
+                <span
+                  th:if="${#fields.hasErrors('businessentityid')}"
+                  th:errors="*{businessentityid}"
                   class="text-danger"
                 ></span>
               </div>
