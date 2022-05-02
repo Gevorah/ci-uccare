@@ -1,4 +1,4 @@
-package co.edu.icesi.dev.uccareapp.transport.model.login;
+package co.edu.icesi.dev.uccareapp.transport.security;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class UserApp {
+public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -15,9 +15,9 @@ public class UserApp {
 
     private String password;
 
-    private UserType type;
+    private Role role;
 
-    public UserApp() {
+    public User() {
     }
 
     public String getUsername() {
@@ -28,11 +28,11 @@ public class UserApp {
         return password;
     }
 
-    public UserType getType() {
-        return type;
+    public Role getRole() {
+        return role;
     }
     
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -40,7 +40,7 @@ public class UserApp {
         this.password = password;
     }
 
-    public void setType(UserType type) {
-        this.type = type;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

@@ -2,9 +2,9 @@ package co.edu.icesi.dev.uccareapp.transport.service;
 
 import java.util.Optional;
 
-import co.edu.icesi.dev.uccareapp.transport.model.login.UserApp;
+import co.edu.icesi.dev.uccareapp.transport.security.User;
 
 public interface UserService {
-    public Optional<UserApp> findById(Integer id);
-    public Iterable<UserApp> findAll();
+    public Optional<User> findById(Integer id);
+    public Iterable<User> findAll();
 }

@@ -34,13 +34,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //	}
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        //httpSecurity.antMatcher("/**").authorizeRequests()
-        //	.antMatchers("/vendors").hasAnyRole("").
-        //	.anyRequest().authenticated();
-        httpSecurity.authorizeRequests().antMatchers("/index").authenticated().anyRequest().permitAll().and().formLogin().and().logout()
-                .invalidateHttpSession(true).clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
-                .permitAll().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()//.antMatchers("/").hasAnyRole("admin","operator")
+            .antMatchers("/vendors/**","/shipmethods/**").hasRole("ADMIN")
+            .anyRequest().authenticated()
+        	
+            .and().formLogin().and().httpBasic().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+            
+            .and().logout()
+            .invalidateHttpSession(true).clearAuthentication(true)
+            //.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutSuccessUrl("/login?logout").permitAll();
     }
 }
