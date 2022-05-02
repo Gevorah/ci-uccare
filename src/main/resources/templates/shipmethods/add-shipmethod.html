@@ -27,6 +27,21 @@
           <form action="#" th:action="@{/shipmethods/add/}" th:object="${shipmethod}" method="post">
             <div class="row">
               <div class="form-group col-md-6">
+                <label for="shipmethodid" class="col-form-label">Id</label>
+                <input
+                  type="number"
+                  th:field="*{shipmethodid}"
+                  class="form-control"
+                  id="shipmethodid"
+                  placeholder="0"
+                />
+                <span
+                  th:if="${#fields.hasErrors('shipmethodid')}"
+                  th:errors="*{shipmethodid}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
                 <label for="name" class="col-form-label">Name</label>
                 <input
                   type="text"
@@ -44,7 +59,7 @@
               <div class="form-group col-md-6">
                 <label for="rowguid" class="col-form-label">Rowguid</label>
                 <input
-                  type="number"
+                  type="text"
                   th:field="*{rowguid}"
                   class="form-control"
                   id="rowguid"
@@ -57,9 +72,10 @@
                 ></span>
               </div>
               <div class="form-group col-md-6">
-                <label for="shipbase" class="col-form-label">Shipbase</label>
+                <label for="shipbase" class="col-form-label">Ship Base</label>
                 <input
                   type="number"
+                  step="0.1"
                   th:field="*{shipbase}"
                   class="form-control"
                   id="shipbase"
@@ -72,9 +88,10 @@
                 ></span>
               </div>
               <div class="form-group col-md-6">
-                <label for="shiprate" class="col-form-label">Shiprate</label>
+                <label for="shiprate" class="col-form-label">Ship Rate</label>
                 <input
-                  type="shiprate"
+                  type="number"
+                  step="0.1"
                   th:field="*{shiprate}"
                   class="form-control"
                   id="shiprate"

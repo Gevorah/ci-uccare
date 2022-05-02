@@ -1,7 +1,7 @@
 package co.edu.icesi.dev.uccareapp.transport.model.prchasing;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,10 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the vendor database table.
@@ -37,9 +38,10 @@ public class Vendor implements Serializable {
     @Positive
     private Integer creditrating;
 
-    private Timestamp modifieddate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate modifieddate;
 
-    @NotNull
+    @NotBlank
     private String name;
 
     private String preferredvendorstatus;
@@ -88,7 +90,7 @@ public class Vendor implements Serializable {
         return this.creditrating;
     }
 
-    public Timestamp getModifieddate() {
+    public LocalDate getModifieddate() {
         return this.modifieddate;
     }
 
@@ -142,7 +144,7 @@ public class Vendor implements Serializable {
         this.creditrating = creditrating;
     }
 
-    public void setModifieddate(Timestamp modifieddate) {
+    public void setModifieddate(LocalDate modifieddate) {
         this.modifieddate = modifieddate;
     }
 

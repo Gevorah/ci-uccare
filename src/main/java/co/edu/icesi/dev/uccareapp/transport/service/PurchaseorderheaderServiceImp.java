@@ -1,7 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +32,13 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
 
         if (!employeerepository.existsById(purchaseorderheader.getEmployeeid()))
             throw new NullPointerException("employeeid doesn't correspond to an existing Employee");
-        if (purchaseorderheader.getOrderdate().before(Timestamp.from(Instant.now().minusSeconds(100))) ||
-                purchaseorderheader.getOrderdate().after(Timestamp.from(Instant.now().plusSeconds(100))))
+        if (!purchaseorderheader.getOrderdate().isEqual(LocalDate.now()))
             throw new IllegalArgumentException("orderdate must be actual");
         if (purchaseorderheader.getSubtotal().signum() != 1)
             throw new IllegalArgumentException("subtotal must be greater than 0");
 
         purchaseorderheaderrepository.save(purchaseorderheader);
-        
+
         return true;
     }
 
@@ -52,8 +50,7 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
 
         if (!employeerepository.existsById(purchaseorderheader.getEmployeeid()))
             throw new NullPointerException("employeeid doesn't correspond to an existing Employee");
-        if (purchaseorderheader.getOrderdate().before(Timestamp.from(Instant.now().minusMillis(10000))) ||
-                purchaseorderheader.getOrderdate().after(Timestamp.from(Instant.now().plusMillis(10000))))
+        if (!purchaseorderheader.getOrderdate().isEqual(LocalDate.now()))
             throw new IllegalArgumentException("orderdate must be actual");
         if (purchaseorderheader.getSubtotal().signum() != 1)
             throw new IllegalArgumentException("subtotal must be greater than 0");
@@ -62,7 +59,7 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
         
         editpurchaseorderheader.setEmployeeid(purchaseorderheader.getEmployeeid());
         editpurchaseorderheader.setFreight(purchaseorderheader.getFreight());
-        editpurchaseorderheader.setModifieddate(Timestamp.from(Instant.now()));
+        editpurchaseorderheader.setModifieddate(LocalDate.now());
         editpurchaseorderheader.setOrderdate(purchaseorderheader.getOrderdate());
         editpurchaseorderheader.setRevisionnumber(purchaseorderheader.getRevisionnumber());
         editpurchaseorderheader.setShipdate(purchaseorderheader.getShipdate());
@@ -83,7 +80,8 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
 
     @Override
     public Iterable<Purchaseorderheader> findAll() {
-        return purchaseorderheaderrepository.findAll();
+        return purchaseorderheaderrepository.findAll().iterator().hasNext()?
+                purchaseorderheaderrepository.findAll() : null;
     }
 
     @Override

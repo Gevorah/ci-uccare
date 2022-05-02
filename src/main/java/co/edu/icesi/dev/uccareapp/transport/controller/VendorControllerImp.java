@@ -29,8 +29,8 @@ public class VendorControllerImp implements VendorController {
         this.businessentityrepository = businessentityrepository;
     }
 
-    @GetMapping("/vendors/")
-    public String indexUser(Model model) {
+    @GetMapping("/vendors")
+    public String index(Model model) {
         model.addAttribute("vendors", vendorservice.findAll());
         return "vendors/index";
     }
@@ -51,7 +51,7 @@ public class VendorControllerImp implements VendorController {
             }
             vendorservice.saveVendor(vendor);
         }
-        return "redirect:/vendors/";
+        return "redirect:/vendors";
     }
 
     @GetMapping("/vendors/edit/{id}")
@@ -60,26 +60,26 @@ public class VendorControllerImp implements VendorController {
         if (vendor == null)
             throw new IllegalArgumentException("Invalid vendor Id:" + id);
         model.addAttribute("vendor", vendor.get());
-        //model.addAttribute("types", vendorservice.getTypes());
+        model.addAttribute("businessentities", businessentityrepository.findAll());
         return "vendors/update-vendor";
     }
 
     @PostMapping("/vendors/edit/{id}")
     public String updateVendor(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, 
             @Validated @ModelAttribute Vendor vendor, BindingResult bindingResult, Model model ) {
-        if (action != null && action.equals("Cancel")) {
-            return "redirect:/vendors/";
-        } else {
-            model.addAttribute("vendors", vendorservice.findAll());
+        if (!action.equals("Cancel")) {
+            if (bindingResult.hasErrors()) {
+                return "vendors/add-vendor";
+            }
+            vendorservice.editVendor(vendor);
         }
-        return "redirect:/vendors/";
+        return "redirect:/vendors";
     }
 
     @GetMapping("/vendors/del/{id}")
-    public String deleteUser(@PathVariable("id") Integer id, Model model) {
+    public String deleteVendor(@PathVariable("id") Integer id, Model model) {
         Vendor vendor = vendorservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid vendor Id:" + id));
         vendorservice.delete(vendor);
-        model.addAttribute("vendors", vendorservice.findAll());
-        return "vendors/index";
+        return "redirect:/vendors";
     }
 }

@@ -82,7 +82,8 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
 
     @Override
     public Iterable<Purchaseorderdetail> findAll() {
-        return purchaseorderdetailrepository.findAll();
+        return purchaseorderdetailrepository.findAll().iterator().hasNext()?
+                purchaseorderdetailrepository.findAll() : null;
     }
 
     @Override

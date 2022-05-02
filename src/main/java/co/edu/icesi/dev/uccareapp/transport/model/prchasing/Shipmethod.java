@@ -2,7 +2,7 @@ package co.edu.icesi.dev.uccareapp.transport.model.prchasing;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the shipmethod database table.
@@ -27,14 +31,18 @@ public class Shipmethod implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHIPMETHOD_SHIPMETHODID_GENERATOR")
 	private Integer shipmethodid;
 
-	private Timestamp modifieddate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
 
+	@Size(min = 4)
 	private String name;
 
 	private Integer rowguid;
 
+	@Positive
 	private BigDecimal shipbase;
 
+	@Positive
 	private BigDecimal shiprate;
 
 	// bi-directional many-to-one association to Purchaseorderheader
@@ -51,7 +59,7 @@ public class Shipmethod implements Serializable {
 		return purchaseorderheader;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -86,7 +94,7 @@ public class Shipmethod implements Serializable {
 		return purchaseorderheader;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

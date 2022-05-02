@@ -30,41 +30,37 @@
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Account</th>
-                  <th>Status</th>
-                  <th>Credit</th>
                   <th>Modified Date</th>
                   <th>Name</th>
-                  <th>Prefered Status</th>
-                  <th>Web</th>
+                  <th>Rowguid</th>
+                  <th>Ship Base</th>
+                  <th>Ship Rate</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
                 <tr th:each="shipmethod : ${shipmethods}">
-                  <td class="text-info" th:text="${shipmethod.businessentityid}"></td>
-                  <td class="text-info" th:text="${shipmethod.accountnumber}"></td>
-                  <td class="text-info" th:text="${shipmethod.activeflag}"></td>
-                  <td class="text-info" th:text="${shipmethod.creditrating}"></td>
+                  <td class="text-info" th:text="${shipmethod.shipmethodid}"></td>
                   <td class="text-info" th:text="${shipmethod.modifieddate}"></td>
                   <td class="text-info" th:text="${shipmethod.name}"></td>
-                  <td class="text-info" th:text="${shipmethod.preferredvendorstatus}"></td>
-                  <td class="text-info" th:text="${shipmethod.purchasingwebserviceurl}"></td>
+                  <td class="text-info" th:text="${shipmethod.rowguid}"></td>
+                  <td class="text-info" th:text="${shipmethod.shipbase}"></td>
+                  <td class="text-info" th:text="${shipmethod.shiprate}"></td>
                   <td>
                     <a
-                      th:href="@{/shipmethods/edit/{id}(id=${shipmethod.businessentityid})}"
+                      th:href="@{/shipmethods/edit/{id}(id=${shipmethod.shipmethodid})}"
                       class="btn btn-primary"
                     >
-                      <i class="fas fa-shipmethod-edit ml-2"></i>
+                      <i class="fas fa-edit ml-2"></i>
                     </a>
                   </td>
                   <td>
                     <a
-                      th:href="@{/shipmethods/del/{id}(id=${shipmethod.businessentityid})}"
+                      th:href="@{/shipmethods/del/{id}(id=${shipmethod.shipmethodid})}"
                       class="btn btn-primary"
                     >
-                      <i class="fas fa-shipmethod-times ml-2"></i>
+                      <i class="fas fa-trash-alt ml-2"></i>
                     </a>
                   </td>
                 </tr>
@@ -73,12 +69,7 @@
           </div>
           <p class="my-5">
             <a href="/shipmethods/add" class="btn btn-primary">
-              <i class="fas fa-shipmethod-plus ml-2"></i>
-            </a>
-          </p>
-          <p class="my-5">
-            <a href="/shipmethods/add" class="btn btn-primary">
-              <i class="fas fa-calendar-plus ml-2"></i>
+              <i class="fas fa-plus ml-2"></i>
             </a>
           </p>
         </div>

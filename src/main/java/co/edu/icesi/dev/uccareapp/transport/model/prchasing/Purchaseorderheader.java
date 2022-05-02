@@ -1,11 +1,24 @@
 package co.edu.icesi.dev.uccareapp.transport.model.prchasing;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.PastOrPresent;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the purchaseorderheader database table.
@@ -14,164 +27,169 @@ import java.util.List;
 @Entity
 @NamedQuery(name="Purchaseorderheader.findAll", query="SELECT p FROM Purchaseorderheader p")
 public class Purchaseorderheader implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@SequenceGenerator(name="PURCHASEORDERHEADER_PURCHASEORDERID_GENERATOR",allocationSize = 1, sequenceName="PURCHASEORDERHEADER_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PURCHASEORDERHEADER_PURCHASEORDERID_GENERATOR")
-	private Integer purchaseorderid;
+    @Id
+    @SequenceGenerator(name="PURCHASEORDERHEADER_PURCHASEORDERID_GENERATOR",allocationSize = 1, sequenceName="PURCHASEORDERHEADER_SEQ")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PURCHASEORDERHEADER_PURCHASEORDERID_GENERATOR")
+    private Integer purchaseorderid;
+    
+    private Integer employeeid;
 
-	private Integer employeeid;
+    private BigDecimal freight;
 
-	private BigDecimal freight;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate modifieddate;
 
-	private Timestamp modifieddate;
+    @PastOrPresent(message = "must be a date in the present")
+    @FutureOrPresent(message = "must be a date in the present")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate orderdate;
 
-	private Timestamp orderdate;
+    private Integer revisionnumber;
 
-	private Integer revisionnumber;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate shipdate;
 
-	private Timestamp shipdate;
+    private Integer status;
 
-	private Integer status;
+    private BigDecimal subtotal;
 
-	private BigDecimal subtotal;
+    private BigDecimal taxamt;
 
-	private BigDecimal taxamt;
+    //bi-directional many-to-one association to Purchaseorderdetail
+    @OneToMany(mappedBy="purchaseorderheader")
+    private List<Purchaseorderdetail> purchaseorderdetails;
 
-	//bi-directional many-to-one association to Purchaseorderdetail
-	@OneToMany(mappedBy="purchaseorderheader")
-	private List<Purchaseorderdetail> purchaseorderdetails;
+    //bi-directional many-to-one association to Shipmethod
+    @ManyToOne
+    @JoinColumn(name="shipmethodid")
+    private Shipmethod shipmethod;
 
-	//bi-directional many-to-one association to Shipmethod
-	@ManyToOne
-	@JoinColumn(name="shipmethodid")
-	private Shipmethod shipmethod;
+    //bi-directional many-to-one association to Vendor
+    @ManyToOne
+    @JoinColumn(name="vendorid")
+    private Vendor vendor;
 
-	//bi-directional many-to-one association to Vendor
-	@ManyToOne
-	@JoinColumn(name="vendorid")
-	private Vendor vendor;
+    public Purchaseorderheader() {
+    }
 
-	public Purchaseorderheader() {
-	}
+    public Integer getPurchaseorderid() {
+        return this.purchaseorderid;
+    }
 
-	public Integer getPurchaseorderid() {
-		return this.purchaseorderid;
-	}
+    public void setPurchaseorderid(Integer purchaseorderid) {
+        this.purchaseorderid = purchaseorderid;
+    }
 
-	public void setPurchaseorderid(Integer purchaseorderid) {
-		this.purchaseorderid = purchaseorderid;
-	}
+    public Integer getEmployeeid() {
+        return this.employeeid;
+    }
 
-	public Integer getEmployeeid() {
-		return this.employeeid;
-	}
+    public void setEmployeeid(Integer employeeid) {
+        this.employeeid = employeeid;
+    }
 
-	public void setEmployeeid(Integer employeeid) {
-		this.employeeid = employeeid;
-	}
+    public BigDecimal getFreight() {
+        return this.freight;
+    }
 
-	public BigDecimal getFreight() {
-		return this.freight;
-	}
+    public void setFreight(BigDecimal freight) {
+        this.freight = freight;
+    }
 
-	public void setFreight(BigDecimal freight) {
-		this.freight = freight;
-	}
+    public LocalDate getModifieddate() {
+        return this.modifieddate;
+    }
 
-	public Timestamp getModifieddate() {
-		return this.modifieddate;
-	}
+    public void setModifieddate(LocalDate modifieddate) {
+        this.modifieddate = modifieddate;
+    }
 
-	public void setModifieddate(Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
-	}
+    public LocalDate getOrderdate() {
+        return this.orderdate;
+    }
 
-	public Timestamp getOrderdate() {
-		return this.orderdate;
-	}
+    public void setOrderdate(LocalDate orderdate) {
+        this.orderdate = orderdate;
+    }
 
-	public void setOrderdate(Timestamp orderdate) {
-		this.orderdate = orderdate;
-	}
+    public Integer getRevisionnumber() {
+        return this.revisionnumber;
+    }
 
-	public Integer getRevisionnumber() {
-		return this.revisionnumber;
-	}
+    public void setRevisionnumber(Integer revisionnumber) {
+        this.revisionnumber = revisionnumber;
+    }
 
-	public void setRevisionnumber(Integer revisionnumber) {
-		this.revisionnumber = revisionnumber;
-	}
+    public LocalDate getShipdate() {
+        return this.shipdate;
+    }
 
-	public Timestamp getShipdate() {
-		return this.shipdate;
-	}
+    public void setShipdate(LocalDate shipdate) {
+        this.shipdate = shipdate;
+    }
 
-	public void setShipdate(Timestamp shipdate) {
-		this.shipdate = shipdate;
-	}
+    public Integer getStatus() {
+        return this.status;
+    }
 
-	public Integer getStatus() {
-		return this.status;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public BigDecimal getSubtotal() {
+        return this.subtotal;
+    }
 
-	public BigDecimal getSubtotal() {
-		return this.subtotal;
-	}
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
 
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
+    public BigDecimal getTaxamt() {
+        return this.taxamt;
+    }
 
-	public BigDecimal getTaxamt() {
-		return this.taxamt;
-	}
+    public void setTaxamt(BigDecimal taxamt) {
+        this.taxamt = taxamt;
+    }
 
-	public void setTaxamt(BigDecimal taxamt) {
-		this.taxamt = taxamt;
-	}
+    public List<Purchaseorderdetail> getPurchaseorderdetails() {
+        return this.purchaseorderdetails;
+    }
 
-	public List<Purchaseorderdetail> getPurchaseorderdetails() {
-		return this.purchaseorderdetails;
-	}
+    public void setPurchaseorderdetails(List<Purchaseorderdetail> purchaseorderdetails) {
+        this.purchaseorderdetails = purchaseorderdetails;
+    }
 
-	public void setPurchaseorderdetails(List<Purchaseorderdetail> purchaseorderdetails) {
-		this.purchaseorderdetails = purchaseorderdetails;
-	}
+    public Purchaseorderdetail addPurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
+        getPurchaseorderdetails().add(purchaseorderdetail);
+        purchaseorderdetail.setPurchaseorderheader(this);
 
-	public Purchaseorderdetail addPurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
-		getPurchaseorderdetails().add(purchaseorderdetail);
-		purchaseorderdetail.setPurchaseorderheader(this);
+        return purchaseorderdetail;
+    }
 
-		return purchaseorderdetail;
-	}
+    public Purchaseorderdetail removePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
+        getPurchaseorderdetails().remove(purchaseorderdetail);
+        purchaseorderdetail.setPurchaseorderheader(null);
 
-	public Purchaseorderdetail removePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
-		getPurchaseorderdetails().remove(purchaseorderdetail);
-		purchaseorderdetail.setPurchaseorderheader(null);
+        return purchaseorderdetail;
+    }
 
-		return purchaseorderdetail;
-	}
+    public Shipmethod getShipmethod() {
+        return this.shipmethod;
+    }
 
-	public Shipmethod getShipmethod() {
-		return this.shipmethod;
-	}
+    public void setShipmethod(Shipmethod shipmethod) {
+        this.shipmethod = shipmethod;
+    }
 
-	public void setShipmethod(Shipmethod shipmethod) {
-		this.shipmethod = shipmethod;
-	}
+    public Vendor getVendor() {
+        return this.vendor;
+    }
 
-	public Vendor getVendor() {
-		return this.vendor;
-	}
-
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
-	}
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
 
 }

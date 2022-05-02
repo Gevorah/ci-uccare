@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +58,13 @@ public class VendorServiceImp implements VendorService {
         editvendor.setAccountnumber(vendor.getAccountnumber());
         editvendor.setActiveflag(vendor.getActiveflag());
         editvendor.setCreditrating(vendor.getCreditrating());
-        editvendor.setModifieddate(vendor.getModifieddate());
+        editvendor.setModifieddate(LocalDate.now());
         editvendor.setName(vendor.getName());
         editvendor.setPreferredvendorstatus(vendor.getPreferredvendorstatus());
         editvendor.setPurchasingwebserviceurl(vendor.getPurchasingwebserviceurl());
         
+        vendorrepository.save(editvendor);
+
         return true;
     }
 
@@ -72,7 +75,8 @@ public class VendorServiceImp implements VendorService {
 
     @Override
     public Iterable<Vendor> findAll() {
-        return vendorrepository.findAll();
+        return vendorrepository.findAll().iterator().hasNext()?
+                vendorrepository.findAll() : null;
     }
 
     @Override

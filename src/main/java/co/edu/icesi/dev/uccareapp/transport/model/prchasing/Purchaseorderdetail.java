@@ -2,13 +2,15 @@ package co.edu.icesi.dev.uccareapp.transport.model.prchasing;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the purchaseorderdetail database table.
@@ -21,10 +23,12 @@ public class Purchaseorderdetail implements Serializable {
 
 	@EmbeddedId
 	private PurchaseorderdetailPK id;
+	
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate duedate;
 
-	private Timestamp duedate;
-
-	private Timestamp modifieddate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
 
 	private Integer orderqty;
 
@@ -44,7 +48,7 @@ public class Purchaseorderdetail implements Serializable {
 	public Purchaseorderdetail() {
 	}
 
-	public Timestamp getDuedate() {
+	public LocalDate getDuedate() {
 		return this.duedate;
 	}
 
@@ -52,7 +56,7 @@ public class Purchaseorderdetail implements Serializable {
 		return this.id;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -80,7 +84,7 @@ public class Purchaseorderdetail implements Serializable {
 		return this.unitprice;
 	}
 
-	public void setDuedate(Timestamp duedate) {
+	public void setDuedate(LocalDate duedate) {
 		this.duedate = duedate;
 	}
 
@@ -88,7 +92,7 @@ public class Purchaseorderdetail implements Serializable {
 		this.id = id;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

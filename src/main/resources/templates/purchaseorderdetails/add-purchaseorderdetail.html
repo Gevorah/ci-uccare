@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Add Vendor</title>
+    <title>Add Purchase Order Header</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
@@ -21,116 +21,125 @@
   </head>
   <body>
     <div class="container my-5">
-      <h2 class="mb-5">New Vendor</h2>
+      <h2 class="mb-5">New Purchase Order Header</h2>
       <div class="row">
         <div class="col-md-6">
-          <form action="#" th:action="@{/vendors/add/}" th:object="${vendor}" method="post">
+          <form
+            action="#"
+            th:action="@{/purchaseorderheaders/add/}"
+            th:object="${purchaseorderheader}"
+            method="post"
+          >
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="businessentityid" class="col-form-label">Id</label>
+                <label for="id" class="col-form-label">Id</label>
                 <div></div>
-                <select th:field="*{businessentityid}">
+                <select th:field="*{id}">
                   <option value="" th:text="-Select-"></option>
                   <option
-                    th:each="b : ${businessentities}"
-                    th:value="${b.businessentityid}"
-                    th:text="${b.businessentityid}"
+                    th:each="p : ${purchaseorderheaders}"
+                    th:value="${p.purchaseorderid}"
+                    th:text="${p.purchaseorderid}"
                     class="form-control"
                   ></option>
                 </select>
                 <span
-                  th:if="${#fields.hasErrors('businessentityid')}"
-                  th:errors="*{businessentityid}"
+                  th:if="${#fields.hasErrors('id')}"
+                  th:errors="*{id}"
                   class="text-danger"
                 ></span>
               </div>
               <div class="form-group col-md-6">
-                <label for="accountnumber" class="col-form-label">Account</label>
+                <label for="duedate" class="col-form-label">Due Date</label>
                 <input
-                  type="text"
-                  th:field="*{accountnumber}"
+                  type="date"
+                  th:field="*{duedate}"
                   class="form-control"
-                  id="accountnumber"
+                  id="duedate"
+                  placeholder="Date"
+                />
+                <span
+                  th:if="${#fields.hasErrors('duedate')}"
+                  th:errors="*{duedate}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="orderqty" class="col-form-label">Order Quantity</label>
+                <input
+                  type="number"
+                  th:field="*{orderqty}"
+                  class="form-control"
+                  id="orderqty"
+                  placeholder="1"
+                />
+                <span
+                  th:if="${#fields.hasErrors('orderqty')}"
+                  th:errors="*{orderqty}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="productid" class="col-form-label">Product Id</label>
+                <input
+                  type="number"
+                  step="0"
+                  th:field="*{productid}"
+                  class="form-control"
+                  id="productid"
                   placeholder="0"
                 />
                 <span
-                  th:if="${#fields.hasErrors('accountnumber')}"
-                  th:errors="*{accountnumber}"
+                  th:if="${#fields.hasErrors('productid')}"
+                  th:errors="*{productid}"
                   class="text-danger"
                 ></span>
               </div>
               <div class="form-group col-md-6">
-                <label for="activeflag" class="col-form-label">Status</label>
-                <input
-                  type="text"
-                  th:field="*{activeflag}"
-                  class="form-control"
-                  id="activeflag"
-                  placeholder="active"
-                />
-                <span
-                  th:if="${#fields.hasErrors('activeflag')}"
-                  th:errors="*{activeflag}"
-                  class="text-danger"
-                ></span>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="creditrating" class="col-form-label">Credit</label>
+                <label for="receivedqty" class="col-form-label">Received Quantity</label>
                 <input
                   type="number"
-                  th:field="*{creditrating}"
+                  step="0.1"
+                  th:field="*{receivedqty}"
                   class="form-control"
-                  id="creditrating"
-                  placeholder="10"
+                  id="receivedqty"
+                  placeholder="0.1"
                 />
                 <span
-                  th:if="${#fields.hasErrors('creditrating')}"
-                  th:errors="*{creditrating}"
+                  th:if="${#fields.hasErrors('receivedqty')}"
+                  th:errors="*{receivedqty}"
                   class="text-danger"
                 ></span>
               </div>
               <div class="form-group col-md-6">
-                <label for="name" class="col-form-label">Name</label>
+                <label for="rejectedqty" class="col-form-label">Rejected Quantity</label>
                 <input
-                  type="text"
-                  th:field="*{name}"
+                  type="number"
+                  step="0.1"
+                  th:field="*{rejectedqty}"
                   class="form-control"
-                  id="name"
-                  placeholder="name"
+                  id="rejectedqty"
+                  placeholder="0.1"
                 />
                 <span
-                  th:if="${#fields.hasErrors('name')}"
-                  th:errors="*{name}"
+                  th:if="${#fields.hasErrors('rejectedqty')}"
+                  th:errors="*{rejectedqty}"
                   class="text-danger"
                 ></span>
               </div>
               <div class="form-group col-md-6">
-                <label for="preferredvendorstatus" class="col-form-label">Prefered Status</label>
+                <label for="unitprice" class="col-form-label">Unit Price</label>
                 <input
-                  type="text"
-                  th:field="*{preferredvendorstatus}"
+                  type="number"
+                  step="0.1"
+                  th:field="*{unitprice}"
                   class="form-control"
-                  id="preferredvendorstatus"
-                  placeholder="active"
+                  id="unitprice"
+                  placeholder="0.1"
                 />
                 <span
-                  th:if="${#fields.hasErrors('preferredvendorstatus')}"
-                  th:errors="*{preferredvendorstatus}"
-                  class="text-danger"
-                ></span>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="purchasingwebserviceurl" class="col-form-label">Web</label>
-                <input
-                  type="text"
-                  th:field="*{purchasingwebserviceurl}"
-                  class="form-control"
-                  id="purchasingwebserviceurl"
-                  placeholder="https://web.buy.com"
-                />
-                <span
-                  th:if="${#fields.hasErrors('purchasingwebserviceurl')}"
-                  th:errors="*{purchasingwebserviceurl}"
+                  th:if="${#fields.hasErrors('unitprice')}"
+                  th:errors="*{unitprice}"
                   class="text-danger"
                 ></span>
               </div>

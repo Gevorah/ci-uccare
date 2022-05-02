@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class ShipmethodServiceImp implements ShipmethodService {
             throw new IllegalArgumentException("name must have at least 4 chars");
 
         Shipmethod editshipmethod = shipmethodrepository.findById(shipmethod.getShipmethodid()).get();
-        editshipmethod.setModifieddate(shipmethod.getModifieddate());
+        editshipmethod.setModifieddate(LocalDate.now());
         editshipmethod.setName(shipmethod.getName());
         editshipmethod.setRowguid(shipmethod.getRowguid());
         editshipmethod.setShipbase(shipmethod.getShipbase());
@@ -66,7 +67,8 @@ public class ShipmethodServiceImp implements ShipmethodService {
 
     @Override
     public Iterable<Shipmethod> findAll() {
-        return shipmethodrepository.findAll();
+        return shipmethodrepository.findAll().iterator().hasNext()?
+                shipmethodrepository.findAll() : null;
     }
 
     @Override
