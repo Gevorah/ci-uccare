@@ -11,12 +11,8 @@ import co.edu.icesi.dev.uccareapp.transport.repository.UserRepository;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 	
-	UserRepository userrepository;
-	
 	@Autowired
-	public CustomUserDetailsService(UserRepository userrepository) {
-		this.userrepository = userrepository;
-	}
+	UserRepository userrepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -24,12 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found.");
 		}
-		org.springframework.security.core.userdetails.User.UserBuilder builder = 
-			org.springframework.security.core.userdetails.User
-			.withUsername(username)
-			.password(user.getPassword())
-			.roles(user.getRole().name());
-		
-		return builder.build();
+		return new CustomUserDetails(user);
 	}
 }

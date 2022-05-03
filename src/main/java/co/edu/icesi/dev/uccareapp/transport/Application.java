@@ -1,5 +1,7 @@
 package co.edu.icesi.dev.uccareapp.transport;
 
+import java.util.Arrays;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +12,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
+import co.edu.icesi.dev.uccareapp.transport.repository.RoleRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.UserRepository;
 import co.edu.icesi.dev.uccareapp.transport.security.Role;
 import co.edu.icesi.dev.uccareapp.transport.security.User;
@@ -27,19 +30,28 @@ public class Application {
 	
 	@Bean
 	public CommandLineRunner dummy(UserRepository userrepository,
-		BusinessentityRepository businessentityrepository, EmployeeRepository employeerepository) {
+		BusinessentityRepository businessentityrepository, EmployeeRepository employeerepository,
+		RoleRepository rolerepository) {
 		return (args) -> {
-			User admin = new User();
-			admin.setUsername("admin");
-			admin.setPassword("{noop}admin");
-			admin.setRole(Role.ADMIN);
-			userrepository.save(admin);
+			Role admin = new Role();
+			admin.setName("ADMIN");
+			rolerepository.save(admin);
 
-			User operator = new User();
-			operator.setUsername("operator");
-			operator.setPassword("{noop}123");
-			operator.setRole(Role.OPERATOR);
-			userrepository.save(operator);
+			Role operator = new Role();
+			operator.setName("OPERATOR");
+			rolerepository.save(operator);
+
+			User user1 = new User();
+			user1.setUsername("admin");
+			user1.setPassword("admin");
+			user1.getRoles().add(admin);
+			userrepository.save(user1);
+
+			User user2 = new User();
+			user2.setUsername("operator");
+			user2.setPassword("123");
+			user2.getRoles().add(operator);
+			userrepository.save(user2);
 
 			Businessentity businessentity1 = new Businessentity();
 			businessentity1.setBusinessentityid(1);

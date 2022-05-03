@@ -1,21 +1,37 @@
 package co.edu.icesi.dev.uccareapp.transport.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "user_id")
     private Integer id;
 
     private String username;
 
     private String password;
 
-    private Role role;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+            )
+    private List<Role> roles = new ArrayList<>();
 
     public User() {
     }
@@ -28,8 +44,8 @@ public class User {
         return password;
     }
 
-    public Role getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
     
     public void setUsername(String username) {
@@ -40,7 +56,7 @@ public class User {
         this.password = password;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
