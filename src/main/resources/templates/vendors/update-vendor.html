@@ -27,11 +27,10 @@
               <div class="form-group col-md-6">
                 <label for="businessentityid" class="col-form-label">Id</label>
                 <div></div>
-                <select th:field="*{businessentityid}">
+                <select th:field="*{businessentityid}" th:disabled="disabled">
                   <option
-                    th:each="b : ${businessentities}"
-                    th:value="${b.businessentityid}"
-                    th:text="${b.businessentityid}"
+                    th:value="*{businessentityid}"
+                    th:text="*{businessentityid}"
                     class="form-control"
                   ></option>
                 </select>

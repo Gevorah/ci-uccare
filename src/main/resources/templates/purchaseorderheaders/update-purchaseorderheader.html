@@ -32,6 +32,7 @@
                   class="form-control"
                   id="purchaseorderid"
                   placeholder="0"
+                  th:disabled="disabled"
                 />
                 <span
                   th:if="${#fields.hasErrors('purchaseorderid')}"
