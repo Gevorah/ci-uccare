@@ -40,6 +40,7 @@ public class PurchaseorderdetailControllerImp implements PurchaseorderdetailCont
     public String showSaveForm(Model model) {
         model.addAttribute("purchaseorderdetail", new Purchaseorderdetail());
         model.addAttribute("purchaseorderheaders", purchaseorderheaderrepository.findAll());
+        model.addAttribute("pk", new PurchaseorderdetailPK());
         return "purchaseorderdetails/add-purchaseorderdetail";
     }
 
