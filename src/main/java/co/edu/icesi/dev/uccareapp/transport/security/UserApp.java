@@ -7,12 +7,13 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class CustomUserDetails implements UserDetails {
+public class UserApp implements UserDetails {
     
     private User user;
 
-    public CustomUserDetails(User user) {
+    public UserApp(User user) {
         this.user = user;
     }
 
@@ -20,13 +21,13 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<Role> roles = user.getRoles();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
+        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName())));
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return new BCryptPasswordEncoder(6).encode(user.getPassword());
     }
     @Override
     public String getUsername() {
@@ -34,18 +35,18 @@ public class CustomUserDetails implements UserDetails {
     }
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

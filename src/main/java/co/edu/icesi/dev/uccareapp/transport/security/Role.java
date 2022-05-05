@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.security;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,24 +9,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Role {
     
-    @Id    
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
-    private Integer id;
+    @Id
+    @SequenceGenerator(name = "ROLE_ROLEID_GENERATOR", allocationSize = 1, sequenceName = "ROLE_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ROLE_ROLEID_GENERATOR")
+    @Column(name = "role_id", nullable = false)
+    private Integer roleid;
 
     private String name;
 
     private String desc;
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private List<User> users = new ArrayList<User>();
+
+    public Role() {
+    }
 
     public Integer getId() {
-        return id;
+        return roleid;
     }
 
     public String getDesc() {
@@ -40,8 +46,8 @@ public class Role {
         return users;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer roleid) {
+        this.roleid = roleid;
     }
 
     public void setName(String name) {

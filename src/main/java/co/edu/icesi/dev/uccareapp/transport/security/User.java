@@ -13,27 +13,37 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "user_id")
-    private Integer id;
+    @SequenceGenerator(name = "USER_USERID_GENERATOR", allocationSize = 1, sequenceName = "USER_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_USERID_GENERATOR")
+    @Column(name = "user_id", nullable = false)
+    private Integer userid;
 
     private String username;
 
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-            )
-    private List<Role> roles = new ArrayList<>();
+        name = "users_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles = new ArrayList<Role>();
 
     public User() {
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    public Integer getUserid() {
+        return userid;
     }
 
     public String getUsername() {
@@ -46,6 +56,10 @@ public class User {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
     
     public void setUsername(String username) {

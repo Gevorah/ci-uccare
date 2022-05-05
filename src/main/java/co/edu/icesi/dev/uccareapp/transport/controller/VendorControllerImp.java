@@ -19,15 +19,12 @@ import co.edu.icesi.dev.uccareapp.transport.service.VendorService;
 
 @Controller
 public class VendorControllerImp implements VendorController {
-
+    
+    @Autowired
     VendorService vendorservice;
-    BusinessentityRepository businessentityrepository;
 
     @Autowired
-    public VendorControllerImp(VendorService vendorservice, BusinessentityRepository businessentityrepository) {
-        this.vendorservice = vendorservice;
-        this.businessentityrepository = businessentityrepository;
-    }
+    BusinessentityRepository businessentityrepository;
 
     @GetMapping("/vendors")
     public String index(Model model) {

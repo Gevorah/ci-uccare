@@ -18,13 +18,9 @@ import co.edu.icesi.dev.uccareapp.transport.service.ShipmethodService;
 
 @Controller
 public class ShipmethodControllerImp implements ShipmethodController {
-
-    ShipmethodService shipmethodservice;
-
+    
     @Autowired
-    public ShipmethodControllerImp(ShipmethodService shipmethodservice) {
-        this.shipmethodservice = shipmethodservice;
-    }
+    ShipmethodService shipmethodservice;
 
     @GetMapping("/shipmethods")
     public String index(Model model) {
