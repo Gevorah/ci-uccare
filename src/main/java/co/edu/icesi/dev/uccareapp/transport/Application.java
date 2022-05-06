@@ -8,6 +8,7 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.RoleRepository;
@@ -66,6 +67,9 @@ public class Application {
 			Employee employee2 = new Employee();
 			employee2.setBusinessentityid(2);
 			employeerepository.save(employee2);
+
+			PurchaseorderdetailPK pk = new PurchaseorderdetailPK();
+			System.out.println(pk==null);
 
 		};
 	}

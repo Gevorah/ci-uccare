@@ -13,16 +13,14 @@ import co.edu.icesi.dev.uccareapp.transport.repository.VendorRepository;
 @Service
 public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService {
 
+    @Autowired
     private PurchaseorderheaderRepository purchaseorderheaderrepository;
-    private VendorRepository vendorrepository;
-    private EmployeeRepository employeerepository;
 
     @Autowired
-    public PurchaseorderheaderServiceImp(PurchaseorderheaderRepository purchaseorderheaderrepository, VendorRepository vendorrepository, EmployeeRepository employeerepository) {
-        this.purchaseorderheaderrepository = purchaseorderheaderrepository;
-        this.vendorrepository = vendorrepository;
-        this.employeerepository = employeerepository;
-    }
+    private VendorRepository vendorrepository;
+    
+    @Autowired
+    private EmployeeRepository employeerepository;
 
     @Override
     public boolean savePurchaseorderheader(Purchaseorderheader purchaseorderheader) throws NullPointerException, IllegalArgumentException {
@@ -88,5 +86,4 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
     public void delete(Purchaseorderheader purchaseorderheader) {
         purchaseorderheaderrepository.delete(purchaseorderheader);
     }
-
 }

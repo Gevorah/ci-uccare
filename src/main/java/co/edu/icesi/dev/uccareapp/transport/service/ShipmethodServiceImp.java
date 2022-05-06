@@ -12,12 +12,8 @@ import co.edu.icesi.dev.uccareapp.transport.repository.ShipmethodRepository;
 @Service
 public class ShipmethodServiceImp implements ShipmethodService {
 
-    private ShipmethodRepository shipmethodrepository;
-
     @Autowired
-    public ShipmethodServiceImp(ShipmethodRepository shipmethodrepository) {
-        this.shipmethodrepository = shipmethodrepository;
-    }
+    private ShipmethodRepository shipmethodrepository;
 
     @Override
     public boolean saveShipmethod(Shipmethod shipmethod) throws NullPointerException, IllegalArgumentException {

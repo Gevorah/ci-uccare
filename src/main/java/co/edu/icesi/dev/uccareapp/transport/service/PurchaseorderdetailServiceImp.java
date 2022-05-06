@@ -12,16 +12,11 @@ import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderheaderReposi
 @Service
 public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService {
 
+    @Autowired
     private PurchaseorderdetailRepository purchaseorderdetailrepository;
 
-    private PurchaseorderheaderRepository purchaseorderheaderrepository;
-
     @Autowired
-    public PurchaseorderdetailServiceImp(PurchaseorderdetailRepository purchaseorderdetailrepository,
-            PurchaseorderheaderRepository purchaseorderheaderrepository) {
-        this.purchaseorderdetailrepository = purchaseorderdetailrepository;
-        this.purchaseorderheaderrepository = purchaseorderheaderrepository;
-    }
+    private PurchaseorderheaderRepository purchaseorderheaderrepository;
 
     @Override
     public boolean savePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail)

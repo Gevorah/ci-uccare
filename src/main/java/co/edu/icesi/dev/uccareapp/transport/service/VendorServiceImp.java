@@ -13,15 +13,12 @@ import co.edu.icesi.dev.uccareapp.transport.repository.VendorRepository;
 @Service
 public class VendorServiceImp implements VendorService {
 
-    private VendorRepository vendorrepository;
-    private BusinessentityRepository businessentityrepository;
-
     @Autowired
-    public VendorServiceImp(VendorRepository vendorrepository, BusinessentityRepository businessentityrepository) {
-        this.vendorrepository = vendorrepository;
-        this.businessentityrepository = businessentityrepository;
-    }
-
+    private VendorRepository vendorrepository;
+    
+    @Autowired
+    private BusinessentityRepository businessentityrepository;
+    
     @Override
     public boolean saveVendor(Vendor vendor) throws NullPointerException, IllegalArgumentException {
         if (vendor == null || vendorrepository.existsById(vendor.getBusinessentityid()) )

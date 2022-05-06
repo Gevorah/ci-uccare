@@ -32,6 +32,5 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
         }
 
         response.sendRedirect(request.getContextPath() + "/access-denied");
-
     }
 }

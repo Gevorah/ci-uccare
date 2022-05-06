@@ -11,12 +11,8 @@ import co.edu.icesi.dev.uccareapp.transport.security.User;
 @Service
 public class UserServiceImp implements UserService {
     
-    private UserRepository userrepository;
-
     @Autowired
-    public UserServiceImp(UserRepository userrepository) {
-        this.userrepository = userrepository;
-    }
+    private UserRepository userrepository;
 
     @Override
     public Optional<User> findById(Integer id) {
