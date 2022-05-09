@@ -42,12 +42,13 @@ public class PurchaseorderdetailControllerImp implements PurchaseorderdetailCont
     }
 
     @PostMapping("/purchaseorderdetails/add") 
-    public String saveShipmethod(@Validated @ModelAttribute Purchaseorderdetail purchaseorderdetail, BindingResult bindingResult, 
+    public String saveShipmethod(@Validated @ModelAttribute Purchaseorderdetail purchaseorderdetail, @ModelAttribute PurchaseorderdetailPK pk, BindingResult bindingResult, 
             Model model, @RequestParam(value = "action", required = true) String action) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
                 return "purchaseorderdetails/add-purchaseorderdetail";
             }
+            purchaseorderdetail.setId(pk);
             purchaseorderdetailservice.savePurchaseorderdetail(purchaseorderdetail);
         }
         return "redirect:/purchaseorderdetails/";

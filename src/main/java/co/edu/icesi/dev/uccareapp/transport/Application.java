@@ -1,5 +1,8 @@
 package co.edu.icesi.dev.uccareapp.transport;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +12,10 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
+import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderheaderRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.RoleRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.UserRepository;
 import co.edu.icesi.dev.uccareapp.transport.security.Role;
@@ -30,7 +35,7 @@ public class Application {
 	@Bean
 	public CommandLineRunner dummy(UserRepository userrepository,
 		BusinessentityRepository businessentityrepository, EmployeeRepository employeerepository,
-		RoleRepository rolerepository) {
+		RoleRepository rolerepository, PurchaseorderheaderRepository purchaseorderheaderrepository) {
 		return (args) -> {
 			Role admin = new Role();
 			admin.setName("ADMIN");
@@ -68,8 +73,12 @@ public class Application {
 			employee2.setBusinessentityid(2);
 			employeerepository.save(employee2);
 
-			PurchaseorderdetailPK pk = new PurchaseorderdetailPK();
-			System.out.println(pk==null);
+			Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
+            purchaseorderheader.setPurchaseorderid(1);
+            purchaseorderheader.setEmployeeid(1);
+            purchaseorderheader.setOrderdate(LocalDate.now());
+            purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
+			purchaseorderheaderrepository.save(purchaseorderheader);
 
 		};
 	}

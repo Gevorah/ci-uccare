@@ -26,7 +26,7 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
             throw new NullPointerException("Purchaseorderdetail is null or already exists");
 
         if (!purchaseorderheaderrepository
-                .existsById(purchaseorderdetail.getPurchaseorderheader().getPurchaseorderid()))
+                .existsById(purchaseorderdetail.getId().getPurchaseorderid()))
             throw new NullPointerException("Purchaseorderheader doesn't exist");
         if (purchaseorderdetail.getOrderqty() < 1)
             throw new IllegalArgumentException("orderqty must be greater than 0");
