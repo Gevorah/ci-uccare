@@ -5,19 +5,20 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
-import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderheaderRepository;
-import co.edu.icesi.dev.uccareapp.transport.repository.VendorRepository;
 
 @Service
 public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService {
 
     @Autowired
-    private PurchaseorderheaderRepository purchaseorderheaderrepository;
+    private PurchaseorderheaderDAO purchaseorderheaderrepository;
 
     @Autowired
-    private VendorRepository vendorrepository;
+    private VendorDAO vendorrepository;
     
     @Autowired
     private EmployeeRepository employeerepository;
