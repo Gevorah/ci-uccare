@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,21 +50,28 @@ public class PurchaseorderdetailDAOImp implements PurchaseorderdetailDAO {
         return findById(id).isPresent()? true : false;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderdetail> findAll() {
-        String psql = "SELECT d FROM Purchaseorderdetail d";
-        return (Iterable<Purchaseorderdetail>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT d FROM Purchaseorderdetail d";
+        return entityManager.createQuery(jpql, Purchaseorderdetail.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderdetail> findByProductid(Integer productid) {
-        String psql = "SELECT d FROM Purchaseorderdetail d WHERE d.productid = " + productid;
-        return (Iterable<Purchaseorderdetail>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT d FROM Purchaseorderdetail d WHERE d.productid = :productid";
+        TypedQuery<Purchaseorderdetail> query = entityManager.createQuery(jpql, Purchaseorderdetail.class);
+        query.setParameter("productid", productid);
+        return query.getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderdetail> findByUnitprice(BigDecimal unitprice) {
-        String psql = "SELECT d FROM Purchaseorderdetail d WHERE d.unitprice = " + unitprice;
-        return (Iterable<Purchaseorderdetail>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT d FROM Purchaseorderdetail d WHERE d.unitprice = :unitprice";
+        TypedQuery<Purchaseorderdetail> query = entityManager.createQuery(jpql, Purchaseorderdetail.class);
+        query.setParameter("unitprice", unitprice);
+        return query.getResultList();
     }
 }

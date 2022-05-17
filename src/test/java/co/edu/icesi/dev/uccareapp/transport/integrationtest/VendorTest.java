@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Iterator;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,12 +59,8 @@ public class VendorTest {
     public void afterAll() {
         System.out.println("--------->DESTROY<---------");
         
-        //Iterator<Businessentity> t = businessentityrepository.findAll().iterator();
-        //while(t.hasNext()) System.out.println(t.next().getBusinessentityid());
         businessentityrepository.deleteAll();
         
-        //Iterator<Vendor> t = vendorrepository.findAll().iterator();
-        //while(t.hasNext()) System.out.println(t.next().getBusinessentityid());
         vendorrepository.deleteAll();
     }
 

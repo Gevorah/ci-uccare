@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,6 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
         entityManager.remove(entity);
     }
 
-    @Transactional
     @Override
     public void deleteAll() {
         entityManager.createQuery("DELETE FROM Purchaseorderheader").executeUpdate();
@@ -47,21 +47,28 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
         return findById(id).isPresent()? true : false;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderheader> findAll() {
-        String psql = "SELECT h FROM Purchaseorderheader h";
-        return (Iterable<Purchaseorderheader>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT h FROM Purchaseorderheader h";
+        return entityManager.createQuery(jpql, Purchaseorderheader.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderheader> findByShipmethodid(Integer shipmethodid) {
-        String psql = "SELECT h FROM Purchaseorderheader h WHERE h.shipmethodid = " + shipmethodid;
-        return (Iterable<Purchaseorderheader>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT h FROM Purchaseorderheader h WHERE h.shipmethodid = :shipmethodid";
+        TypedQuery<Purchaseorderheader> query = entityManager.createQuery(jpql, Purchaseorderheader.class);
+        query.setParameter("shipmethodid", shipmethodid);
+        return query.getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderheader> findByVendorid(Integer vendorid) {
-        String psql = "SELECT h FROM Purchaseorderheader h WHERE h.vendorid = " + vendorid;
-        return (Iterable<Purchaseorderheader>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT h FROM Purchaseorderheader h WHERE h.vendorid = :vendorid";
+        TypedQuery<Purchaseorderheader> query = entityManager.createQuery(jpql, Purchaseorderheader.class);
+        query.setParameter("vendorid", vendorid);
+        return query.getResultList();
     }
 }

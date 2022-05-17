@@ -47,9 +47,10 @@ public class ShipmethodDAOImp implements ShipmethodDAO {
         return findById(id).isPresent()? true : false;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Shipmethod> findAll() {
-        String psql = "SELECT s FROM Shipmethod s";
-        return (Iterable<Shipmethod>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT s FROM Shipmethod s";
+        return entityManager.createQuery(jpql, Shipmethod.class).getResultList();
     }
 }

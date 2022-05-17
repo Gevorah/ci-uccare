@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,27 +48,37 @@ public class VendorDAOImp implements VendorDAO {
         return findById(id).isPresent()? true : false;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findAll() {
-        String psql = "SELECT v FROM Vendor v";
-        return (Iterable<Vendor>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT v FROM Vendor v";
+        return entityManager.createQuery(jpql, Vendor.class).getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findByCreditrating(Integer creditrating) {
-        String psql = "SELECT v FROM Vendor v WHERE v.creditrating = " + creditrating;
-        return (Iterable<Vendor>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT v FROM Vendor v WHERE v.creditrating = :creditrating";
+        TypedQuery<Vendor> query = entityManager.createQuery(jpql, Vendor.class);
+        query.setParameter("creditrating", creditrating);
+        return query.getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findByName(String name) {
-        String psql = "SELECT v FROM Vendor v WHERE v.name = " + name;
-        return (Iterable<Vendor>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT v FROM Vendor v WHERE v.name = :name";
+        TypedQuery<Vendor> query = entityManager.createQuery(jpql, Vendor.class);
+        query.setParameter("name", name);
+        return query.getResultList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findByPreferredvendorstatus(String preferredvendorstatus) {
-        String psql = "SELECT v FROM Vendor v WHERE v.preferredvendorstatus = " + preferredvendorstatus;
-        return (Iterable<Vendor>) entityManager.createQuery(psql).getResultList();
+        String jpql = "SELECT v FROM Vendor v WHERE v.preferredvendorstatus = :preferredvendorstatus";
+        TypedQuery<Vendor> query = entityManager.createQuery(jpql, Vendor.class);
+        query.setParameter("preferredvendorstatus", preferredvendorstatus);
+        return query.getResultList();
     }
 }
