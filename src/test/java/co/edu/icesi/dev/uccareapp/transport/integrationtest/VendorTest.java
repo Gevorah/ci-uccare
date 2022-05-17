@@ -19,10 +19,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.icesi.dev.uccareapp.transport.Application;
+import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
-import co.edu.icesi.dev.uccareapp.transport.repository.VendorRepository;
 import co.edu.icesi.dev.uccareapp.transport.service.VendorService;
 
 @SpringBootTest
@@ -31,7 +31,7 @@ import co.edu.icesi.dev.uccareapp.transport.service.VendorService;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class VendorTest {
     @Autowired
-    private VendorRepository vendorrepository;
+    private VendorDAO vendorrepository;
 
     @Autowired
     private BusinessentityRepository businessentityrepository;

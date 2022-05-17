@@ -17,16 +17,19 @@ public class VendorDAOImp implements VendorDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     @Override
     public void save(Vendor entity) {
         entityManager.persist(entity);
     }
 
+    @Transactional
     @Override
     public void update(Vendor entity) {
         entityManager.merge(entity);
     }
 
+    @Transactional
     @Override
     public void delete(Vendor entity) {
         entityManager.remove(entity);
@@ -38,11 +41,14 @@ public class VendorDAOImp implements VendorDAO {
         entityManager.createQuery("DELETE FROM Vendor").executeUpdate();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Vendor> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(Vendor.class, id));
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////
+    @Transactional(readOnly = true)
     @Override
     public boolean existsById(Integer id) {
         return findById(id).isPresent()? true : false;

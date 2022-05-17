@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,6 +25,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.service.VendorService;
+import co.edu.icesi.dev.uccareapp.transport.service.VendorServiceImp;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -38,6 +40,11 @@ public class VendorTest {
 
     @InjectMocks
     private VendorService vendorservice;
+
+    @Autowired
+    public VendorTest() {
+        this.vendorservice = new VendorServiceImp();
+    }
 
     @BeforeAll
     public static void breforeAll() {
