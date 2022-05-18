@@ -22,12 +22,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.icesi.dev.uccareapp.transport.Application;
-import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
-import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
-import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderService;
+import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderServiceImp;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -35,16 +34,13 @@ import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderService;
 public class PurchaseorderheaderTest {
     
     @Mock
-    private PurchaseorderheaderDAO purchaseorderheaderdao;
-
-    @Mock
-    private VendorDAO vendordao;
+    private PurchaseorderheaderDAOImp purchaseorderheaderdao;
 
     @Mock
     private EmployeeRepository employeerepository;
     
     @InjectMocks
-    private PurchaseorderheaderService purchaseorderheaderservice;
+    private PurchaseorderheaderServiceImp purchaseorderheaderservice;
 
     @BeforeAll
     public static void breforeAll() {
@@ -113,7 +109,7 @@ public class PurchaseorderheaderTest {
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(LocalDate.now());
+            optpurchaseorderheader.get().setOrderdate(LocalDate.now().minusDays(1));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
 
             when(purchaseorderheaderdao.findById(1)).thenReturn(optpurchaseorderheader);
@@ -135,7 +131,7 @@ public class PurchaseorderheaderTest {
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(LocalDate.now());
+            optpurchaseorderheader.get().setOrderdate(LocalDate.now().plusDays(1));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
 
             when(purchaseorderheaderdao.findById(1)).thenReturn(optpurchaseorderheader);
@@ -228,7 +224,7 @@ public class PurchaseorderheaderTest {
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);            
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(LocalDate.now());
+            optpurchaseorderheader.get().setOrderdate(LocalDate.now().minusDays(1));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
 
             when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
@@ -251,7 +247,7 @@ public class PurchaseorderheaderTest {
             Optional<Purchaseorderheader> optpurchaseorderheader = Optional.of(new Purchaseorderheader());
             optpurchaseorderheader.get().setPurchaseorderid(1);            
             optpurchaseorderheader.get().setEmployeeid(employee.getBusinessentityid());
-            optpurchaseorderheader.get().setOrderdate(LocalDate.now());
+            optpurchaseorderheader.get().setOrderdate(LocalDate.now().plusDays(1));
             optpurchaseorderheader.get().setSubtotal(new BigDecimal("0.1"));
 
             when(purchaseorderheaderdao.existsById(1)).thenReturn(true);

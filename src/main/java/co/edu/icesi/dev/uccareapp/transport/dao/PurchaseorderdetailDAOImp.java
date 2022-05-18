@@ -19,16 +19,19 @@ public class PurchaseorderdetailDAOImp implements PurchaseorderdetailDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     @Override
     public void save(Purchaseorderdetail entity) {
         entityManager.persist(entity);
     }
 
+    @Transactional
     @Override
     public void update(Purchaseorderdetail entity) {
         entityManager.merge(entity);
     }
 
+    @Transactional
     @Override
     public void delete(Purchaseorderdetail entity) {
         entityManager.remove(entity);
@@ -40,6 +43,7 @@ public class PurchaseorderdetailDAOImp implements PurchaseorderdetailDAO {
         entityManager.createQuery("DELETE FROM Purchaseorderdetail").executeUpdate();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Purchaseorderdetail> findById(PurchaseorderdetailPK id) {
         return Optional.ofNullable(entityManager.find(Purchaseorderdetail.class, id));

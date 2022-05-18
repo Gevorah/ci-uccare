@@ -47,8 +47,6 @@ public class VendorDAOImp implements VendorDAO {
         return Optional.ofNullable(entityManager.find(Vendor.class, id));
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    @Transactional(readOnly = true)
     @Override
     public boolean existsById(Integer id) {
         return findById(id).isPresent()? true : false;

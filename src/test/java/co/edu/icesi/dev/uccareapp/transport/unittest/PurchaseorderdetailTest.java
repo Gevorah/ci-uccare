@@ -21,25 +21,25 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.icesi.dev.uccareapp.transport.Application;
-import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderdetailDAO;
-import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderdetailDAOImp;
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
-import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderdetailService;
+import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderdetailServiceImp;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 public class PurchaseorderdetailTest {
     
     @Mock
-    private PurchaseorderdetailDAO purchaseorderdetaildao;
+    private PurchaseorderdetailDAOImp purchaseorderdetailDAO;
     
     @Mock
-    private PurchaseorderheaderDAO purchaseorderheaderdao;
+    private PurchaseorderheaderDAOImp purchaseorderheaderDAO;
 
     @InjectMocks
-    private PurchaseorderdetailService purchaseorderdetailservice;
+    private PurchaseorderdetailServiceImp purchaseorderdetailservice;
 
     @BeforeAll
     public static void breforeAll() {
@@ -60,7 +60,7 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
@@ -72,10 +72,10 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             assertTrue(purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get()));
-            assertEquals(optpurchaseorderdetail, purchaseorderdetaildao.findById(purchaseorderdetailPK));
+            assertEquals(optpurchaseorderdetail, purchaseorderdetailDAO.findById(purchaseorderdetailPK));
         }
         
         @Test
@@ -84,7 +84,7 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(3);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
@@ -96,7 +96,7 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
                 purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get());
@@ -110,7 +110,7 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
@@ -122,7 +122,7 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(-1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get());
@@ -136,7 +136,7 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
@@ -148,7 +148,7 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("-0.1"));
 
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.savePurchaseorderdetail(optpurchaseorderdetail.get());
@@ -166,8 +166,8 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
-            when(purchaseorderheaderdao.findById(1)).thenReturn(Optional.of(purchaseorderheader));
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.findById(1)).thenReturn(Optional.of(purchaseorderheader));
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
@@ -179,11 +179,11 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetaildao.existsById(purchaseorderdetailPK)).thenReturn(true);
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.existsById(purchaseorderdetailPK)).thenReturn(true);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             assertTrue(purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get()));
-            assertEquals(optpurchaseorderdetail, purchaseorderdetaildao.findById(purchaseorderdetailPK));
+            assertEquals(optpurchaseorderdetail, purchaseorderdetailDAO.findById(purchaseorderdetailPK));
         }
         
         @Test
@@ -192,8 +192,8 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(3);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
-            when(purchaseorderheaderdao.findById(1)).thenReturn(Optional.of(purchaseorderheader));
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.findById(1)).thenReturn(Optional.of(purchaseorderheader));
 
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
@@ -206,9 +206,9 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetaildao.existsById(purchaseorderdetailPK)).thenReturn(true);
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.existsById(purchaseorderdetailPK)).thenReturn(true);
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
                 purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get());
@@ -222,8 +222,8 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
-            when(purchaseorderheaderdao.findById(1)).thenReturn(Optional.of(purchaseorderheader));
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.findById(1)).thenReturn(Optional.of(purchaseorderheader));
 
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
@@ -236,9 +236,9 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(-1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("0.1"));
 
-            when(purchaseorderdetaildao.existsById(purchaseorderdetailPK)).thenReturn(true);
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.existsById(purchaseorderdetailPK)).thenReturn(true);
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get());
@@ -252,8 +252,8 @@ public class PurchaseorderdetailTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
 
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
-            when(purchaseorderheaderdao.findById(1)).thenReturn(Optional.of(purchaseorderheader));
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
+            when(purchaseorderheaderDAO.findById(1)).thenReturn(Optional.of(purchaseorderheader));
 
 
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
@@ -266,9 +266,9 @@ public class PurchaseorderdetailTest {
             optpurchaseorderdetail.get().setOrderqty(1);
             optpurchaseorderdetail.get().setUnitprice(new BigDecimal("-0.1"));
 
-            when(purchaseorderdetaildao.existsById(purchaseorderdetailPK)).thenReturn(true);
-            when(purchaseorderheaderdao.existsById(1)).thenReturn(true);
-            when(purchaseorderdetaildao.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
+            when(purchaseorderdetailDAO.existsById(purchaseorderdetailPK)).thenReturn(true);
+            when(purchaseorderheaderDAO.existsById(1)).thenReturn(true);
+            when(purchaseorderdetailDAO.findById(purchaseorderdetailPK)).thenReturn(optpurchaseorderdetail);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 purchaseorderdetailservice.editPurchaseorderdetail(optpurchaseorderdetail.get());

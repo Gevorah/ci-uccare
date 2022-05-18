@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import co.edu.icesi.dev.uccareapp.transport.Application;
@@ -25,45 +24,34 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailP
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderdetailService;
 
-@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PurchaseorderdetailTest { 
     @Autowired
-    PurchaseorderdetailDAO purchaseorderdetaildao;
+    PurchaseorderdetailDAO purchaseorderdetailDAO;
 
     @Autowired
-    PurchaseorderheaderDAO purchaseorderheaderdao;
+    PurchaseorderheaderDAO purchaseorderheaderDAO;
 
     @Autowired
     PurchaseorderdetailService purchaseorderdetailservice;
 
     @BeforeAll
-    public void breforeAll() {
+    public void beforeAll() {
         System.out.println("--------->SETUP<---------");
 
         Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
-        purchaseorderheader.setPurchaseorderid(1);
-        purchaseorderheaderdao.save(purchaseorderheader);
-
-        PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-        purchaseorderdetailPK.setPurchaseorderid(1);
-        purchaseorderdetailPK.setPurchaseorderdetailid(1);
-        
-        Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
-        purchaseorderdetail.setId(purchaseorderdetailPK);
-        purchaseorderdetail.setOrderqty(1);
-        purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
-        purchaseorderdetaildao.save(purchaseorderdetail);
+        purchaseorderheader.setPurchaseorderid(10);
+        purchaseorderheaderDAO.save(purchaseorderheader);
     }
 
     @AfterAll
     public void afterAll() {
         System.out.println("--------->DESTROY<---------");
         
-        //purchaseorderdetaildao.deleteAll();
-        //purchaseorderheaderdao.deleteAll();
+        //purchaseorderdetailDAO.deleteAll();
+        //purchaseorderheaderDAO.deleteAll();
     }
 
     @Nested
@@ -71,20 +59,19 @@ public class PurchaseorderdetailTest {
     class Save {
         @BeforeEach
         public void beforeEach() {
-            purchaseorderdetaildao.deleteAll();
+            purchaseorderdetailDAO.deleteAll();
         }
         
         @Test
         @DisplayName("save purchaseorderdetail test 1")
         public void savePurchaseorderdetailtest1() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(10);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
             purchaseorderdetail.setId(purchaseorderdetailPK);
-            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderdao.findById(1).get());
-            System.out.println(purchaseorderheaderdao.findById(1).get().getPurchaseorderid());
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderDAO.findById(10).get());
             purchaseorderdetail.setOrderqty(1);
             purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
             
@@ -95,7 +82,7 @@ public class PurchaseorderdetailTest {
         @DisplayName("save purchaseorderdetail test 2")
         public void savePurchaseorderdetailtest2() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(3);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
@@ -118,12 +105,12 @@ public class PurchaseorderdetailTest {
         @DisplayName("save purchaseorderdetail test 3")
         public void savePurchaseorderdetailtest3() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(10);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
             purchaseorderdetail.setId(purchaseorderdetailPK);
-            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderdao.findById(1).get());
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderDAO.findById(10).get());
             purchaseorderdetail.setOrderqty(-1);
             purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
             
@@ -136,12 +123,12 @@ public class PurchaseorderdetailTest {
         @DisplayName("save purchaseorderdetail test 4")
         public void savePurchaseorderdetailtest4() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(10);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
             purchaseorderdetail.setId(purchaseorderdetailPK);
-            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderdao.findById(1).get());
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderDAO.findById(10).get());
             purchaseorderdetail.setOrderqty(1);
             purchaseorderdetail.setUnitprice(new BigDecimal("-0.1"));
             
@@ -152,20 +139,33 @@ public class PurchaseorderdetailTest {
         }
     }
 
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     @Nested
     @DisplayName("Edit Cases")
     class Edit {
+        @BeforeAll
+        public void beforeAll() {
+            PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
+            purchaseorderdetailPK.setPurchaseorderid(10);
+            purchaseorderdetailPK.setPurchaseorderdetailid(1);
+            
+            Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
+            purchaseorderdetail.setId(purchaseorderdetailPK);
+            purchaseorderdetail.setOrderqty(1);
+            purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
+            purchaseorderdetailDAO.save(purchaseorderdetail);
+        }
+
         @Test
         @DisplayName("edit purchaseorderdetail test 1")
         public void editPurchaseorderdetailtest1() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(10);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
             purchaseorderdetail.setId(purchaseorderdetailPK);
-            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderdao.findById(1).get());
-            System.out.println(purchaseorderheaderdao.findById(1).get().getPurchaseorderid());
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderDAO.findById(10).get());
             purchaseorderdetail.setOrderqty(1);
             purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
             
@@ -176,7 +176,7 @@ public class PurchaseorderdetailTest {
         @DisplayName("edit purchaseorderdetail test 2")
         public void editPurchaseorderdetailtest2() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(10);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
@@ -199,12 +199,12 @@ public class PurchaseorderdetailTest {
         @DisplayName("edit purchaseorderdetail test 3")
         public void editPurchaseorderdetailtest3() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(10);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
             purchaseorderdetail.setId(purchaseorderdetailPK);
-            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderdao.findById(1).get());
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderDAO.findById(10).get());
             purchaseorderdetail.setOrderqty(-1);
             purchaseorderdetail.setUnitprice(new BigDecimal("0.1"));
             
@@ -217,12 +217,12 @@ public class PurchaseorderdetailTest {
         @DisplayName("edit purchaseorderdetail test 4")
         public void editPurchaseorderdetailtest4() {
             PurchaseorderdetailPK purchaseorderdetailPK = new PurchaseorderdetailPK();
-            purchaseorderdetailPK.setPurchaseorderid(1);
+            purchaseorderdetailPK.setPurchaseorderid(10);
             purchaseorderdetailPK.setPurchaseorderdetailid(1);
 
             Purchaseorderdetail purchaseorderdetail = new Purchaseorderdetail();
             purchaseorderdetail.setId(purchaseorderdetailPK);
-            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderdao.findById(1).get());
+            purchaseorderdetail.setPurchaseorderheader(purchaseorderheaderDAO.findById(10).get());
             purchaseorderdetail.setOrderqty(1);
             purchaseorderdetail.setUnitprice(new BigDecimal("-0.1"));
             

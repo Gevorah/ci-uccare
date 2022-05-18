@@ -20,11 +20,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import co.edu.icesi.dev.uccareapp.transport.Application;
-import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
-import co.edu.icesi.dev.uccareapp.transport.service.VendorService;
 import co.edu.icesi.dev.uccareapp.transport.service.VendorServiceImp;
 
 @SpringBootTest
@@ -33,13 +32,13 @@ import co.edu.icesi.dev.uccareapp.transport.service.VendorServiceImp;
 public class VendorTest {
     
     @Mock
-    private VendorDAO vendordao;
+    private VendorDAOImp vendordao;
     
     @Mock
     private BusinessentityRepository businessentityrepository;
 
     @InjectMocks
-    private VendorService vendorservice;
+    private VendorServiceImp vendorservice;
 
     @Autowired
     public VendorTest() {

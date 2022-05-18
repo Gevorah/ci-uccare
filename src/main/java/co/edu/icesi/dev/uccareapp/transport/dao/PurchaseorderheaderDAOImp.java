@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.dao;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -17,26 +18,31 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     @Override
     public void save(Purchaseorderheader entity) {
         entityManager.persist(entity);
     }
 
+    @Transactional
     @Override
     public void update(Purchaseorderheader entity) {
         entityManager.merge(entity);
     }
 
+    @Transactional
     @Override
     public void delete(Purchaseorderheader entity) {
         entityManager.remove(entity);
     }
 
+    @Transactional
     @Override
     public void deleteAll() {
         entityManager.createQuery("DELETE FROM Purchaseorderheader").executeUpdate();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Purchaseorderheader> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(Purchaseorderheader.class, id));
@@ -57,7 +63,7 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
     @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderheader> findByShipmethodid(Integer shipmethodid) {
-        String jpql = "SELECT h FROM Purchaseorderheader h WHERE h.shipmethodid = :shipmethodid";
+        String jpql = "SELECT h FROM Purchaseorderheader h WHERE h.shipmethod.shipmethodid = :shipmethodid";
         TypedQuery<Purchaseorderheader> query = entityManager.createQuery(jpql, Purchaseorderheader.class);
         query.setParameter("shipmethodid", shipmethodid);
         return query.getResultList();
@@ -66,9 +72,18 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
     @Transactional(readOnly = true)
     @Override
     public Iterable<Purchaseorderheader> findByVendorid(Integer vendorid) {
-        String jpql = "SELECT h FROM Purchaseorderheader h WHERE h.vendorid = :vendorid";
+        String jpql = "SELECT h FROM Purchaseorderheader h WHERE h.vendor.businessentityid = :vendorid";
         TypedQuery<Purchaseorderheader> query = entityManager.createQuery(jpql, Purchaseorderheader.class);
         query.setParameter("vendorid", vendorid);
+        return query.getResultList();
+    }
+
+    @Transactional(readOnly = true)
+    public Iterable<Purchaseorderheader> findByDateRange(LocalDate start, LocalDate end) {
+        String jpql = "";
+        TypedQuery<Purchaseorderheader> query = entityManager.createQuery(jpql, Purchaseorderheader.class);
+        query.setParameter("start", start);
+        query.setParameter("end", start);
         return query.getResultList();
     }
 }

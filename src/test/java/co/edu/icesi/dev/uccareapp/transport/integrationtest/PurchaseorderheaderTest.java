@@ -16,27 +16,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import co.edu.icesi.dev.uccareapp.transport.Application;
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
-import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
 import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderService;
 
-@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PurchaseorderheaderTest { 
     @Autowired
-    PurchaseorderheaderDAO purchaseorderheaderdao;
-
-    @Autowired
-    VendorDAO vendorrepository;
+    PurchaseorderheaderDAO purchaseorderheaderDAO;
 
     @Autowired
     EmployeeRepository employeerepository;
@@ -57,15 +51,14 @@ public class PurchaseorderheaderTest {
         purchaseorderheader.setEmployeeid(1);
         purchaseorderheader.setOrderdate(LocalDate.now());
         purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
-        purchaseorderheaderdao.save(purchaseorderheader);
+        purchaseorderheaderDAO.save(purchaseorderheader);
     }
 
     @AfterAll
     public void afterAll() {
         System.out.println("--------->DESTROY<---------");
         
-        //purchaseorderheaderdao.deleteAll();
-        //vendorrepository.deleteAll();
+        //purchaseorderheaderDAO.deleteAll();
         //employeerepository.deleteAll();
     }
 
@@ -74,7 +67,7 @@ public class PurchaseorderheaderTest {
     class Save {
         @BeforeEach
         public void beforeEach() {
-            purchaseorderheaderdao.deleteAll();
+            purchaseorderheaderDAO.deleteAll();
         }
 
         @Test
@@ -110,7 +103,7 @@ public class PurchaseorderheaderTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
             purchaseorderheader.setEmployeeid(1);
-            purchaseorderheader.setOrderdate(LocalDate.now());
+            purchaseorderheader.setOrderdate(LocalDate.now().minusDays(1));
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
@@ -125,7 +118,7 @@ public class PurchaseorderheaderTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
             purchaseorderheader.setEmployeeid(1);
-            purchaseorderheader.setOrderdate(LocalDate.now());
+            purchaseorderheader.setOrderdate(LocalDate.now().plusDays(1));
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
@@ -186,7 +179,7 @@ public class PurchaseorderheaderTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
             purchaseorderheader.setEmployeeid(1);
-            purchaseorderheader.setOrderdate(LocalDate.now());
+            purchaseorderheader.setOrderdate(LocalDate.now().minusDays(1));
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
@@ -201,7 +194,7 @@ public class PurchaseorderheaderTest {
             Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
             purchaseorderheader.setPurchaseorderid(1);
             purchaseorderheader.setEmployeeid(1);
-            purchaseorderheader.setOrderdate(LocalDate.now());
+            purchaseorderheader.setOrderdate(LocalDate.now().plusDays(1));
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {

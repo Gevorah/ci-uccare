@@ -9,12 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
-import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderheaderRepository;
 
 @SpringBootApplication
 public class Application {
@@ -28,8 +28,8 @@ public class Application {
     }
     
     @Bean
-    public CommandLineRunner dummy(BusinessentityRepository businessentityrepository, 
-        EmployeeRepository employeerepository, PurchaseorderheaderRepository purchaseorderheaderrepository) {
+    public CommandLineRunner dummy(BusinessentityRepository businessentityrepository,
+        EmployeeRepository employeerepository, PurchaseorderheaderDAO purchaseorderheaderrepository) {
         return (args) -> {
 
             Businessentity businessentity1 = new Businessentity();
@@ -54,7 +54,6 @@ public class Application {
             purchaseorderheader.setOrderdate(LocalDate.now());
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
             purchaseorderheaderrepository.save(purchaseorderheader);
-
         };
     }
 }

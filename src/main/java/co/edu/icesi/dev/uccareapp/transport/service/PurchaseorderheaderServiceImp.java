@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
-import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
 
@@ -16,9 +15,6 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
 
     @Autowired
     private PurchaseorderheaderDAO purchaseorderheaderrepository;
-
-    @Autowired
-    private VendorDAO vendorrepository;
     
     @Autowired
     private EmployeeRepository employeerepository;
@@ -67,7 +63,7 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
         editpurchaseorderheader.setTaxamt(purchaseorderheader.getTaxamt());
         editpurchaseorderheader.setVendor(purchaseorderheader.getVendor());
 
-        purchaseorderheaderrepository.save(editpurchaseorderheader);
+        purchaseorderheaderrepository.update(editpurchaseorderheader);
         
         return true;
     }

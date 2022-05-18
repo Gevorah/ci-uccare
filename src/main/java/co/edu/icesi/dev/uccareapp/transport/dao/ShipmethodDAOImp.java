@@ -16,16 +16,19 @@ public class ShipmethodDAOImp implements ShipmethodDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     @Override
     public void save(Shipmethod entity) {
         entityManager.persist(entity);
     }
 
+    @Transactional
     @Override
     public void update(Shipmethod entity) {
         entityManager.merge(entity);
     }
 
+    @Transactional
     @Override
     public void delete(Shipmethod entity) {
         entityManager.remove(entity);
@@ -37,6 +40,7 @@ public class ShipmethodDAOImp implements ShipmethodDAO {
         entityManager.createQuery("DELETE FROM Shipmethod").executeUpdate();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<Shipmethod> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(Shipmethod.class, id));

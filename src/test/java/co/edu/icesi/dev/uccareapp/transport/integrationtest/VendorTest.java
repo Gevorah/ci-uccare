@@ -14,7 +14,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,13 +24,12 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.service.VendorService;
 
-@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class VendorTest {
     @Autowired
-    private VendorDAO vendorrepository;
+    private VendorDAO vendorDAO;
 
     @Autowired
     private BusinessentityRepository businessentityrepository;
@@ -50,7 +48,7 @@ public class VendorTest {
         Vendor vendor = new Vendor();
         vendor.setBusinessentityid(1);
         vendor.setCreditrating(1);
-        vendor.setPurchasingwebserviceurl("https");
+        vendor.setPurchasingwebserviceurl("https::");
         vendor.setName("test");
         vendorservice.saveVendor(vendor);
     }
@@ -61,15 +59,15 @@ public class VendorTest {
         
         businessentityrepository.deleteAll();
         
-        vendorrepository.deleteAll();
+        vendorDAO.deleteAll();
     }
 
     @Nested
     @DisplayName("Save Cases")
     public class Save {
         @BeforeEach
-        public void BeforeEach() {
-            vendorrepository.deleteAll();
+        public void beforeEach() {
+            vendorDAO.deleteAll();
         }
 
         @Test
@@ -78,7 +76,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName("test");
 
             assertTrue(vendorservice.saveVendor(vendor));
@@ -90,7 +88,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(3);
             vendor.setCreditrating(1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName("test");
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
@@ -105,7 +103,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(-1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName("test");
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
@@ -136,7 +134,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName(null);
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
@@ -155,7 +153,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName("test");
 
             assertTrue(vendorservice.editVendor(vendor));
@@ -167,7 +165,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(3);
             vendor.setCreditrating(1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName("test");
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {
@@ -182,7 +180,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(-1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName("test");
             
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
@@ -212,7 +210,7 @@ public class VendorTest {
             Vendor vendor = new Vendor();
             vendor.setBusinessentityid(1);
             vendor.setCreditrating(1);
-            vendor.setPurchasingwebserviceurl("https");
+            vendor.setPurchasingwebserviceurl("https:");
             vendor.setName(null);
 
             NullPointerException thrown = assertThrows(NullPointerException.class, () -> {

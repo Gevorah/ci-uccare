@@ -16,22 +16,20 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import co.edu.icesi.dev.uccareapp.transport.Application;
+import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
-import co.edu.icesi.dev.uccareapp.transport.repository.ShipmethodRepository;
 import co.edu.icesi.dev.uccareapp.transport.service.ShipmethodService;
 
-@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ShipmethodTest {
     @Autowired
-    private ShipmethodRepository shipmethodrepository;
+    private ShipmethodDAO shipmethodDAO;
 
     @Autowired
     private ShipmethodService shipmethodservice;
@@ -45,14 +43,14 @@ public class ShipmethodTest {
         shipmethod.setShipbase(new BigDecimal("0.1"));
         shipmethod.setShiprate(new BigDecimal("0.1"));
         shipmethod.setName("FOUR");
-        shipmethodrepository.save(shipmethod);
+        shipmethodDAO.save(shipmethod);
     }
 
     @AfterAll
     public void afterAll() {
         System.out.println("--------->DESTROY<---------");
 
-        shipmethodrepository.deleteAll();        
+        shipmethodDAO.deleteAll();        
     }
 
     @Nested
@@ -60,7 +58,7 @@ public class ShipmethodTest {
     public class Save {
         @BeforeEach
         public void beforeEach() {
-            shipmethodrepository.deleteAll();
+            shipmethodDAO.deleteAll();
         }
 
         @Test

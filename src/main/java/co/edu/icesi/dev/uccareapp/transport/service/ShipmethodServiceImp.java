@@ -6,18 +6,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
-import co.edu.icesi.dev.uccareapp.transport.repository.ShipmethodRepository;
 
 @Service
 public class ShipmethodServiceImp implements ShipmethodService {
 
     @Autowired
-    private ShipmethodRepository shipmethodrepository;
+    private ShipmethodDAO shipmethodDAO;
 
     @Override
     public boolean saveShipmethod(Shipmethod shipmethod) throws NullPointerException, IllegalArgumentException {
-        if (shipmethod == null || shipmethodrepository.existsById(shipmethod.getShipmethodid()))
+        if (shipmethod == null || shipmethodDAO.existsById(shipmethod.getShipmethodid()))
             throw new NullPointerException("Shipmethod is null or already exists");
 
         if (shipmethod.getShipbase().signum() != 1)
@@ -27,14 +27,14 @@ public class ShipmethodServiceImp implements ShipmethodService {
         if (shipmethod.getName().length() < 4)
             throw new IllegalArgumentException("name must have at least 4 chars");
 
-        shipmethodrepository.save(shipmethod);
+        shipmethodDAO.save(shipmethod);
         
         return true;
     }
 
     @Override
     public boolean editShipmethod(Shipmethod shipmethod) throws NullPointerException, IllegalArgumentException {
-        if (shipmethod == null || !shipmethodrepository.existsById(shipmethod.getShipmethodid()))
+        if (shipmethod == null || !shipmethodDAO.existsById(shipmethod.getShipmethodid()))
             throw new NullPointerException("Shipmethod is null or doesn't exists");
 
         if (shipmethod.getShipbase().signum() != 1)
@@ -44,32 +44,32 @@ public class ShipmethodServiceImp implements ShipmethodService {
         if (shipmethod.getName().length() < 4)
             throw new IllegalArgumentException("name must have at least 4 chars");
 
-        Shipmethod editshipmethod = shipmethodrepository.findById(shipmethod.getShipmethodid()).get();
+        Shipmethod editshipmethod = shipmethodDAO.findById(shipmethod.getShipmethodid()).get();
         editshipmethod.setModifieddate(LocalDate.now());
         editshipmethod.setName(shipmethod.getName());
         editshipmethod.setRowguid(shipmethod.getRowguid());
         editshipmethod.setShipbase(shipmethod.getShipbase());
         editshipmethod.setShiprate(shipmethod.getShipbase());
 
-        shipmethodrepository.save(editshipmethod);
+        shipmethodDAO.update(editshipmethod);
         
         return true;
     }
 
     @Override
     public Optional<Shipmethod> findById(Integer id) {
-        return shipmethodrepository.findById(id);
+        return shipmethodDAO.findById(id);
     }
 
     @Override
     public Iterable<Shipmethod> findAll() {
-        return shipmethodrepository.findAll().iterator().hasNext()?
-                shipmethodrepository.findAll() : null;
+        return shipmethodDAO.findAll().iterator().hasNext()?
+                shipmethodDAO.findAll() : null;
     }
 
     @Override
     public void delete(Shipmethod shipmethod) {
-        shipmethodrepository.delete(shipmethod);
+        shipmethodDAO.delete(shipmethod);
     }
 
 }

@@ -20,9 +20,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import co.edu.icesi.dev.uccareapp.transport.Application;
-import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
-import co.edu.icesi.dev.uccareapp.transport.service.ShipmethodService;
+import co.edu.icesi.dev.uccareapp.transport.service.ShipmethodServiceImp;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -30,10 +30,10 @@ import co.edu.icesi.dev.uccareapp.transport.service.ShipmethodService;
 public class ShipmethodTest {
     
     @Mock
-    private ShipmethodDAO shipmethoddao;
+    private ShipmethodDAOImp shipmethodDAO;
     
     @InjectMocks
-    private ShipmethodService shipmethodservice;
+    private ShipmethodServiceImp shipmethodservice;
 
     @BeforeAll
     public static void breforeAll() {
@@ -57,10 +57,10 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("0.1"));
             optshipmethod.get().setName("FOUR");
 
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             assertTrue(shipmethodservice.saveShipmethod(optshipmethod.get()));
-            assertEquals(optshipmethod, shipmethoddao.findById(1));
+            assertEquals(optshipmethod, shipmethodDAO.findById(1));
         }
 
         
@@ -73,7 +73,7 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("0.1"));
             optshipmethod.get().setName("FOUR");
 
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 shipmethodservice.saveShipmethod(optshipmethod.get());
@@ -91,7 +91,7 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("-0.1"));
             optshipmethod.get().setName("FOUR");
 
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 shipmethodservice.saveShipmethod(optshipmethod.get());
@@ -109,7 +109,7 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("0.1"));
             optshipmethod.get().setName("FOU");
 
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 shipmethodservice.saveShipmethod(optshipmethod.get());
@@ -130,11 +130,11 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("0.1"));
             optshipmethod.get().setName("FOUR");
             
-            when(shipmethoddao.existsById(1)).thenReturn(true);
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.existsById(1)).thenReturn(true);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             assertTrue(shipmethodservice.editShipmethod(optshipmethod.get()));
-            assertEquals(optshipmethod, shipmethoddao.findById(1));
+            assertEquals(optshipmethod, shipmethodDAO.findById(1));
         }
 
         
@@ -147,8 +147,8 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("0.1"));
             optshipmethod.get().setName("FOUR");
             
-            when(shipmethoddao.existsById(1)).thenReturn(true);
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.existsById(1)).thenReturn(true);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 shipmethodservice.editShipmethod(optshipmethod.get());
@@ -166,8 +166,8 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("-0.1"));
             optshipmethod.get().setName("FOUR");
 
-            when(shipmethoddao.existsById(1)).thenReturn(true);
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.existsById(1)).thenReturn(true);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 shipmethodservice.editShipmethod(optshipmethod.get());
@@ -185,8 +185,8 @@ public class ShipmethodTest {
             optshipmethod.get().setShiprate(new BigDecimal("0.1"));
             optshipmethod.get().setName("FOU");
 
-            when(shipmethoddao.existsById(1)).thenReturn(true);
-            when(shipmethoddao.findById(1)).thenReturn(optshipmethod);
+            when(shipmethodDAO.existsById(1)).thenReturn(true);
+            when(shipmethodDAO.findById(1)).thenReturn(optshipmethod);
 
             IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
                 shipmethodservice.editShipmethod(optshipmethod.get());

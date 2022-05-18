@@ -6,22 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
-import co.edu.icesi.dev.uccareapp.transport.repository.VendorRepository;
 
 @Service
 public class VendorServiceImp implements VendorService {
 
     @Autowired
-    private VendorRepository vendorrepository;
+    private VendorDAO vendorDAO;
     
     @Autowired
     private BusinessentityRepository businessentityrepository;
     
     @Override
     public boolean saveVendor(Vendor vendor) throws NullPointerException, IllegalArgumentException {
-        if (vendor == null || vendorrepository.existsById(vendor.getBusinessentityid()) )
+        if (vendor == null || vendorDAO.existsById(vendor.getBusinessentityid()) )
             throw new NullPointerException("Vendor is null or already exists");
         
         if(!businessentityrepository.existsById(vendor.getBusinessentityid()))
@@ -33,14 +33,14 @@ public class VendorServiceImp implements VendorService {
         if (vendor.getName() == null)
             throw new NullPointerException("Fill the name field");
         
-        vendorrepository.save(vendor);
+        vendorDAO.save(vendor);
         
         return true;
     }
 
     @Override
     public boolean editVendor(Vendor vendor) throws NullPointerException, IllegalArgumentException {
-        if (vendor == null || !vendorrepository.existsById(vendor.getBusinessentityid()))
+        if (vendor == null || !vendorDAO.existsById(vendor.getBusinessentityid()))
             throw new NullPointerException("Vendor is null or doesn't exist");
         
         if (vendor.getCreditrating() < 0)
@@ -50,7 +50,7 @@ public class VendorServiceImp implements VendorService {
         if (vendor.getName() == null)
             throw new NullPointerException("Fill the name field");
         
-        Vendor editvendor = vendorrepository.findById(vendor.getBusinessentityid()).get();
+        Vendor editvendor = vendorDAO.findById(vendor.getBusinessentityid()).get();
         
         editvendor.setAccountnumber(vendor.getAccountnumber());
         editvendor.setActiveflag(vendor.getActiveflag());
@@ -60,25 +60,25 @@ public class VendorServiceImp implements VendorService {
         editvendor.setPreferredvendorstatus(vendor.getPreferredvendorstatus());
         editvendor.setPurchasingwebserviceurl(vendor.getPurchasingwebserviceurl());
         
-        vendorrepository.save(editvendor);
+        vendorDAO.update(editvendor);
 
         return true;
     }
 
     @Override
     public Optional<Vendor> findById(Integer id) {
-        return vendorrepository.findById(id);
+        return vendorDAO.findById(id);
     }
 
     @Override
     public Iterable<Vendor> findAll() {
-        return vendorrepository.findAll().iterator().hasNext()?
-                vendorrepository.findAll() : null;
+        return vendorDAO.findAll().iterator().hasNext()?
+                vendorDAO.findAll() : null;
     }
 
     @Override
     public void delete(Vendor vendor) {
-        vendorrepository.delete(vendor);
+        vendorDAO.delete(vendor);
     }
 
 }
