@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -27,6 +28,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 
+@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @Rollback
@@ -61,6 +63,8 @@ public class PurchaseorderheaderDAOTest {
         vendor.setName("test");
         
         vendorDAO.save(vendor);
+
+        
 
         Purchaseorderheader purchaseorderheader1 = new Purchaseorderheader();
         purchaseorderheader1.setPurchaseorderid(1);

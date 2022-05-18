@@ -29,7 +29,7 @@ public class Application {
     
     @Bean
     public CommandLineRunner dummy(BusinessentityRepository businessentityrepository,
-        EmployeeRepository employeerepository, PurchaseorderheaderDAO purchaseorderheaderrepository) {
+        EmployeeRepository employeerepository, PurchaseorderheaderDAO purchaseorderheaderDAO) {
         return (args) -> {
 
             Businessentity businessentity1 = new Businessentity();
@@ -53,7 +53,6 @@ public class Application {
             purchaseorderheader.setEmployeeid(1);
             purchaseorderheader.setOrderdate(LocalDate.now());
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
-            purchaseorderheaderrepository.save(purchaseorderheader);
         };
     }
 }
