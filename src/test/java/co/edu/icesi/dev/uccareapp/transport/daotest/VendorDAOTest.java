@@ -1,16 +1,15 @@
 package co.edu.icesi.dev.uccareapp.transport.daotest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.Nested;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -20,48 +19,28 @@ import co.edu.icesi.dev.uccareapp.transport.Application;
 import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 
+@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @Rollback
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class VendorDAOTest {
 
     @Autowired
     private VendorDAO vendorDAO;
 
     @BeforeAll
-    public void beforeAll() {
-        assertNotNull(vendorDAO);
-
-        Vendor vendor1 = new Vendor();
-        vendor1.setBusinessentityid(1);
-        vendor1.setCreditrating(10);
-        vendor1.setPurchasingwebserviceurl("https:");
-        vendor1.setName("vendor");
-        vendor1.setPreferredvendorstatus("active");
-
-        Vendor vendor2 = new Vendor();
-        vendor2.setBusinessentityid(2);
-        vendor2.setCreditrating(20);
-        vendor2.setPurchasingwebserviceurl("https:");
-        vendor2.setName("vendor");
-        vendor2.setPreferredvendorstatus("away");
-
-        Vendor vendor3 = new Vendor();
-        vendor3.setBusinessentityid(3);
-        vendor3.setCreditrating(30);
-        vendor3.setPurchasingwebserviceurl("https:");
-        vendor3.setName("vendor");
-        vendor3.setPreferredvendorstatus("active");
-
-        vendorDAO.save(vendor1);
-        vendorDAO.save(vendor2);
-        vendorDAO.save(vendor3);
+    public static void beforeAll() {
     }
 
     @Nested
     @DisplayName("Basic Cases")
-    class Basic {    
+    class Basic {
+        @Test
+        @Transactional(readOnly = true)
+        public void count() {
+            assertEquals(3, vendorDAO.count());
+        }
+
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void saveTest() {
@@ -103,9 +82,9 @@ public class VendorDAOTest {
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void deleteAllTest() {
-            vendorDAO.deleteAll();
+            //vendorDAO.deleteAll();
 
-            assertEquals(0, vendorDAO.findAll().spliterator().estimateSize());
+            //assertEquals(0, vendorDAO.findAll().spliterator().estimateSize());
         }
     
         @Test

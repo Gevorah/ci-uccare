@@ -9,10 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
-import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderdetailDAOImp;
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
+import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAOImp;
+import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
 
@@ -28,31 +35,133 @@ public class Application {
     }
     
     @Bean
-    public CommandLineRunner dummy(BusinessentityRepository businessentityrepository,
-        EmployeeRepository employeerepository, PurchaseorderheaderDAO purchaseorderheaderDAO) {
+    public CommandLineRunner dummy(
+        BusinessentityRepository businessentityrepository,
+        EmployeeRepository employeerepository, 
+        VendorDAOImp vendorDAO, ShipmethodDAOImp shipmethodDAO,
+        PurchaseorderheaderDAOImp purchaseorderheaderDAO,
+        PurchaseorderdetailDAOImp purchaseorderdetailDAO) {
+        
         return (args) -> {
-
-            Businessentity businessentity1 = new Businessentity();
-            businessentity1.setBusinessentityid(1);
-            businessentityrepository.save(businessentity1);
-
-            Businessentity businessentity2 = new Businessentity();
-            businessentity2.setBusinessentityid(2);
-            businessentityrepository.save(businessentity2);
-
+            
+            // Employees
             Employee employee1 = new Employee();
             employee1.setBusinessentityid(1);
-            employeerepository.save(employee1);
 
             Employee employee2 = new Employee();
             employee2.setBusinessentityid(2);
+            
+            employeerepository.save(employee1);
             employeerepository.save(employee2);
 
-            Purchaseorderheader purchaseorderheader = new Purchaseorderheader();
-            purchaseorderheader.setPurchaseorderid(1);
-            purchaseorderheader.setEmployeeid(1);
-            purchaseorderheader.setOrderdate(LocalDate.now());
-            purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
+            // Business
+            Businessentity businessentity1 = new Businessentity();
+            businessentity1.setBusinessentityid(1);
+            
+            Businessentity businessentity2 = new Businessentity();
+            businessentity2.setBusinessentityid(2);
+            
+            businessentityrepository.save(businessentity1);
+            businessentityrepository.save(businessentity2);
+            
+            // Vendors
+            Vendor vendor1 = new Vendor();
+            vendor1.setBusinessentityid(1);
+            vendor1.setCreditrating(10);
+            vendor1.setPurchasingwebserviceurl("https:");
+            vendor1.setName("vendor");
+            vendor1.setPreferredvendorstatus("active");
+    
+            Vendor vendor2 = new Vendor();
+            vendor2.setBusinessentityid(2);
+            vendor2.setCreditrating(20);
+            vendor2.setPurchasingwebserviceurl("https:");
+            vendor2.setName("vendor");
+            vendor2.setPreferredvendorstatus("away");
+    
+            Vendor vendor3 = new Vendor();
+            vendor3.setBusinessentityid(3);
+            vendor3.setCreditrating(30);
+            vendor3.setPurchasingwebserviceurl("https:");
+            vendor3.setName("vendor");
+            vendor3.setPreferredvendorstatus("active");
+    
+            vendorDAO.save(vendor1);
+            vendorDAO.save(vendor2);
+            vendorDAO.save(vendor3);
+
+            // Shipmethods
+            Shipmethod shipmethod = new Shipmethod();
+            shipmethod.setShipmethodid(1);
+            shipmethod.setShipbase(new BigDecimal("0.1"));
+            shipmethod.setShiprate(new BigDecimal("0.1"));
+            shipmethod.setName("FOUR");
+
+            shipmethodDAO.save(shipmethod);
+
+            // Headers
+            Purchaseorderheader purchaseorderheader1 = new Purchaseorderheader();
+            purchaseorderheader1.setPurchaseorderid(1);
+            purchaseorderheader1.setEmployeeid(1);
+            purchaseorderheader1.setOrderdate(LocalDate.now());
+            purchaseorderheader1.setSubtotal(new BigDecimal("0.1"));
+            purchaseorderheader1.setShipmethod(shipmethod);
+    
+            Purchaseorderheader purchaseorderheader2 = new Purchaseorderheader();
+            purchaseorderheader2.setPurchaseorderid(2);
+            purchaseorderheader2.setEmployeeid(2);
+            purchaseorderheader2.setOrderdate(LocalDate.now());
+            purchaseorderheader2.setSubtotal(new BigDecimal("0.1"));
+            purchaseorderheader2.setVendor(vendor1);
+    
+            Purchaseorderheader purchaseorderheader3 = new Purchaseorderheader();
+            purchaseorderheader3.setPurchaseorderid(3);
+            purchaseorderheader3.setEmployeeid(3);
+            purchaseorderheader3.setOrderdate(LocalDate.now());
+            purchaseorderheader3.setSubtotal(new BigDecimal("0.1"));
+            purchaseorderheader3.setShipmethod(shipmethod);
+    
+            purchaseorderheaderDAO.save(purchaseorderheader1);
+            purchaseorderheaderDAO.save(purchaseorderheader2);
+            purchaseorderheaderDAO.save(purchaseorderheader3);
+
+            // Details
+            PurchaseorderdetailPK purchaseorderdetailPK1 = new PurchaseorderdetailPK();
+            purchaseorderdetailPK1.setPurchaseorderid(1);
+            purchaseorderdetailPK1.setPurchaseorderdetailid(1);
+
+            PurchaseorderdetailPK purchaseorderdetailPK2 = new PurchaseorderdetailPK();
+            purchaseorderdetailPK2.setPurchaseorderid(1);
+            purchaseorderdetailPK2.setPurchaseorderdetailid(2);
+
+            PurchaseorderdetailPK purchaseorderdetailPK3 = new PurchaseorderdetailPK();
+            purchaseorderdetailPK3.setPurchaseorderid(2);
+            purchaseorderdetailPK3.setPurchaseorderdetailid(1);
+
+            Purchaseorderdetail purchaseorderdetail1 = new Purchaseorderdetail();
+            purchaseorderdetail1.setId(purchaseorderdetailPK1);
+            purchaseorderdetail1.setOrderqty(1);
+            purchaseorderdetail1.setUnitprice(new BigDecimal("0.1"));
+            purchaseorderdetail1.setProductid(1);
+            purchaseorderdetail1.setDuedate(LocalDate.now().minusDays(3));
+
+            Purchaseorderdetail purchaseorderdetail2 = new Purchaseorderdetail();
+            purchaseorderdetail2.setId(purchaseorderdetailPK2);
+            purchaseorderdetail2.setOrderqty(1);
+            purchaseorderdetail2.setUnitprice(new BigDecimal("0.3"));
+            purchaseorderdetail2.setProductid(1);
+            purchaseorderdetail1.setDuedate(LocalDate.now().minusDays(3));
+
+            Purchaseorderdetail purchaseorderdetail3 = new Purchaseorderdetail();
+            purchaseorderdetail3.setId(purchaseorderdetailPK3);
+            purchaseorderdetail3.setOrderqty(1);
+            purchaseorderdetail3.setUnitprice(new BigDecimal("0.3"));
+            purchaseorderdetail3.setProductid(1);
+            purchaseorderdetail1.setDuedate(LocalDate.now().minusDays(1));
+
+            purchaseorderdetailDAO.save(purchaseorderdetail1);
+            purchaseorderdetailDAO.save(purchaseorderdetail2);
+            purchaseorderdetailDAO.save(purchaseorderdetail3);
         };
     }
 }

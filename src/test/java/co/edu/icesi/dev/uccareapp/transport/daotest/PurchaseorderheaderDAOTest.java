@@ -1,17 +1,16 @@
 package co.edu.icesi.dev.uccareapp.transport.daotest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,80 +20,31 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.dev.uccareapp.transport.Application;
-import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
-import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAO;
-import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
-import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
-import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @Rollback
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PurchaseorderheaderDAOTest {
 
     @Autowired
-    PurchaseorderheaderDAO purchaseorderheaderDAO;
-
-    @Autowired
-    ShipmethodDAO shipmethodDAO;
-
-    @Autowired
-    VendorDAO vendorDAO;
+    PurchaseorderheaderDAOImp purchaseorderheaderDAO;
 
     @BeforeAll
-    public void beforeAll() {
-        assertNotNull(purchaseorderheaderDAO);
-
-        Shipmethod shipmethod = new Shipmethod();
-        shipmethod.setShipmethodid(1);
-        shipmethod.setShipbase(new BigDecimal("0.1"));
-        shipmethod.setShiprate(new BigDecimal("0.1"));
-        shipmethod.setName("FOUR");
-
-        shipmethodDAO.save(shipmethod);
-
-        Vendor vendor = new Vendor();
-        vendor.setBusinessentityid(1);
-        vendor.setCreditrating(1);
-        vendor.setPurchasingwebserviceurl("https:");
-        vendor.setName("test");
-        
-        vendorDAO.save(vendor);
-
-
-
-        Purchaseorderheader purchaseorderheader1 = new Purchaseorderheader();
-        purchaseorderheader1.setPurchaseorderid(1);
-        purchaseorderheader1.setEmployeeid(1);
-        purchaseorderheader1.setOrderdate(LocalDate.now());
-        purchaseorderheader1.setSubtotal(new BigDecimal("0.1"));
-        purchaseorderheader1.setShipmethod(shipmethod);
-
-        Purchaseorderheader purchaseorderheader2 = new Purchaseorderheader();
-        purchaseorderheader2.setPurchaseorderid(2);
-        purchaseorderheader2.setEmployeeid(2);
-        purchaseorderheader2.setOrderdate(LocalDate.now());
-        purchaseorderheader2.setSubtotal(new BigDecimal("0.1"));
-        purchaseorderheader2.setVendor(vendor);
-
-        Purchaseorderheader purchaseorderheader3 = new Purchaseorderheader();
-        purchaseorderheader3.setPurchaseorderid(3);
-        purchaseorderheader3.setEmployeeid(3);
-        purchaseorderheader3.setOrderdate(LocalDate.now());
-        purchaseorderheader3.setSubtotal(new BigDecimal("0.1"));
-        purchaseorderheader3.setShipmethod(shipmethod);
-
-        purchaseorderheaderDAO.save(purchaseorderheader1);
-        purchaseorderheaderDAO.save(purchaseorderheader2);
-        purchaseorderheaderDAO.save(purchaseorderheader3);
+    public static void beforeAll() {
     }
 
     @Nested
     @DisplayName("Basic Cases")
     class Basic {    
+        @Test
+        @Transactional(readOnly = true)
+        public void count() {
+            assertEquals(3, purchaseorderheaderDAO.count());
+        }
+
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void saveTest() {
@@ -137,9 +87,9 @@ public class PurchaseorderheaderDAOTest {
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void deleteAllTest() {
-            purchaseorderheaderDAO.deleteAll();
+            //purchaseorderheaderDAO.deleteAll();
 
-            assertEquals(0, purchaseorderheaderDAO.findAll().spliterator().estimateSize());
+            //assertEquals(0, purchaseorderheaderDAO.findAll().spliterator().estimateSize());
         }
     
         @Test
@@ -183,7 +133,13 @@ public class PurchaseorderheaderDAOTest {
         @Test
         @Transactional(readOnly = true)
         public void findByDateRange() {
-            
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + 
+            purchaseorderheaderDAO.findByDateRange(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).spliterator().estimateSize());
+
+            Iterator<Purchaseorderheader> h = purchaseorderheaderDAO.findByDateRange(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).iterator();
+            while(h.hasNext()) {
+                System.out.println(h.next().getPurchaseorderdetails().size());
+            }
         }
     }
 }

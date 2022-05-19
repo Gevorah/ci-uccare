@@ -1,7 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.daotest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
 
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,54 +25,24 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailP
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @Rollback
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PurchaseorderdetailDAOTest {
 
     @Autowired
     PurchaseorderdetailDAO purchaseorderdetailDAO;
 
     @BeforeAll
-    public void beforeAll() {
-        assertNotNull(purchaseorderdetailDAO);
-
-        PurchaseorderdetailPK purchaseorderdetailPK1 = new PurchaseorderdetailPK();
-        purchaseorderdetailPK1.setPurchaseorderid(1);
-        purchaseorderdetailPK1.setPurchaseorderdetailid(1);
-
-        PurchaseorderdetailPK purchaseorderdetailPK2 = new PurchaseorderdetailPK();
-        purchaseorderdetailPK2.setPurchaseorderid(1);
-        purchaseorderdetailPK2.setPurchaseorderdetailid(2);
-
-        PurchaseorderdetailPK purchaseorderdetailPK3 = new PurchaseorderdetailPK();
-        purchaseorderdetailPK3.setPurchaseorderid(1);
-        purchaseorderdetailPK3.setPurchaseorderdetailid(3);
-
-        Purchaseorderdetail purchaseorderdetail1 = new Purchaseorderdetail();
-        purchaseorderdetail1.setId(purchaseorderdetailPK1);
-        purchaseorderdetail1.setOrderqty(1);
-        purchaseorderdetail1.setUnitprice(new BigDecimal("0.1"));
-        purchaseorderdetail1.setProductid(1);
-
-        Purchaseorderdetail purchaseorderdetail2 = new Purchaseorderdetail();
-        purchaseorderdetail2.setId(purchaseorderdetailPK2);
-        purchaseorderdetail2.setOrderqty(1);
-        purchaseorderdetail2.setUnitprice(new BigDecimal("0.3"));
-        purchaseorderdetail2.setProductid(1);
-
-        Purchaseorderdetail purchaseorderdetail3 = new Purchaseorderdetail();
-        purchaseorderdetail3.setId(purchaseorderdetailPK3);
-        purchaseorderdetail3.setOrderqty(1);
-        purchaseorderdetail3.setUnitprice(new BigDecimal("0.3"));
-        purchaseorderdetail3.setProductid(1);
-
-        purchaseorderdetailDAO.save(purchaseorderdetail1);
-        purchaseorderdetailDAO.save(purchaseorderdetail2);
-        purchaseorderdetailDAO.save(purchaseorderdetail3);
+    public static void beforeAll() {
+        
     }
 
     @Nested
     @DisplayName("Basic Cases")
     class Basic {
+        @Test
+        @Transactional(readOnly = true)
+        public void count() {
+            assertEquals(3, purchaseorderdetailDAO.count());
+        }
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void saveTest() {

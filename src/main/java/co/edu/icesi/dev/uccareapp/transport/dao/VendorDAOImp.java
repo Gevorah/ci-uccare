@@ -12,36 +12,37 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 
 @Repository
+@Transactional
 public class VendorDAOImp implements VendorDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
+    @Override
+    public long count() {
+        return entityManager.createQuery("SELECT COUNT(*) FROM Vendor", Long.class).getSingleResult();
+    }
+
     @Override
     public void save(Vendor entity) {
         entityManager.persist(entity);
     }
 
-    @Transactional
     @Override
     public void update(Vendor entity) {
         entityManager.merge(entity);
     }
 
-    @Transactional
     @Override
     public void delete(Vendor entity) {
         entityManager.remove(entity);
     }
 
-    @Transactional
     @Override
     public void deleteAll() {
         entityManager.createQuery("DELETE FROM Vendor").executeUpdate();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Optional<Vendor> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(Vendor.class, id));
@@ -52,14 +53,12 @@ public class VendorDAOImp implements VendorDAO {
         return findById(id).isPresent()? true : false;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findAll() {
         String jpql = "SELECT v FROM Vendor v";
         return entityManager.createQuery(jpql, Vendor.class).getResultList();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findByCreditrating(Integer creditrating) {
         String jpql = "SELECT v FROM Vendor v WHERE v.creditrating = :creditrating";
@@ -68,7 +67,6 @@ public class VendorDAOImp implements VendorDAO {
         return query.getResultList();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findByName(String name) {
         String jpql = "SELECT v FROM Vendor v WHERE v.name = :name";
@@ -77,7 +75,6 @@ public class VendorDAOImp implements VendorDAO {
         return query.getResultList();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Iterable<Vendor> findByPreferredvendorstatus(String preferredvendorstatus) {
         String jpql = "SELECT v FROM Vendor v WHERE v.preferredvendorstatus = :preferredvendorstatus";

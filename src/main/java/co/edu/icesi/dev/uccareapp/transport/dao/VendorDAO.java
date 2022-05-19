@@ -6,6 +6,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 
 public interface VendorDAO {
 
+    long count();
     void save(Vendor entity);
     void update(Vendor entity);
     void delete(Vendor entity);

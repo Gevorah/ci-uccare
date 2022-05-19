@@ -11,36 +11,37 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
 
 @Repository
+@Transactional
 public class ShipmethodDAOImp implements ShipmethodDAO {
     
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
+    @Override
+    public long count() {
+        return entityManager.createQuery("SELECT COUNT(*) FROM Shipmethod", Long.class).getSingleResult();
+    }
+
     @Override
     public void save(Shipmethod entity) {
         entityManager.persist(entity);
     }
 
-    @Transactional
     @Override
     public void update(Shipmethod entity) {
         entityManager.merge(entity);
     }
 
-    @Transactional
     @Override
     public void delete(Shipmethod entity) {
         entityManager.remove(entity);
     }
 
-    @Transactional
     @Override
     public void deleteAll() {
         entityManager.createQuery("DELETE FROM Shipmethod").executeUpdate();
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Optional<Shipmethod> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(Shipmethod.class, id));
@@ -51,7 +52,6 @@ public class ShipmethodDAOImp implements ShipmethodDAO {
         return findById(id).isPresent()? true : false;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Iterable<Shipmethod> findAll() {
         String jpql = "SELECT s FROM Shipmethod s";

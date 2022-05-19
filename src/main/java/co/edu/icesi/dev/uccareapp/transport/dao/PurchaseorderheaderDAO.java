@@ -5,7 +5,8 @@ import java.util.Optional;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 
 public interface PurchaseorderheaderDAO {
-        
+    
+    long count();
     void save(Purchaseorderheader entity);
     void update(Purchaseorderheader entity);
     void delete(Purchaseorderheader entity);

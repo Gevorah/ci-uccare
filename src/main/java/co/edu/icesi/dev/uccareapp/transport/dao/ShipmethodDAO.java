@@ -6,6 +6,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
 
 public interface ShipmethodDAO {
     
+    long count();
     void save(Shipmethod entity);
     void update(Shipmethod entity);
     void delete(Shipmethod entity);

@@ -1,16 +1,15 @@
 package co.edu.icesi.dev.uccareapp.transport.daotest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -20,26 +19,23 @@ import co.edu.icesi.dev.uccareapp.transport.Application;
 import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAO;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
 
+@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Application.class)
 @Rollback
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ShipmethodDAOTest {
 
     @Autowired
     ShipmethodDAO shipmethodDAO;
 
     @BeforeAll
-    public void beforeAll() {
-        assertNotNull(shipmethodDAO);
+    public static void beforeAll() {
+    }
 
-        Shipmethod shipmethod = new Shipmethod();
-        shipmethod.setShipmethodid(1);
-        shipmethod.setShipbase(new BigDecimal("0.1"));
-        shipmethod.setShiprate(new BigDecimal("0.1"));
-        shipmethod.setName("FOUR");
-
-        shipmethodDAO.save(shipmethod);
+    @Test
+    @Transactional(readOnly = true)
+    public void count() {
+        assertEquals(1, shipmethodDAO.count());
     }
 
     @Test
@@ -83,9 +79,9 @@ public class ShipmethodDAOTest {
     @Test
     @Transactional(rollbackFor = Exception.class)
     public void deleteAllTest() {
-        shipmethodDAO.deleteAll();
+        //shipmethodDAO.deleteAll();
         
-        assertEquals(0, shipmethodDAO.findAll().spliterator().estimateSize());
+        //assertEquals(0, shipmethodDAO.findAll().spliterator().estimateSize());
     }
 
     @Test

@@ -8,6 +8,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailP
 
 public interface PurchaseorderdetailDAO {
 
+    long count();
     void save(Purchaseorderdetail entity);
     void update(Purchaseorderdetail entity);
     void delete(Purchaseorderdetail entity);
