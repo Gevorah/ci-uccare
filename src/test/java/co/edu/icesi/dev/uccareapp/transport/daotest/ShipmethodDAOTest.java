@@ -79,8 +79,8 @@ public class ShipmethodDAOTest {
     @Test
     @Transactional(rollbackFor = Exception.class)
     public void deleteAllTest() {
+        // violate FOREIGN KEY or other constraints. 
         //shipmethodDAO.deleteAll();
-        
         //assertEquals(0, shipmethodDAO.findAll().spliterator().estimateSize());
     }
 

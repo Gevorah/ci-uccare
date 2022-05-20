@@ -103,7 +103,7 @@ public class Application {
             Purchaseorderheader purchaseorderheader1 = new Purchaseorderheader();
             purchaseorderheader1.setPurchaseorderid(1);
             purchaseorderheader1.setEmployeeid(1);
-            purchaseorderheader1.setOrderdate(LocalDate.now());
+            purchaseorderheader1.setOrderdate(LocalDate.now().plusDays(1));
             purchaseorderheader1.setSubtotal(new BigDecimal("0.1"));
             purchaseorderheader1.setShipmethod(shipmethod);
     
@@ -150,14 +150,14 @@ public class Application {
             purchaseorderdetail2.setOrderqty(1);
             purchaseorderdetail2.setUnitprice(new BigDecimal("0.3"));
             purchaseorderdetail2.setProductid(1);
-            purchaseorderdetail1.setDuedate(LocalDate.now().minusDays(3));
+            purchaseorderdetail2.setDuedate(LocalDate.now().minusDays(1));
 
             Purchaseorderdetail purchaseorderdetail3 = new Purchaseorderdetail();
             purchaseorderdetail3.setId(purchaseorderdetailPK3);
-            purchaseorderdetail3.setOrderqty(1);
+            purchaseorderdetail3.setOrderqty(3);
             purchaseorderdetail3.setUnitprice(new BigDecimal("0.3"));
             purchaseorderdetail3.setProductid(1);
-            purchaseorderdetail1.setDuedate(LocalDate.now().minusDays(1));
+            purchaseorderdetail3.setDuedate(LocalDate.now().plusDays(1));
 
             purchaseorderdetailDAO.save(purchaseorderdetail1);
             purchaseorderdetailDAO.save(purchaseorderdetail2);

@@ -76,13 +76,23 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
         return query.getResultList();
     }
 
-    public Iterable<Purchaseorderheader> findByDateRange(LocalDate start, LocalDate end) {
-        String jpql = "SELECT h FROM Purchaseorderheader h,  Purchaseorderdetail d " +
-                      "WHERE h.id.purchaseorderid = d.purchaseorderid " +
-                      "AND d.duedate >= :start AND d.duedate <= :end";
-        TypedQuery<Purchaseorderheader> query = entityManager.createQuery(jpql, Purchaseorderheader.class);
+    public Iterable<Object[]> findByDateRange(LocalDate start, LocalDate end) {
+        String jpql = "SELECT h, SUM(d.unitprice * d.orderqty) AS detailssum FROM Purchaseorderheader h " +
+                      "INNER JOIN Purchaseorderdetail d ON h.purchaseorderid = d.purchaseorderheader.purchaseorderid " +
+                      "WHERE d.duedate BETWEEN :start AND :end " +
+                      "GROUP BY h.purchaseorderid " +
+                      "ORDER BY h.orderdate";
+        TypedQuery<Object[]> query = entityManager.createQuery(jpql, Object[].class);
         query.setParameter("start", start);
         query.setParameter("end", end);
+        return query.getResultList();
+    }
+
+    public Iterable<Purchaseorderheader> findByTwoDetails() {
+        String jpql = "SELECT h FROM Purchaseorderheader h " +
+                      "WHERE 2 <= (SELECT COUNT(*) FROM Purchaseorderdetail d " +
+                      "  WHERE h.purchaseorderid = d.purchaseorderheader.purchaseorderid )";
+        TypedQuery<Purchaseorderheader> query = entityManager.createQuery(jpql, Purchaseorderheader.class);
         return query.getResultList();
     }
 }

@@ -38,7 +38,7 @@ public class PurchaseorderheaderDAOTest {
 
     @Nested
     @DisplayName("Basic Cases")
-    class Basic {    
+    class Basic {
         @Test
         @Transactional(readOnly = true)
         public void count() {
@@ -53,7 +53,7 @@ public class PurchaseorderheaderDAOTest {
             purchaseorderheader.setEmployeeid(1);
             purchaseorderheader.setOrderdate(LocalDate.now());
             purchaseorderheader.setSubtotal(new BigDecimal("0.1"));
-    
+
             purchaseorderheaderDAO.save(purchaseorderheader);
 
             assertEquals(purchaseorderheader, purchaseorderheaderDAO.findById(0).get());
@@ -70,28 +70,28 @@ public class PurchaseorderheaderDAOTest {
 
             purchaseorderheaderDAO.update(purchaseorderheader);
 
-            assertEquals(purchaseorderheader.getEmployeeid(), 
-                purchaseorderheaderDAO.findById(1).get().getEmployeeid());
+            assertEquals(purchaseorderheader.getEmployeeid(),
+                    purchaseorderheaderDAO.findById(1).get().getEmployeeid());
         }
-    
+
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void deleteTest() {
             Purchaseorderheader purchaseorderheader = purchaseorderheaderDAO.findById(1).get();
-            
+
             purchaseorderheaderDAO.delete(purchaseorderheader);
 
             assertTrue(purchaseorderheaderDAO.findById(1).isEmpty());
         }
-    
+
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void deleteAllTest() {
-            //purchaseorderheaderDAO.deleteAll();
-
-            //assertEquals(0, purchaseorderheaderDAO.findAll().spliterator().estimateSize());
+            // violate FOREIGN KEY or other constraints. 
+            // purchaseorderheaderDAO.deleteAll();
+            // assertEquals(0, purchaseorderheaderDAO.findAll().spliterator().estimateSize());
         }
-    
+
         @Test
         @Transactional(readOnly = true)
         public void findByIdTest() {
@@ -105,7 +105,7 @@ public class PurchaseorderheaderDAOTest {
 
             assertEquals(purchaseorderheader.getEmployeeid(), purchaseorderheaderDAO.findById(0).get().getEmployeeid());
         }
-    
+
         @Test
         @Transactional(readOnly = true)
         public void findAllTest() {
@@ -119,27 +119,43 @@ public class PurchaseorderheaderDAOTest {
         @Test
         @Transactional(readOnly = true)
         public void findByShipmethodid() {
-            long result = purchaseorderheaderDAO.findByShipmethodid(1).spliterator().estimateSize();
-            assertEquals(2, result);
+            long size = purchaseorderheaderDAO.findByShipmethodid(1).spliterator().estimateSize();
+            assertEquals(2, size);
         }
-    
+
         @Test
         @Transactional(readOnly = true)
         public void findByVendorid() {
-            long result = purchaseorderheaderDAO.findByVendorid(1).spliterator().estimateSize();
-            assertEquals(1, result);
+            long size = purchaseorderheaderDAO.findByVendorid(1).spliterator().estimateSize();
+            assertEquals(1, size);
         }
-    
+
         @Test
         @Transactional(readOnly = true)
         public void findByDateRange() {
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + 
-            purchaseorderheaderDAO.findByDateRange(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).spliterator().estimateSize());
+            LocalDate start = LocalDate.now().minusDays(1);
+            LocalDate end = LocalDate.now().plusDays(1);
+            
+            long size = purchaseorderheaderDAO.findByDateRange(start, end).spliterator().estimateSize();
 
-            Iterator<Purchaseorderheader> h = purchaseorderheaderDAO.findByDateRange(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1)).iterator();
-            while(h.hasNext()) {
-                System.out.println(h.next().getPurchaseorderdetails().size());
-            }
+            assertEquals(2, size);
+            
+            Iterator<Object[]> result = purchaseorderheaderDAO.findByDateRange(start, end).iterator();
+
+            Object[] hs = result.next();
+            assertEquals(2, ((Purchaseorderheader) hs[0]).getPurchaseorderid());
+            assertEquals(new BigDecimal("0.90"), hs[1]);
+
+            hs = result.next();
+            assertEquals(1, ((Purchaseorderheader) hs[0]).getPurchaseorderid());
+            assertEquals(new BigDecimal("0.30"), hs[1]);
+        }
+
+        @Test
+        @Transactional(readOnly = true)
+        public void findByTwoDetails() {
+            long size = purchaseorderheaderDAO.findByTwoDetails().spliterator().estimateSize();
+            assertEquals(1, size);
         }
     }
 }

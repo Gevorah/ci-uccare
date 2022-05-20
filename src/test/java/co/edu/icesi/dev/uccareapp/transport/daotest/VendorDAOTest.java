@@ -82,8 +82,8 @@ public class VendorDAOTest {
         @Test
         @Transactional(rollbackFor = Exception.class)
         public void deleteAllTest() {
+            // violate FOREIGN KEY or other constraints. 
             //vendorDAO.deleteAll();
-
             //assertEquals(0, vendorDAO.findAll().spliterator().estimateSize());
         }
     
