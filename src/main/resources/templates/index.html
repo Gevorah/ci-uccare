@@ -27,24 +27,21 @@
       <div class="row">
         <div class="col-md-6">
           <h2 th:case="null">Menu</h2>
-          <p sec:authorize="hasRole('ADMIN')">
+          <p>
             <a href="/vendors"><i class="fas fa-user-edit ml-2"></i> Go to Vendors</a>
           </p>
           <p sec:authorize="hasRole('ADMIN')">
             <a href="/shipmethods"><i class="fas fa-truck ml-2"></i> Go to Shipmethods</a>
           </p>
-          <p sec:authorize="hasRole('OPERATOR')">
+          <p>
             <a href="/purchaseorderheaders"
               ><i class="fas fa-file-contract ml-2"></i> Go to Purchase Order Headers</a
             >
           </p>
-          <p sec:authorize="hasRole('OPERATOR')">
+          <p>
             <a href="/purchaseorderdetails"
               ><i class="fas fa-file-alt ml-2"></i> Go to Purchase Order Details</a
             >
-          </p>
-          <p>
-            <a href="/logout"><i class="fas fa-sign-out-alt ml-2"></i> Log Out</a>
           </p>
         </div>
       </div>
