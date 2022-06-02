@@ -1,7 +1,7 @@
 package co.edu.icesi.dev.uccareapp.transport.model.prod;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the productreview database table.
@@ -30,11 +32,13 @@ public class Productreview implements Serializable {
 
 	private String emailaddress;
 
-	private Timestamp modifieddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
 
 	private Integer rating;
 
-	private Timestamp reviewdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate reviewdate;
 
 	private String reviewername;
 
@@ -54,7 +58,7 @@ public class Productreview implements Serializable {
 		return this.emailaddress;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -70,7 +74,7 @@ public class Productreview implements Serializable {
 		return this.rating;
 	}
 
-	public Timestamp getReviewdate() {
+	public LocalDate getReviewdate() {
 		return this.reviewdate;
 	}
 
@@ -86,7 +90,7 @@ public class Productreview implements Serializable {
 		this.emailaddress = emailaddress;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
@@ -102,7 +106,7 @@ public class Productreview implements Serializable {
 		this.rating = rating;
 	}
 
-	public void setReviewdate(Timestamp reviewdate) {
+	public void setReviewdate(LocalDate reviewdate) {
 		this.reviewdate = reviewdate;
 	}
 

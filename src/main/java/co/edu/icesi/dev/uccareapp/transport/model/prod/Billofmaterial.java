@@ -2,8 +2,11 @@ package co.edu.icesi.dev.uccareapp.transport.model.prod;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 
 /**
@@ -23,13 +26,16 @@ public class Billofmaterial implements Serializable {
 
 	private Integer bomlevel;
 
-	private Timestamp enddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate enddate;
 
-	private Timestamp modifieddate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
 
 	private BigDecimal perassemblyqty;
 
-	private Timestamp startdate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startdate;
 
 	//bi-directional many-to-one association to Product
 	@ManyToOne
@@ -65,19 +71,19 @@ public class Billofmaterial implements Serializable {
 		this.bomlevel = bomlevel;
 	}
 
-	public Timestamp getEnddate() {
+	public LocalDate getEnddate() {
 		return this.enddate;
 	}
 
-	public void setEnddate(Timestamp enddate) {
+	public void setEnddate(LocalDate enddate) {
 		this.enddate = enddate;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
@@ -89,11 +95,11 @@ public class Billofmaterial implements Serializable {
 		this.perassemblyqty = perassemblyqty;
 	}
 
-	public Timestamp getStartdate() {
+	public LocalDate getStartdate() {
 		return this.startdate;
 	}
 
-	public void setStartdate(Timestamp startdate) {
+	public void setStartdate(LocalDate startdate) {
 		this.startdate = startdate;
 	}
 
