@@ -35,7 +35,6 @@ public class ProductreviewServiceImp implements ProductreviewService{
         editProductreview.setComments(productreview.getComments());
         editProductreview.setEmailaddress(productreview.getEmailaddress());
         editProductreview.setModifieddate(productreview.getModifieddate());
-        editProductreview.setProduct(productreview.getProduct());
         editProductreview.setProductreviewid(productreview.getProductreviewid());
         editProductreview.setRating(productreview.getRating());
         editProductreview.setReviewdate(productreview.getReviewdate());
