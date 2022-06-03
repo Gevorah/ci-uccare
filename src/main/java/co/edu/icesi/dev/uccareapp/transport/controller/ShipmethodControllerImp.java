@@ -60,7 +60,7 @@ public class ShipmethodControllerImp implements ShipmethodController {
             @Validated @ModelAttribute Shipmethod shipmethod, BindingResult bindingResult, Model model ) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
-                return "shipmethods/add-shipmethod";
+                return "shipmethods/update-shipmethod";
             }
             shipmethodservice.editShipmethod(shipmethod);
         }

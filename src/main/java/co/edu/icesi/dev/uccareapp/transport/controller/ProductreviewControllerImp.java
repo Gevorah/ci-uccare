@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Productreview;
+import co.edu.icesi.dev.uccareapp.transport.service.ProductService;
 import co.edu.icesi.dev.uccareapp.transport.service.ProductreviewService;
 
 @Controller
@@ -22,56 +23,61 @@ public class ProductreviewControllerImp implements ProductreviewController {
     @Autowired
     ProductreviewService productreviewservice;
 
-    @GetMapping("/productreview")
+    @Autowired
+    ProductService productservice;
+
+    @GetMapping("/productreviews")
     public String index(Model model) {
         model.addAttribute("productreviews", productreviewservice.findAll());
-        return "productreview/index";
+        return "productreviews/index";
     }
 
-    @GetMapping("/productreview/add")
+    @GetMapping("/productreviews/add")
     public String showSaveForm(Model model) {
         model.addAttribute("productreview", new Productreview());
-        return "productreview/add-productreview";
+        model.addAttribute("products", productservice.findAll() );
+        return "productreviews/add-productreview";
     }
 
-    @PostMapping("/productreview/add") 
+    @PostMapping("/productreviews/add") 
     public String saveProductreview(@Validated @ModelAttribute Productreview productreview, BindingResult bindingResult, 
             Model model, @RequestParam(value = "action", required = true) String action) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
-                return "productreview/add-productreview";
+                return "productreviews/add-productreview";
             }
             
             productreviewservice.saveProductreview(productreview);
         }
-        return "redirect:/productreview/";
+        return "redirect:/productreviews/";
     }
 
-    @GetMapping("/billofmaterial/edit/{id}")
+    @GetMapping("/productreviews/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Optional<Productreview> productreviewop = productreviewservice.findById(id);
         if (productreviewop == null)
             throw new IllegalArgumentException("Invalid productreview Id:" + id);
         model.addAttribute("productreview", productreviewop.get());
-        return "productreview/update-productreview";
+        model.addAttribute("products", productservice.findAll() );
+        return "productreviews/update-productreview";
     }
 
-    @PostMapping("/billofmaterial/edit/{id}")
+    @PostMapping("/productreviews/edit/{id}")
     public String updateProductreview(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, 
             @Validated @ModelAttribute Productreview productreview, BindingResult bindingResult, Model model ) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
-                return "productreview/update-productreview";
+                return "productreviews/update-productreview";
             }
             productreviewservice.editProductreview(productreview);
         }
-        return "redirect:/productreview";
+        return "redirect:/productreviews";
     }
 
-    @GetMapping("/productreview/del/{id}")
+    @GetMapping("/productreviews/del/{id}")
     public String deleteShipmethod(@PathVariable("id") Integer id, Model model) {
         Productreview productreview = productreviewservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Productreview Id:" + id));
         productreviewservice.delete(productreview);
-        return "redirect:/productreview";
+        return "redirect:/productreviews";
     }
 }

@@ -69,7 +69,7 @@ public class PurchaseorderdetailControllerImp implements PurchaseorderdetailCont
             @Validated @ModelAttribute Purchaseorderdetail purchaseorderdetail, BindingResult bindingResult, Model model ) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
-                return "purchaseorderdetails/add-purchaseorderdetail";
+                return "purchaseorderdetails/update-purchaseorderdetail";
             }
             purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
         }

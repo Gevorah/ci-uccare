@@ -8,41 +8,41 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
-import co.edu.icesi.dev.uccareapp.transport.model.prod.Productreview;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 
 @Repository
 @Transactional
-public class ProductreviewDAOImp implements ProductreviewDAO {
+public class ProductDAOImp implements ProductDAO {
     
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public long count() {
-        return entityManager.createQuery("SELECT COUNT(*) FROM Productreview", Long.class).getSingleResult();
+        return entityManager.createQuery("SELECT COUNT(*) FROM Product", Long.class).getSingleResult();
     }
 
     @Override
-    public void save(Productreview entity) {
+    public void save(Product entity) {
         entityManager.persist(entity);
         
     }
 
     @Override
-    public void update(Productreview entity) {
+    public void update(Product entity) {
         entityManager.merge(entity);
         
     }
 
     @Override
-    public void delete(Productreview entity) {
+    public void delete(Product entity) {
         entityManager.remove(entity);
         
     }
 
     @Override
-    public Optional<Productreview> findById(Integer id) {
-        return Optional.ofNullable(entityManager.find(Productreview.class, id));
+    public Optional<Product> findById(Integer id) {
+        return Optional.ofNullable(entityManager.find(Product.class, id));
     }
 
     @Override
@@ -51,8 +51,8 @@ public class ProductreviewDAOImp implements ProductreviewDAO {
     }
 
     @Override
-    public Iterable<Productreview> findAll() {
-        String jpql = "SELECT d FROM Productreview d";
-        return entityManager.createQuery(jpql, Productreview.class).getResultList();
+    public Iterable<Product> findAll() {
+        String jpql = "SELECT d FROM Product d";
+        return entityManager.createQuery(jpql, Product.class).getResultList();
     }
 }

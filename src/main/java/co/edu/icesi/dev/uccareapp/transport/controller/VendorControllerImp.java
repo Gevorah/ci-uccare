@@ -66,7 +66,7 @@ public class VendorControllerImp implements VendorController {
             @Validated @ModelAttribute Vendor vendor, BindingResult bindingResult, Model model ) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
-                return "vendors/add-vendor";
+                return "vendors/update-vendor";
             }
             vendorservice.editVendor(vendor);
         }

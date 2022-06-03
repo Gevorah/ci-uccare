@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
+import co.edu.icesi.dev.uccareapp.transport.dao.ProductDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderdetailDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAOImp;
@@ -20,6 +21,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailP
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
 
@@ -40,7 +42,7 @@ public class Application {
         EmployeeRepository employeerepository, 
         VendorDAOImp vendorDAO, ShipmethodDAOImp shipmethodDAO,
         PurchaseorderheaderDAOImp purchaseorderheaderDAO,
-        PurchaseorderdetailDAOImp purchaseorderdetailDAO) {
+        PurchaseorderdetailDAOImp purchaseorderdetailDAO, ProductDAOImp productDAO) {
         
         return (args) -> {
             
@@ -162,6 +164,17 @@ public class Application {
             purchaseorderdetailDAO.save(purchaseorderdetail1);
             purchaseorderdetailDAO.save(purchaseorderdetail2);
             purchaseorderdetailDAO.save(purchaseorderdetail3);
+
+            //Products
+            Product product1 = new Product();
+            product1.setProductid(1);
+            product1.setName("huevos");
+            product1.setColor("blanco");
+            product1.setDiscontinueddate(LocalDate.now());
+
+            productDAO.save(product1);
+            
+
         };
     }
 }

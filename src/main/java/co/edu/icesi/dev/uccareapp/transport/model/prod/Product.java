@@ -2,19 +2,16 @@ package co.edu.icesi.dev.uccareapp.transport.model.prod;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 
 /**
  * The persistent class for the product database table.
@@ -26,8 +23,8 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "PRODUCT_PRODUCTID_GENERATOR", allocationSize = 1, sequenceName = "PRODUCT_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCT_PRODUCTID_GENERATOR")
+	//@SequenceGenerator(name = "PRODUCT_PRODUCTID_GENERATOR", allocationSize = 1, sequenceName = "PRODUCT_SEQ")
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCT_PRODUCTID_GENERATOR")
 	private Integer productid;
 
 	@Column(name = "class")
@@ -37,7 +34,7 @@ public class Product implements Serializable {
 
 	private Integer daystomanufacture;
 
-	private Timestamp discontinueddate;
+	private LocalDate discontinueddate;
 
 	private String finishedgoodsflag;
 
@@ -45,7 +42,7 @@ public class Product implements Serializable {
 
 	private String makeflag;
 
-	private Timestamp modifieddate;
+	private LocalDate modifieddate;
 
 	private String name;
 
@@ -59,9 +56,9 @@ public class Product implements Serializable {
 
 	private Integer safetystocklevel;
 
-	private Timestamp sellenddate;
+	private LocalDate sellenddate;
 
-	private Timestamp sellstartdate;
+	private LocalDate sellstartdate;
 
 	private String size;
 
@@ -224,7 +221,7 @@ public class Product implements Serializable {
 		return this.daystomanufacture;
 	}
 
-	public Timestamp getDiscontinueddate() {
+	public LocalDate getDiscontinueddate() {
 		return this.discontinueddate;
 	}
 
@@ -240,7 +237,7 @@ public class Product implements Serializable {
 		return this.makeflag;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -304,11 +301,11 @@ public class Product implements Serializable {
 		return this.safetystocklevel;
 	}
 
-	public Timestamp getSellenddate() {
+	public LocalDate getSellenddate() {
 		return this.sellenddate;
 	}
 
-	public Timestamp getSellstartdate() {
+	public LocalDate getSellstartdate() {
 		return this.sellstartdate;
 	}
 
@@ -434,7 +431,7 @@ public class Product implements Serializable {
 		this.daystomanufacture = daystomanufacture;
 	}
 
-	public void setDiscontinueddate(Timestamp discontinueddate) {
+	public void setDiscontinueddate(LocalDate discontinueddate) {
 		this.discontinueddate = discontinueddate;
 	}
 
@@ -450,7 +447,7 @@ public class Product implements Serializable {
 		this.makeflag = makeflag;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 
@@ -514,11 +511,11 @@ public class Product implements Serializable {
 		this.safetystocklevel = safetystocklevel;
 	}
 
-	public void setSellenddate(Timestamp sellenddate) {
+	public void setSellenddate(LocalDate sellenddate) {
 		this.sellenddate = sellenddate;
 	}
 
-	public void setSellstartdate(Timestamp sellstartdate) {
+	public void setSellstartdate(LocalDate sellstartdate) {
 		this.sellstartdate = sellstartdate;
 	}
 

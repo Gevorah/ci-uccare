@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Purchase Order Headers</title>
+    <title>Product Reviews</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
@@ -20,34 +20,40 @@
     <link rel="stylesheet" href="../css/shards.min.css" />
   </head>
   <body>
-    <div th:switch="${billofmaterial}" class="container my-5">
+    <div th:switch="${productreviews}" class="container my-5">
       <div class="row">
         <div class="col-md-10">
-          <h2 th:case="null">No Bill of Materials yet!</h2>
+          <h2 th:case="null">No product reviews yet!</h2>
           <div th:case="*">
-            <h2 class="my-5">Bill of Material</h2>
+            <h2 class="my-5">Product Reviews</h2>
             <table class="table table-striped table-responsive-md">
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Bom Level</th>
-                  <th>End Date</th>
+                  <th>Comments</th>
+                  <th>Email</th>
                   <th>Modified Date</th>
-                  <th>Perassembly qty</th>
-                  <th>Start Date</th>
+                  <th>Rating</th>
+                  <th>Review Date</th>
+                  <th>Reviewer Name</th>
+                  <th>Product</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="billofmaterials : ${billofmaterials}">
-                  <td class="text-info" th:text="${billofmaterial.billofmaterialsid}"></td>
-                  <td class="text-info" th:text="${billofmaterial.bomlevel}"></td>
-                  <td class="text-info" th:text="${billofmaterial.enddate}"></td>
-                  <td class="text-info" th:text="${billofmaterial.modifieddate}"></td>
-                  <td class="text-info" th:text="${billofmaterial.perassemblyqty}"></td>
-                  <td class="text-info" th:text="${billofmaterial.startdate}"></td>
+                <tr th:each="productreview : ${productreviews}">
+                  <td class="text-info" th:text="${productreview.productreviewid}"></td>
+                  <td class="text-info" th:text="${productreview.comments}"></td>
+                  <td class="text-info" th:text="${productreview.emailaddress}"></td>
+                  <td class="text-info" th:text="${productreview.modifieddate}"></td>
+                  <td class="text-info" th:text="${productreview.rating}"></td>
+                  <td class="text-info" th:text="${productreview.reviewdate}"></td>
+                  <td class="text-info" th:text="${productreview.reviewername}"></td>
+                  <td class="text-info" th:text="${productreview.product.name}"></td>
                   <td>
                     <a
-                      th:href="@{/billofmaterial/edit/{id}(id=${billofmaterial.billofmaterialsid})}"
+                      th:href="@{/productreviews/edit/{id}(id=${productreview.id})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-edit ml-2"></i>
@@ -55,7 +61,7 @@
                   </td>
                   <td>
                     <a
-                      th:href="@{/billofmaterial/del/{id}(id=${billofmaterial.billofmaterialsid})}"
+                      th:href="@{/productreviews/del/{id}(id=${productreview.id})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-trash-alt ml-2"></i>
@@ -66,7 +72,7 @@
             </table>
           </div>
           <p class="my-5">
-            <a href="/purchaseorderdetails/add" class="btn btn-primary">
+            <a href="/productreviews/add" class="btn btn-primary">
               <i class="fas fa-plus ml-2"></i>
             </a>
           </p>

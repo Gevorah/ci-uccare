@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,8 +21,8 @@ public class Productreview implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "PRODUCTREVIEW_PRODUCTREVIEWID_GENERATOR", allocationSize = 1, sequenceName = "PRODUCTREVIEW_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTREVIEW_PRODUCTREVIEWID_GENERATOR")
+	//@SequenceGenerator(name = "PRODUCTREVIEW_PRODUCTREVIEWID_GENERATOR", allocationSize = 1, sequenceName = "PRODUCTREVIEW_SEQ")
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTREVIEW_PRODUCTREVIEWID_GENERATOR")
 	private Integer productreviewid;
 
 	private String comments;

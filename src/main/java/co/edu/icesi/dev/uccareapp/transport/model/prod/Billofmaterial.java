@@ -20,8 +20,8 @@ public class Billofmaterial implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="BILLOFMATERIALS_BILLOFMATERIALSID_GENERATOR",allocationSize = 1, sequenceName="BILLOFMATERIALS_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BILLOFMATERIALS_BILLOFMATERIALSID_GENERATOR")
+	//@SequenceGenerator(name="BILLOFMATERIALS_BILLOFMATERIALSID_GENERATOR",allocationSize = 1, sequenceName="BILLOFMATERIALS_SEQ")
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BILLOFMATERIALS_BILLOFMATERIALSID_GENERATOR")
 	private Integer billofmaterialsid;
 
 	private Integer bomlevel;

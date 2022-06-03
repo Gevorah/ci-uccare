@@ -69,7 +69,7 @@ public class PurchaseorderheaderControllerImp implements PurchaseorderheaderCont
             @Validated @ModelAttribute Purchaseorderheader purchaseorderheader, BindingResult bindingResult, Model model ) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
-                return "purchaseorderheaders/add-purchaseorderheader";
+                return "purchaseorderheaders/update-purchaseorderheader";
             }
             purchaseorderheaderservice.editPurchaseorderheader(purchaseorderheader);
         }
