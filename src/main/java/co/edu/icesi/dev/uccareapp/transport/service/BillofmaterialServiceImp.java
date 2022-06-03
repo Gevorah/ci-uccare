@@ -27,7 +27,7 @@ public class BillofmaterialServiceImp implements BillofmaterialService {
 
     @Override
     public boolean editBillofmaterial(Billofmaterial billofmaterial) {
-        if (billofmaterial == null || billofmaterialDAO
+        if (billofmaterial == null || !billofmaterialDAO
             .existsById(billofmaterial.getBillofmaterialsid()))
         throw new NullPointerException("Billofmaterial is null or already exists");
 

@@ -17,7 +17,6 @@
       integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/shards.min.css" />
   </head>
   <body>
     <div class="container my-5">
@@ -110,11 +109,11 @@
                 <label for="product" class="col-form-label">Product</label>
                 <div></div>
                 <select th:field="*{product}">
-                  <option value="" th:text="-Select-"></option>
+                  <option th:value="NULL" th:text="-Select-"></option>
                   <option
-                    th:each="p : ${products}"
-                    th:value="${p}"
-                    th:text="${p.name}"
+                    th:each="product : ${products}"
+                    th:value="${{product}}"
+                    th:text="${product.name}"
                     class="form-control"
                   ></option>
                 </select>
@@ -131,7 +130,8 @@
                   class="form-control"
                   id="comments"
                   placeholder="comments"
-                  rows="4" cols="50"
+                  rows="4"
+                  cols="50"
                 />
                 <span
                   th:if="${#fields.hasErrors('comments')}"

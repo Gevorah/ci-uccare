@@ -17,10 +17,9 @@
       integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/shards.min.css" />
   </head>
   <body>
-    <div th:switch="${billofmaterial}" class="container my-5">
+    <div th:switch="${billofmaterials}" class="container my-5">
       <div class="row">
         <div class="col-md-10">
           <h2 th:case="null">No Bill of Materials yet!</h2>
@@ -47,7 +46,7 @@
                   <td class="text-info" th:text="${billofmaterial.startdate}"></td>
                   <td>
                     <a
-                      th:href="@{/billofmaterial/edit/{id}(id=${billofmaterial.billofmaterialsid})}"
+                      th:href="@{/billofmaterials/edit/{id}(id=${billofmaterial.billofmaterialsid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-edit ml-2"></i>
@@ -55,7 +54,7 @@
                   </td>
                   <td>
                     <a
-                      th:href="@{/billofmaterial/del/{id}(id=${billofmaterial.billofmaterialsid})}"
+                      th:href="@{/billofmaterials/del/{id}(id=${billofmaterial.billofmaterialsid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-trash-alt ml-2"></i>

@@ -27,7 +27,7 @@ public class ProductreviewServiceImp implements ProductreviewService{
 
     @Override
     public boolean editProductreview(Productreview productreview) {
-        if (productreview == null || productreviewDAO
+        if (productreview == null || !productreviewDAO
             .existsById(productreview.getProductreviewid()))
         throw new NullPointerException("Productreview is null or already exists");
 

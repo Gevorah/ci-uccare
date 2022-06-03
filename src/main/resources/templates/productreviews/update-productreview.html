@@ -17,7 +17,6 @@
       integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/shards.min.css" />
   </head>
   <body>
     <div class="container my-5">
@@ -26,8 +25,8 @@
         <div class="col-md-6">
           <form
             action="#"
-            th:action="@{/productreviews/edit/}"
             th:object="${productreview}"
+            th:action="@{/productreviews/edit/{id}(id=${productreview.productreviewid})}"
             method="post"
           >
             <div class="row">
@@ -35,7 +34,7 @@
                 <label for="productreviewid" class="col-form-label">Id</label>
                 <input
                   type="number"
-                  th:field="${productreviewid}"
+                  th:field="*{productreviewid}"
                   class="form-control"
                   id="duedate"
                   placeholder="0"
@@ -43,21 +42,6 @@
                 <span
                   th:if="${#fields.hasErrors('productreviewid')}"
                   th:errors="*{productreviewid}"
-                  class="text-danger"
-                ></span>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="comments" class="col-form-label">Comments</label>
-                <textarea
-                  th:field="*{comments}"
-                  class="form-control"
-                  id="comments"
-                  placeholder="comments"
-                  rows="4" cols="50"
-                />
-                <span
-                  th:if="${#fields.hasErrors('comments')}"
-                  th:errors="*{comments}"
                   class="text-danger"
                 ></span>
               </div>
@@ -124,18 +108,33 @@
               <div class="form-group col-md-6">
                 <label for="product" class="col-form-label">Product</label>
                 <div></div>
-                <select th:field="${product}">
-                  <option value="" th:text="-Select-"></option>
+                <select th:field="*{product}">
                   <option
-                    th:each="p : ${products}"
-                    th:value="${p}"
-                    th:text="${p.productid}"
+                    th:each="product : ${products}"
+                    th:value="${{product}}"
+                    th:text="${product.name}"
                     class="form-control"
                   ></option>
                 </select>
                 <span
                   th:if="${#fields.hasErrors('product')}"
                   th:errors="*{product}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="comments" class="col-form-label">Comments</label>
+                <textarea
+                  th:field="*{comments}"
+                  class="form-control"
+                  id="comments"
+                  placeholder="comments"
+                  rows="4"
+                  cols="50"
+                />
+                <span
+                  th:if="${#fields.hasErrors('comments')}"
+                  th:errors="*{comments}"
                   class="text-danger"
                 ></span>
               </div>

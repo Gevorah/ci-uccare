@@ -17,7 +17,6 @@
       integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/shards.min.css" />
   </head>
   <body>
     <div th:switch="${productreviews}" class="container my-5">
@@ -53,7 +52,7 @@
                   <td class="text-info" th:text="${productreview.product.name}"></td>
                   <td>
                     <a
-                      th:href="@{/productreviews/edit/{id}(id=${productreview.id})}"
+                      th:href="@{/productreviews/edit/{id}(id=${productreview.productreviewid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-edit ml-2"></i>
@@ -61,7 +60,7 @@
                   </td>
                   <td>
                     <a
-                      th:href="@{/productreviews/del/{id}(id=${productreview.id})}"
+                      th:href="@{/productreviews/del/{id}(id=${productreview.productreviewid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-trash-alt ml-2"></i>
