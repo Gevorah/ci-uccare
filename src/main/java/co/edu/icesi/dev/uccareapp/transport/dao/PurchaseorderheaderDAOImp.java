@@ -76,6 +76,7 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
         return query.getResultList();
     }
 
+    @Override
     public Iterable<Object[]> findByDateRange(LocalDate start, LocalDate end) {
         String jpql = "SELECT h, SUM(d.unitprice * d.orderqty) AS detailssum FROM Purchaseorderheader h " +
                       "INNER JOIN Purchaseorderdetail d ON h.purchaseorderid = d.purchaseorderheader.purchaseorderid " +
@@ -88,6 +89,7 @@ public class PurchaseorderheaderDAOImp implements PurchaseorderheaderDAO {
         return query.getResultList();
     }
 
+    @Override
     public Iterable<Purchaseorderheader> findByTwoDetails() {
         String jpql = "SELECT h FROM Purchaseorderheader h " +
                       "WHERE 2 <= (SELECT COUNT(*) FROM Purchaseorderdetail d " +

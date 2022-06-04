@@ -83,4 +83,14 @@ public class PurchaseorderheaderServiceImp implements PurchaseorderheaderService
     public void delete(Purchaseorderheader purchaseorderheader) {
         purchaseorderheaderrepository.delete(purchaseorderheader);
     }
+
+    public Iterable<Object[]> findByDateRange(LocalDate start, LocalDate end) {
+
+        return purchaseorderheaderrepository.findByDateRange(start, end);
+    }
+
+    public Iterable<Purchaseorderheader> findByTwoDetails() {
+        
+        return purchaseorderheaderrepository.findByTwoDetails();
+    }
 }
