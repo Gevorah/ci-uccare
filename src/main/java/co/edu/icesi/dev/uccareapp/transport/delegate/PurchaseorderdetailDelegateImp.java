@@ -1,7 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.delegate;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,8 +25,8 @@ public class PurchaseorderdetailDelegateImp implements PurchaseorderdetailDelega
         resttemplate.put(URI, purchaseorderdetail);
     }
 
-    public Optional<Purchaseorderdetail> findById(PurchaseorderdetailPK id) {
-        return Optional.ofNullable(resttemplate.getForObject(URI + id, Purchaseorderdetail.class));
+    public Purchaseorderdetail findById(PurchaseorderdetailPK id) {
+        return resttemplate.getForObject(URI + id, Purchaseorderdetail.class);
     }
 
     public Iterable<Purchaseorderdetail> findAll() {

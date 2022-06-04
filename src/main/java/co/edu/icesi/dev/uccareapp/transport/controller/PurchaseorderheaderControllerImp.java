@@ -20,14 +20,11 @@ import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderService;
 @Controller
 public class PurchaseorderheaderControllerImp implements PurchaseorderheaderController {
     
+    @Autowired
     PurchaseorderheaderService purchaseorderheaderservice;
-    EmployeeRepository employeerepository;
 
     @Autowired
-    public PurchaseorderheaderControllerImp(PurchaseorderheaderService purchaseorderheaderservice, EmployeeRepository employeerepository) {
-        this.purchaseorderheaderservice = purchaseorderheaderservice;
-        this.employeerepository = employeerepository;
-    }
+    EmployeeRepository employeerepository;
 
     @GetMapping("/purchaseorderheaders")
     public String index(Model model) {

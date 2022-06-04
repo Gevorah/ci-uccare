@@ -1,8 +1,8 @@
-package co.edu.icesi.dev.uccareapp.transport.delegate;
+package co.edu.icesi.dev.uccareapp.transport.rest;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 
-public interface VendorDelegate {
+public interface VendorRestController {
     public void saveVendor(Vendor vendor);
 	public void editVendor(Vendor vendor);
 	public Vendor findById(Integer id);

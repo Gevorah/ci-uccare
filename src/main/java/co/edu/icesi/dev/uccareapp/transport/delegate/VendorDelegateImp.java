@@ -1,7 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.delegate;
 
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,8 +24,8 @@ public class VendorDelegateImp implements VendorDelegate {
         resttemplate.put(URI, vendor);
     }
 
-    public Optional<Vendor> findById(Integer id) {
-        return Optional.ofNullable(resttemplate.getForObject(URI + id, Vendor.class));
+    public Vendor findById(Integer id) {
+        return resttemplate.getForObject(URI + id, Vendor.class);
     }
 
     public Iterable<Vendor> findAll() {

@@ -1,8 +1,8 @@
-package co.edu.icesi.dev.uccareapp.transport.delegate;
+package co.edu.icesi.dev.uccareapp.transport.rest;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 
-public interface PurchaseorderheaderDelegate {
+public interface PurchaseorderheaderRestController {
     public void savePurchaseorderheader(Purchaseorderheader purchaseorderheader);
 	public void editPurchaseorderheader(Purchaseorderheader purchaseorderheader);
 	public Purchaseorderheader findById(Integer id);
