@@ -31,9 +31,12 @@
                   <th>Id</th>
                   <th>Name</th>
                   <th>Color</th>
-                  <th>Porduct Line</th>
+                  <th>Product Line</th>
                   <th>Size</th>
                   <th>List Price</th>
+                  <th>Sell Start Date</th>
+                  <th>Sell End Date</th>
+                  <th>Discontinued Date</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -46,6 +49,9 @@
                   <td class="text-info" th:text="${product.productline}"></td>
                   <td class="text-info" th:text="${product.size}"></td>
                   <td class="text-info" th:text="${product.listprice}"></td>
+                  <td class="text-info" th:text="${product.sellstartdate}"></td>
+                  <td class="text-info" th:text="${product.sellenddate}"></td>
+                  <td class="text-info" th:text="${product.discontinueddate}"></td>
                   <td>
                     <a
                       th:href="@{/product/edit/{id}(id=${product.productid})}"

@@ -7,41 +7,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
+import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 
 @Component
-public class VendorDelegateImp implements VendorDelegate {
+public class PurchaseorderdetailDelegateImp implements PurchaseorderdetailDelegate {
 
-    private final String URI = "http://localhost:8080/vendors/";
+    private final String URI = "http://localhost:8080/purchaseorderdetails/";
 
     @Autowired
     private RestTemplate resttemplate;
 
-    public void saveVendor(Vendor vendor) {
-        resttemplate.postForObject(URI, vendor, Vendor.class);
+    public void savePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
+        resttemplate.postForObject(URI, purchaseorderdetail, Purchaseorderdetail.class);
     }
     
-    public void editVendor(Vendor vendor) {
-        resttemplate.put(URI, vendor);
+    public void editPurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
+        resttemplate.put(URI, purchaseorderdetail);
     }
 
-    public Optional<Vendor> findById(Integer id) {
-        return Optional.ofNullable(resttemplate.getForObject(URI + id, Vendor.class));
+    public Optional<Purchaseorderdetail> findById(PurchaseorderdetailPK id) {
+        return Optional.ofNullable(resttemplate.getForObject(URI + id, Purchaseorderdetail.class));
     }
 
-    public Iterable<Vendor> findAll() {
-        Vendor[] array = resttemplate.getForObject(URI, Vendor[].class);
+    public Iterable<Purchaseorderdetail> findAll() {
+        Purchaseorderdetail[] array = resttemplate.getForObject(URI, Purchaseorderdetail[].class);
 
-        Iterable<Vendor> vendors = () -> new Iterator<Vendor>() {
+        Iterable<Purchaseorderdetail> purchaseorderdetails = () -> new Iterator<Purchaseorderdetail>() {
             private int index = 0;
             @Override public boolean hasNext() { return array.length > index; }
-            @Override public Vendor next() { return array[index++]; }
+            @Override public Purchaseorderdetail next() { return array[index++]; }
         };
 
-        return vendors;
+        return purchaseorderdetails;
     }
 
-    public void delete(Vendor vendor) {
-        resttemplate.delete(URI + vendor.getBusinessentityid());
+    public void delete(Purchaseorderdetail purchaseorderdetail) {
+        resttemplate.delete(URI + purchaseorderdetail.getId());
     }
 }

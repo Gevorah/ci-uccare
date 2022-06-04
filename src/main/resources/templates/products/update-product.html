@@ -26,7 +26,7 @@
           <form
             action="#"
             th:object="${product}"
-            th:action="@{/product/edit/{id}(id=${product.productid})}"
+            th:action="@{/products/edit/{id}(id=${product.productid})}"
             method="post"
           >
             <div class="row">
@@ -121,21 +121,6 @@
                 ></span>
               </div>
               <div class="form-group col-md-6">
-                <label for="discontinueddate" class="col-form-label">Discontinued Date</label>
-                <input
-                  type="date"
-                  th:field="*{discontinueddate}"
-                  class="form-control"
-                  id="discontinueddate"
-                  placeholder="Date"
-                />
-                <span
-                  th:if="${#fields.hasErrors('discontinueddate')}"
-                  th:errors="*{discontinueddate}"
-                  class="text-danger"
-                ></span>
-              </div>
-              <div class="form-group col-md-6">
                 <label for="sellstartdate" class="col-form-label">Sell Start Date </label>
                 <input
                   type="date"
@@ -162,6 +147,21 @@
                 <span
                   th:if="${#fields.hasErrors('sellenddate')}"
                   th:errors="*{sellenddate}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="discontinueddate" class="col-form-label">Discontinued Date</label>
+                <input
+                  type="date"
+                  th:field="*{discontinueddate}"
+                  class="form-control"
+                  id="discontinueddate"
+                  placeholder="Date"
+                />
+                <span
+                  th:if="${#fields.hasErrors('discontinueddate')}"
+                  th:errors="*{discontinueddate}"
                   class="text-danger"
                 ></span>
               </div>

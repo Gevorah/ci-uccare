@@ -30,20 +30,20 @@
                 <tr>
                   <th>Id</th>
                   <th>Bom Level</th>
+                  <th>Start Date</th>
                   <th>End Date</th>
                   <th>Modified Date</th>
-                  <th>Perassembly qty</th>
-                  <th>Start Date</th>
+                  <th>Per Assembly qty</th>
                 </tr>
               </thead>
               <tbody>
                 <tr th:each="billofmaterial : ${billofmaterials}">
                   <td class="text-info" th:text="${billofmaterial.billofmaterialsid}"></td>
                   <td class="text-info" th:text="${billofmaterial.bomlevel}"></td>
+                  <td class="text-info" th:text="${billofmaterial.startdate}"></td>
                   <td class="text-info" th:text="${billofmaterial.enddate}"></td>
                   <td class="text-info" th:text="${billofmaterial.modifieddate}"></td>
                   <td class="text-info" th:text="${billofmaterial.perassemblyqty}"></td>
-                  <td class="text-info" th:text="${billofmaterial.startdate}"></td>
                   <td>
                     <a
                       th:href="@{/billofmaterials/edit/{id}(id=${billofmaterial.billofmaterialsid})}"

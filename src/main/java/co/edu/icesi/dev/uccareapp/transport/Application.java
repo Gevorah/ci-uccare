@@ -7,9 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
+import co.edu.icesi.dev.uccareapp.transport.dao.BillofmaterialDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.ProductDAOImp;
+import co.edu.icesi.dev.uccareapp.transport.dao.ProductreviewDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderdetailDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAOImp;
@@ -21,7 +24,9 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailP
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Billofmaterial;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Productreview;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
 
@@ -31,6 +36,11 @@ public class Application {
     public Java8TimeDialect java8TimeDialect() {
         return new Java8TimeDialect();
     }
+
+    @Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -42,7 +52,10 @@ public class Application {
         EmployeeRepository employeerepository, 
         VendorDAOImp vendorDAO, ShipmethodDAOImp shipmethodDAO,
         PurchaseorderheaderDAOImp purchaseorderheaderDAO,
-        PurchaseorderdetailDAOImp purchaseorderdetailDAO, ProductDAOImp productDAO) {
+        PurchaseorderdetailDAOImp purchaseorderdetailDAO, 
+        ProductDAOImp productDAO,
+        ProductreviewDAOImp productreviewDAO,
+        BillofmaterialDAOImp billofmaterialDAO) {
         
         return (args) -> {
             
@@ -165,16 +178,57 @@ public class Application {
             purchaseorderdetailDAO.save(purchaseorderdetail2);
             purchaseorderdetailDAO.save(purchaseorderdetail3);
 
-            //Products
+            // Products
             Product product1 = new Product();
             product1.setProductid(1);
-            product1.setName("huevos");
-            product1.setColor("blanco");
+            product1.setName("Tungsten");
+            product1.setColor("Gray");
             product1.setDiscontinueddate(LocalDate.now());
+            
+            Product product2 = new Product();
+            product2.setProductid(2);
+            product2.setName("Aerogel");
+            product2.setColor("White");
+            product2.setDiscontinueddate(LocalDate.now());
+            
+            Product product3 = new Product();
+            product3.setProductid(3);
+            product3.setName("Osmium");
+            product3.setColor("Gray");
+            product3.setDiscontinueddate(LocalDate.now());
 
             productDAO.save(product1);
+            productDAO.save(product2);
+            productDAO.save(product3);
             
+            // Product Reviews
+            Productreview productreview1 = new Productreview();
+            productreview1.setProductreviewid(1);
+            productreview1.setComments("Good job on the tungsten, it sure is dense");
+            productreview1.setEmailaddress("email@domain.com");
+            productreview1.setRating(5);
+            productreview1.setReviewdate(LocalDate.now());
+            productreview1.setReviewername("Osman");
+            productreview1.setProduct(product1);
 
+            productreviewDAO.save(productreview1);
+
+            // Bills of Material
+            //Unitmeasure unitmeasure = new Unitmeasure();
+            //unitmeasure.setUnitmeasurecode("uma");
+            //unitmeasure.setName(" atomic mass unit");
+
+            Billofmaterial billofmaterial1 = new Billofmaterial();
+            billofmaterial1.setBillofmaterialsid(1);
+            billofmaterial1.setBomlevel(3);
+            billofmaterial1.setStartdate(LocalDate.now().minusDays(30));
+            billofmaterial1.setEnddate(LocalDate.now());
+            billofmaterial1.setPerassemblyqty(new BigDecimal("0.3"));
+            billofmaterial1.setProduct1(product1);
+            billofmaterial1.setProduct2(product2);
+            //billofmaterial1.setUnitmeasure(unitmeasure);
+
+            billofmaterialDAO.save(billofmaterial1);
         };
     }
 }
