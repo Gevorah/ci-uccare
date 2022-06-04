@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * The persistent class for the product database table.
  *
@@ -34,6 +36,7 @@ public class Product implements Serializable {
 
 	private Integer daystomanufacture;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate discontinueddate;
 
 	private String finishedgoodsflag;
@@ -42,6 +45,7 @@ public class Product implements Serializable {
 
 	private String makeflag;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifieddate;
 
 	private String name;
@@ -56,8 +60,10 @@ public class Product implements Serializable {
 
 	private Integer safetystocklevel;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate sellenddate;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate sellstartdate;
 
 	private String size;

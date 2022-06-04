@@ -107,6 +107,42 @@
                   class="text-danger"
                 ></span>
               </div>
+              <div class="form-group col-md-6">
+                <label for="product1" class="col-form-label">Product 1</label>
+                <div></div>
+                <select th:field="*{product1}">
+                  <option th:value="NULL" th:text="-Select-"></option>
+                  <option
+                    th:each="product1 : ${products}"
+                    th:value="${{product1}}"
+                    th:text="${product1.name}"
+                    class="form-control"
+                  ></option>
+                </select>
+                <span
+                  th:if="${#fields.hasErrors('product1')}"
+                  th:errors="*{product1}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="product2" class="col-form-label">Product 2</label>
+                <div></div>
+                <select th:field="*{product2}">
+                  <option th:value="NULL" th:text="-Select-"></option>
+                  <option
+                    th:each="product2 : ${products}"
+                    th:value="${{product2}}"
+                    th:text="${product2.name}"
+                    class="form-control"
+                  ></option>
+                </select>
+                <span
+                  th:if="${#fields.hasErrors('product2')}"
+                  th:errors="*{product2}"
+                  class="text-danger"
+                ></span>
+              </div>
             </div>
             <div class="row">
               <div class="col-md-4 mt-3">
