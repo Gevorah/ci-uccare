@@ -11,7 +11,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
 @Component
 public class ShipmethodDelegateImp implements ShipmethodDelegate {
 
-    private final String URI = "http://localhost:8080/shipmethods/";
+    private final String URI = "http://localhost:8080/api/shipmethods/";
 
     @Autowired
     private RestTemplate resttemplate;
@@ -25,7 +25,7 @@ public class ShipmethodDelegateImp implements ShipmethodDelegate {
     }
 
     public Shipmethod findById(Integer id) {
-        return resttemplate.getForObject(URI + id, Shipmethod.class);
+        return resttemplate.getForEntity(URI + id, Shipmethod.class).getBody();
     }
 
     public Iterable<Shipmethod> findAll() {

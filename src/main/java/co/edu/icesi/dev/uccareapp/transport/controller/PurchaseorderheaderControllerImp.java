@@ -1,7 +1,5 @@
 package co.edu.icesi.dev.uccareapp.transport.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,22 +11,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.edu.icesi.dev.uccareapp.transport.delegate.PurchaseorderheaderDelegate;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 import co.edu.icesi.dev.uccareapp.transport.repository.EmployeeRepository;
-import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderheaderService;
 
 @Controller
 public class PurchaseorderheaderControllerImp implements PurchaseorderheaderController {
     
     @Autowired
-    PurchaseorderheaderService purchaseorderheaderservice;
+    PurchaseorderheaderDelegate purchaseorderheaderdelegate;
 
     @Autowired
     EmployeeRepository employeerepository;
 
     @GetMapping("/purchaseorderheaders")
     public String index(Model model) {
-        model.addAttribute("purchaseorderheaders", purchaseorderheaderservice.findAll());
+        model.addAttribute("purchaseorderheaders", purchaseorderheaderdelegate.findAll());
         return "purchaseorderheaders/index";
     }
 
@@ -46,17 +44,14 @@ public class PurchaseorderheaderControllerImp implements PurchaseorderheaderCont
             if (bindingResult.hasErrors()) {
                 return "purchaseorderheaders/add-purchaseorderheader";
             }
-            purchaseorderheaderservice.savePurchaseorderheader(purchaseorderheader);
+            purchaseorderheaderdelegate.savePurchaseorderheader(purchaseorderheader);
         }
         return "redirect:/purchaseorderheaders/";
     }
 
     @GetMapping("/purchaseorderheaders/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Optional<Purchaseorderheader> purchaseorderheader = purchaseorderheaderservice.findById(id);
-        if (purchaseorderheader == null)
-            throw new IllegalArgumentException("Invalid purchaseorderheader Id:" + id);
-        model.addAttribute("purchaseorderheader", purchaseorderheader.get());
+        model.addAttribute("purchaseorderheader", purchaseorderheaderdelegate.findById(id));
         model.addAttribute("employees", employeerepository.findAll());
         return "purchaseorderheaders/update-purchaseorderheader";
     }
@@ -68,15 +63,14 @@ public class PurchaseorderheaderControllerImp implements PurchaseorderheaderCont
             if (bindingResult.hasErrors()) {
                 return "purchaseorderheaders/update-purchaseorderheader";
             }
-            purchaseorderheaderservice.editPurchaseorderheader(purchaseorderheader);
+            purchaseorderheaderdelegate.editPurchaseorderheader(purchaseorderheader);
         }
         return "redirect:/purchaseorderheaders";
     }
 
     @GetMapping("/purchaseorderheaders/del/{id}")
     public String deleteShipmethod(@PathVariable("id") Integer id, Model model) {
-        Purchaseorderheader purchaseorderheader = purchaseorderheaderservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid purchaseorderheaders Id:" + id));
-        purchaseorderheaderservice.delete(purchaseorderheader);
+        purchaseorderheaderdelegate.delete(purchaseorderheaderdelegate.findById(id));
         return "redirect:/purchaseorderheaders";
     }
 }

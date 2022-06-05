@@ -50,7 +50,8 @@ public class Application {
     public CommandLineRunner dummy(
         BusinessentityRepository businessentityrepository,
         EmployeeRepository employeerepository, 
-        VendorDAOImp vendorDAO, ShipmethodDAOImp shipmethodDAO,
+        VendorDAOImp vendorDAO, 
+        ShipmethodDAOImp shipmethodDAO,
         PurchaseorderheaderDAOImp purchaseorderheaderDAO,
         PurchaseorderdetailDAOImp purchaseorderdetailDAO, 
         ProductDAOImp productDAO,

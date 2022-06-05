@@ -7,5 +7,5 @@ public interface VendorRestController {
 	public void editVendor(Vendor vendor);
 	public Vendor findById(Integer id);
 	public Iterable<Vendor> findAll();
-	public void delete(Vendor vendor);
+	public void delete(Integer id);
 }

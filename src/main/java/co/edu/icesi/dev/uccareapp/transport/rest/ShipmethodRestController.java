@@ -7,5 +7,5 @@ public interface ShipmethodRestController {
 	public void editShipmethod(Shipmethod shipmethod);
 	public Shipmethod findById(Integer id);
 	public Iterable<Shipmethod> findAll();
-	public void delete(Shipmethod shipmethod);
+	public void delete(Integer id);
 }

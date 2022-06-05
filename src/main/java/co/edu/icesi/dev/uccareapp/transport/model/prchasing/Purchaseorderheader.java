@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The persistent class for the purchaseorderheader database table.
  * 
@@ -52,15 +55,18 @@ public class Purchaseorderheader implements Serializable {
 
     private BigDecimal taxamt;
 
+    @JsonManagedReference(value = "purchaseorderheader-purchaseorderdetail")
     //bi-directional many-to-one association to Purchaseorderdetail
     @OneToMany(mappedBy="purchaseorderheader")
     private List<Purchaseorderdetail> purchaseorderdetails;
 
+    @JsonBackReference(value = "shipmethod-purchaseorderheader")
     //bi-directional many-to-one association to Shipmethod
     @ManyToOne
     @JoinColumn(name="shipmethodid")
     private Shipmethod shipmethod;
 
+    @JsonBackReference(value = "vendor-purchaseorderheader")
     //bi-directional many-to-one association to Vendor
     @ManyToOne
     @JoinColumn(name="vendorid")

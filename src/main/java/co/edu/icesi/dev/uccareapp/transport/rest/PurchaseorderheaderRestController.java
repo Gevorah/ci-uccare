@@ -7,5 +7,5 @@ public interface PurchaseorderheaderRestController {
 	public void editPurchaseorderheader(Purchaseorderheader purchaseorderheader);
 	public Purchaseorderheader findById(Integer id);
 	public Iterable<Purchaseorderheader> findAll();
-	public void delete(Purchaseorderheader purchaseorderheader);
+	public void delete(Integer id);
 }

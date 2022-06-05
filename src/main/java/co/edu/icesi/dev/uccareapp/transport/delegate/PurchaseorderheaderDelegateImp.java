@@ -11,7 +11,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderheader;
 @Component
 public class PurchaseorderheaderDelegateImp implements PurchaseorderheaderDelegate {
 
-    private final String URI = "http://localhost:8080/purchaseorderheaders/";
+    private final String URI = "http://localhost:8080/api/purchaseorderheaders/";
 
     @Autowired
     private RestTemplate resttemplate;

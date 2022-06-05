@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The persistent class for the shipmethod database table.
  *
@@ -42,6 +44,7 @@ public class Shipmethod implements Serializable {
 	@Positive
 	private BigDecimal shiprate;
 
+	@JsonManagedReference(value = "shipmethod-purchaseorderheader")
 	// bi-directional many-to-one association to Purchaseorderheader
 	@OneToMany(mappedBy = "shipmethod")
 	private List<Purchaseorderheader> purchaseorderheaders;

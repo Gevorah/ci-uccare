@@ -8,5 +8,5 @@ public interface PurchaseorderdetailRestController {
 	public void editPurchaseorderdetail(Purchaseorderdetail purchaseorderdetail);
 	public Purchaseorderdetail findById(PurchaseorderdetailPK id);
 	public Iterable<Purchaseorderdetail> findAll();
-	public void delete(Purchaseorderdetail purchaseorderdetail);
+	public void delete(PurchaseorderdetailPK id);
 }

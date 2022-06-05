@@ -11,7 +11,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 @Component
 public class VendorDelegateImp implements VendorDelegate {
 
-    private final String URI = "http://localhost:8080/vendors/";
+    private final String URI = "http://localhost:8080/api/vendors/";
 
     @Autowired
     private RestTemplate resttemplate;
@@ -25,6 +25,7 @@ public class VendorDelegateImp implements VendorDelegate {
     }
 
     public Vendor findById(Integer id) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+URI+id);
         return resttemplate.getForObject(URI + id, Vendor.class);
     }
 

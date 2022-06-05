@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * The persistent class for the purchaseorderdetail database table.
  *
@@ -40,6 +42,7 @@ public class Purchaseorderdetail implements Serializable {
 
 	private BigDecimal unitprice;
 
+    @JsonBackReference(value = "purchaseorderheader-purchaseorderdetail")
 	// bi-directional many-to-one association to Purchaseorderheader
 	@ManyToOne
 	@JoinColumn(name = "purchaseorderid", insertable = false, updatable = false)

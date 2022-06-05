@@ -12,7 +12,7 @@ import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailP
 @Component
 public class PurchaseorderdetailDelegateImp implements PurchaseorderdetailDelegate {
 
-    private final String URI = "http://localhost:8080/purchaseorderdetails/";
+    private final String URI = "http://localhost:8080/api/purchaseorderdetails/";
 
     @Autowired
     private RestTemplate resttemplate;

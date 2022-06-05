@@ -14,6 +14,8 @@ import javax.validation.constraints.Positive;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The persistent class for the vendor database table.
  *
@@ -45,11 +47,12 @@ public class Vendor implements Serializable {
 
     @URL(protocol = "https")
     private String purchasingwebserviceurl;
-
+    
     // bi-directional many-to-one association to Productvendor
     @OneToMany(mappedBy = "vendor")
     private List<Productvendor> productvendors;
 
+    @JsonManagedReference(value = "vendor-purchaseorderheader")
     // bi-directional many-to-one association to Purchaseorderheader
     @OneToMany(mappedBy = "vendor")
     private List<Purchaseorderheader> purchaseorderheaders;

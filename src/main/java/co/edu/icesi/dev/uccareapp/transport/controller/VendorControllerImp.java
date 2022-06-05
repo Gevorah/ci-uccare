@@ -1,7 +1,5 @@
 package co.edu.icesi.dev.uccareapp.transport.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,22 +11,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.edu.icesi.dev.uccareapp.transport.delegate.VendorDelegate;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 import co.edu.icesi.dev.uccareapp.transport.repository.BusinessentityRepository;
-import co.edu.icesi.dev.uccareapp.transport.service.VendorService;
 
 @Controller
 public class VendorControllerImp implements VendorController {
     
     @Autowired
-    VendorService vendorservice;
+    VendorDelegate vendordelegate;
 
     @Autowired
     BusinessentityRepository businessentityrepository;
 
     @GetMapping("/vendors")
     public String index(Model model) {
-        model.addAttribute("vendors", vendorservice.findAll());
+        model.addAttribute("vendors", vendordelegate.findAll());
         return "vendors/index";
     }
 
@@ -46,17 +44,15 @@ public class VendorControllerImp implements VendorController {
             if (bindingResult.hasErrors()) {
                 return "vendors/add-vendor";
             }
-            vendorservice.saveVendor(vendor);
+            vendordelegate.saveVendor(vendor);
         }
         return "redirect:/vendors";
     }
 
     @GetMapping("/vendors/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Optional<Vendor> vendor = vendorservice.findById(id);
-        if (vendor == null)
-            throw new IllegalArgumentException("Invalid vendor Id:" + id);
-        model.addAttribute("vendor", vendor.get());
+        Vendor vendor = vendordelegate.findById(id);
+        model.addAttribute("vendor", vendor);
         model.addAttribute("businessentities", businessentityrepository.findAll());
         return "vendors/update-vendor";
     }
@@ -68,15 +64,14 @@ public class VendorControllerImp implements VendorController {
             if (bindingResult.hasErrors()) {
                 return "vendors/update-vendor";
             }
-            vendorservice.editVendor(vendor);
+            vendordelegate.editVendor(vendor);
         }
         return "redirect:/vendors";
     }
 
     @GetMapping("/vendors/del/{id}")
     public String deleteVendor(@PathVariable("id") Integer id, Model model) {
-        Vendor vendor = vendorservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid vendor Id:" + id));
-        vendorservice.delete(vendor);
+        vendordelegate.delete(vendordelegate.findById(id));
         return "redirect:/vendors";
     }
 }

@@ -1,7 +1,5 @@
 package co.edu.icesi.dev.uccareapp.transport.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,18 +11,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.edu.icesi.dev.uccareapp.transport.delegate.ShipmethodDelegate;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Shipmethod;
-import co.edu.icesi.dev.uccareapp.transport.service.ShipmethodService;
 
 @Controller
 public class ShipmethodControllerImp implements ShipmethodController {
     
     @Autowired
-    ShipmethodService shipmethodservice;
+    ShipmethodDelegate shipmethoddelegate;
 
     @GetMapping("/shipmethods")
     public String index(Model model) {
-        model.addAttribute("shipmethods", shipmethodservice.findAll());
+        model.addAttribute("shipmethods", shipmethoddelegate.findAll());
         return "shipmethods/index";
     }
 
@@ -41,17 +39,14 @@ public class ShipmethodControllerImp implements ShipmethodController {
             if (bindingResult.hasErrors()) {
                 return "shipmethods/add-shipmethod";
             }
-            shipmethodservice.saveShipmethod(shipmethod);
+            shipmethoddelegate.saveShipmethod(shipmethod);
         }
         return "redirect:/shipmethods/";
     }
 
     @GetMapping("/shipmethods/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Optional<Shipmethod> shipmethod = shipmethodservice.findById(id);
-        if (shipmethod == null)
-            throw new IllegalArgumentException("Invalid shipmethod Id:" + id);
-        model.addAttribute("shipmethod", shipmethod.get());
+        model.addAttribute("shipmethod", shipmethoddelegate.findById(id));
         return "shipmethods/update-shipmethod";
     }
 
@@ -62,15 +57,14 @@ public class ShipmethodControllerImp implements ShipmethodController {
             if (bindingResult.hasErrors()) {
                 return "shipmethods/update-shipmethod";
             }
-            shipmethodservice.editShipmethod(shipmethod);
+            shipmethoddelegate.editShipmethod(shipmethod);
         }
         return "redirect:/shipmethods";
     }
 
     @GetMapping("/shipmethods/del/{id}")
     public String deleteShipmethod(@PathVariable("id") Integer id, Model model) {
-        Shipmethod shipmethod = shipmethodservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid shipmethods Id:" + id));
-        shipmethodservice.delete(shipmethod);
+        shipmethoddelegate.delete(shipmethoddelegate.findById(id));
         return "redirect:/shipmethods";
     }
 }
