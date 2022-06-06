@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
-import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 import co.edu.icesi.dev.uccareapp.transport.service.PurchaseorderdetailService;
 
 @RestController
@@ -22,14 +21,14 @@ public class PurchaseorderdetailRestControllerImp implements Purchaseorderdetail
         purchaseorderdetailservice.savePurchaseorderdetail(purchaseorderdetail);
     }
 
-    @RequestMapping(path="/api/purchaseorderdetails/{id}", method=RequestMethod.PUT, consumes="application/json")
+    @RequestMapping(path="/api/purchaseorderdetails/{headerid}-{detailid}", method=RequestMethod.PUT, consumes="application/json")
     public void editPurchaseorderdetail(@RequestBody Purchaseorderdetail purchaseorderdetail) {
         purchaseorderdetailservice.editPurchaseorderdetail(purchaseorderdetail);
     }
 
-    @RequestMapping(path="/api/purchaseorderdetails/{id}", method=RequestMethod.GET)
-    public Purchaseorderdetail findById(@PathVariable("id") PurchaseorderdetailPK id) {
-        return purchaseorderdetailservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Id:" + id));
+    @RequestMapping(path="/api/purchaseorderdetails/{headerid}-{detailid}", method=RequestMethod.GET)
+    public Purchaseorderdetail findById(@PathVariable("headerid") Integer headerid, @PathVariable("detailid") Integer detailid) {
+        return purchaseorderdetailservice.findById(headerid, detailid).orElseThrow(() -> new IllegalArgumentException("Invalid Id:" + headerid + "-" + detailid));
     }
 
     @RequestMapping(path="/api/purchaseorderdetails", method=RequestMethod.GET)
@@ -37,8 +36,8 @@ public class PurchaseorderdetailRestControllerImp implements Purchaseorderdetail
         return purchaseorderdetailservice.findAll();
     }
 
-    @RequestMapping(path="/api/purchaseorderdetails/{id}", method=RequestMethod.DELETE)
-    public void delete(@PathVariable("id") PurchaseorderdetailPK id) {
-        purchaseorderdetailservice.delete(purchaseorderdetailservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Id:" + id)));
+    @RequestMapping(path="/api/purchaseorderdetails/{headerid}-{detailid}", method=RequestMethod.DELETE)
+    public void delete(@PathVariable("headerid") Integer headerid, @PathVariable("detailid") Integer detailid) {
+        purchaseorderdetailservice.delete(purchaseorderdetailservice.findById(headerid, detailid).orElseThrow(() -> new IllegalArgumentException("Invalid Id:" + headerid + "-" + detailid)));
     }
 }

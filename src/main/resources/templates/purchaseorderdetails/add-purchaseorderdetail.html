@@ -31,23 +31,7 @@
           >
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="id" class="col-form-label">Id</label>
-                <div></div>
-                <input
-                  type="number"
-                  th:field="${pk.purchaseorderdetailid}"
-                  class="form-control"
-                  id="duedate"
-                  placeholder="0"
-                />
-                <span
-                  th:if="${#fields.hasErrors('id')}"
-                  th:errors="*{id}"
-                  class="text-danger"
-                ></span>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="id" class="col-form-label">Purchase Order Header Id</label>
+                <label for="id" class="col-form-label">Header Id</label>
                 <div></div>
                 <select th:field="${pk.purchaseorderid}">
                   <option value="" th:text="-Select-"></option>
@@ -58,6 +42,22 @@
                     class="form-control"
                   ></option>
                 </select>
+                <span
+                  th:if="${#fields.hasErrors('id')}"
+                  th:errors="*{id}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="id" class="col-form-label">Detail Id</label>
+                <div></div>
+                <input
+                  type="number"
+                  th:field="${pk.purchaseorderdetailid}"
+                  class="form-control"
+                  id="duedate"
+                  placeholder="0"
+                />
                 <span
                   th:if="${#fields.hasErrors('id')}"
                   th:errors="*{id}"

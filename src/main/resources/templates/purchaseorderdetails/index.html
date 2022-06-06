@@ -57,7 +57,7 @@
                   <td class="text-info" th:text="${purchaseorderdetail.unitprice}"></td>
                   <td>
                     <a
-                      th:href="@{/purchaseorderdetails/edit/{id}(id=${purchaseorderdetail.id})}"
+                      th:href="@{/purchaseorderdetails/edit/{headerid}-{detailid}(headerid=${purchaseorderdetail.id.purchaseorderid}, detailid=${purchaseorderdetail.id.purchaseorderdetailid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-edit ml-2"></i>
@@ -65,7 +65,7 @@
                   </td>
                   <td>
                     <a
-                      th:href="@{/purchaseorderdetails/del/{id}(id=${purchaseorderdetail.id})}"
+                      th:href="@{/purchaseorderdetails/del/{headerid}-{detailid}(headerid=${purchaseorderdetail.id.purchaseorderid}, detailid=${purchaseorderdetail.id.purchaseorderdetailid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-trash-alt ml-2"></i>

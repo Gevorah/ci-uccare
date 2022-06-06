@@ -28,7 +28,6 @@ public class VendorRestControllerImp implements VendorRestController {
 
     @RequestMapping(path="/api/vendors/{id}", method=RequestMethod.GET)
     public Vendor findById(@PathVariable("id") Integer id) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+id);
         return vendorservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Id: " + id));
     }
 

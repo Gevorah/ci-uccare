@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
-import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 
 @Component
 public class PurchaseorderdetailDelegateImp implements PurchaseorderdetailDelegate {
@@ -22,11 +21,12 @@ public class PurchaseorderdetailDelegateImp implements PurchaseorderdetailDelega
     }
     
     public void editPurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
-        resttemplate.put(URI, purchaseorderdetail);
+        resttemplate.put(URI + purchaseorderdetail.getId().getPurchaseorderid() + 
+                    "-" + purchaseorderdetail.getId().getPurchaseorderdetailid(), purchaseorderdetail);
     }
 
-    public Purchaseorderdetail findById(PurchaseorderdetailPK id) {
-        return resttemplate.getForObject(URI + id, Purchaseorderdetail.class);
+    public Purchaseorderdetail findById(Integer headerid, Integer detailid) {
+        return resttemplate.getForObject(URI + headerid + "-" + detailid, Purchaseorderdetail.class);
     }
 
     public Iterable<Purchaseorderdetail> findAll() {
@@ -42,6 +42,7 @@ public class PurchaseorderdetailDelegateImp implements PurchaseorderdetailDelega
     }
 
     public void delete(Purchaseorderdetail purchaseorderdetail) {
-        resttemplate.delete(URI + purchaseorderdetail.getId());
+        resttemplate.delete(URI + purchaseorderdetail.getId().getPurchaseorderid() +
+                        "-" + purchaseorderdetail.getId().getPurchaseorderdetailid());
     }
 }

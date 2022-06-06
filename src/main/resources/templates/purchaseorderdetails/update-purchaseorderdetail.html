@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Update Purchase Order Header</title>
+    <title>Update Purchase Order Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
@@ -20,34 +20,18 @@
   </head>
   <body>
     <div class="container my-5">
-      <h2 class="mb-5">Update Purchase Order Header</h2>
+      <h2 class="mb-5">Update Purchase Order Details</h2>
       <div class="row">
         <div class="col-md-5">
           <form
             action="#"
-            th:object="${purchaseorderheader}"
-            th:action="@{/purchaseorderheaders/edit/{id}(id=${purchaseorderheader.purchaseorderid})}"
+            th:object="${purchaseorderdetail}"
+            th:action="@{/purchaseorderdetails/edit/{headerid}-{detailid}(headerid=${purchaseorderdetail.id.purchaseorderid}, detailid=${purchaseorderdetail.id.purchaseorderdetailid})}"
             method="post"
           >
             <div class="row">
               <div class="form-group col-md-6">
-                <label for="id" class="col-form-label">Id</label>
-                <div></div>
-                <input
-                  type="number"
-                  th:field="*{id.purchaseorderdetailid}"
-                  class="form-control"
-                  id="duedate"
-                  placeholder="0"
-                />
-                <span
-                  th:if="${#fields.hasErrors('id')}"
-                  th:errors="*{id}"
-                  class="text-danger"
-                ></span>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="id" class="col-form-label">Purchase Order Header Id</label>
+                <label for="id" class="col-form-label">Header Id</label>
                 <div></div>
                 <select th:field="*{id.purchaseorderid}">
                   <option value="" th:text="-Select-"></option>
@@ -58,6 +42,22 @@
                     class="form-control"
                   ></option>
                 </select>
+                <span
+                  th:if="${#fields.hasErrors('id')}"
+                  th:errors="*{id}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="id" class="col-form-label">Detail Id</label>
+                <div></div>
+                <input
+                  type="number"
+                  th:field="*{id.purchaseorderdetailid}"
+                  class="form-control"
+                  id="duedate"
+                  placeholder="0"
+                />
                 <span
                   th:if="${#fields.hasErrors('id')}"
                   th:errors="*{id}"
@@ -161,12 +161,7 @@
             </div>
             <div class="row">
               <div class="col-md-4 mt-3">
-                <input
-                  type="submit"
-                  name="action"
-                  class="btn btn-primary"
-                  value="Update Purchase Order Header"
-                />
+                <input type="submit" name="action" class="btn btn-primary" value="Update" />
               </div>
               <div class="col-md-3 mt-3">
                 <input type="reset" class="btn btn-secondary" value="Clear" />

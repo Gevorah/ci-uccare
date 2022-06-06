@@ -21,7 +21,7 @@ public class PurchaseorderheaderDelegateImp implements PurchaseorderheaderDelega
     }
     
     public void editPurchaseorderheader(Purchaseorderheader purchaseorderheader) {
-        resttemplate.put(URI, purchaseorderheader);
+        resttemplate.put(URI + purchaseorderheader.getPurchaseorderid(), purchaseorderheader);
     }
 
     public Purchaseorderheader findById(Integer id) {

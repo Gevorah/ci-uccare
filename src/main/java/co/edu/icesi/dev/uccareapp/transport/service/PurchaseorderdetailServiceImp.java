@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderdetailDAO;
-import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAO;
+import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
 
@@ -17,7 +17,7 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
     private PurchaseorderdetailDAO purchaseorderdetailDAO;
 
     @Autowired
-    private PurchaseorderheaderDAO purchaseorderheaderDAO;
+    private PurchaseorderheaderDAOImp purchaseorderheaderDAO;
 
     @Override
     public boolean savePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail)
@@ -25,9 +25,9 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
         if (purchaseorderdetail == null || purchaseorderdetailDAO
                 .existsById(purchaseorderdetail.getId()))
             throw new NullPointerException("Purchaseorderdetail is null or already exists");
-
+            
         if (!purchaseorderheaderDAO
-                .existsById(purchaseorderdetail.getPurchaseorderheader().getPurchaseorderid()))
+                .existsById(purchaseorderdetail.getId().getPurchaseorderid()))
             throw new NullPointerException("Purchaseorderheader doesn't exist");
         if (purchaseorderdetail.getOrderqty() < 1)
             throw new IllegalArgumentException("orderqty must be greater than 0");
@@ -47,7 +47,7 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
             throw new NullPointerException("Purchaseorderdetail is null or doesn't exist");
 
         if (!purchaseorderheaderDAO
-                .existsById(purchaseorderdetail.getPurchaseorderheader().getPurchaseorderid()))
+                .existsById(purchaseorderdetail.getId().getPurchaseorderid()))
             throw new NullPointerException("Purchaseorderheader doesn't exist");
         if (purchaseorderdetail.getOrderqty() < 1)
             throw new IllegalArgumentException("orderqty must be greater than 0");
@@ -61,7 +61,7 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
         editpurchaseorderdetail.setOrderqty(purchaseorderdetail.getOrderqty());
         editpurchaseorderdetail.setProductid(purchaseorderdetail.getProductid());
         //editpurchaseorderdetail.setPurchaseorderheader(purchaseorderheaderDAO
-        //        .findById(purchaseorderdetail.getPurchaseorderheader().getPurchaseorderid()).get());
+        //        .findById(purchaseorderdetail.getId().getPurchaseorderid()).get());
         editpurchaseorderdetail.setReceivedqty(purchaseorderdetail.getReceivedqty());
         editpurchaseorderdetail.setRejectedqty(purchaseorderdetail.getReceivedqty());
         editpurchaseorderdetail.setUnitprice(purchaseorderdetail.getUnitprice());
@@ -72,8 +72,11 @@ public class PurchaseorderdetailServiceImp implements PurchaseorderdetailService
     }
 
     @Override
-    public Optional<Purchaseorderdetail> findById(PurchaseorderdetailPK id) {
-        return purchaseorderdetailDAO.findById(id);
+    public Optional<Purchaseorderdetail> findById(Integer headerid, Integer detailid) {
+        PurchaseorderdetailPK pk = new PurchaseorderdetailPK();
+        pk.setPurchaseorderid(headerid);
+        pk.setPurchaseorderdetailid(detailid);
+        return purchaseorderdetailDAO.findById(pk);
     }
 
     @Override

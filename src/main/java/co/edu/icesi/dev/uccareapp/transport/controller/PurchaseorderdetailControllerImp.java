@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.edu.icesi.dev.uccareapp.transport.delegate.PurchaseorderdetailDelegate;
+import co.edu.icesi.dev.uccareapp.transport.delegate.PurchaseorderheaderDelegate;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Purchaseorderdetail;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.PurchaseorderdetailPK;
-import co.edu.icesi.dev.uccareapp.transport.repository.PurchaseorderheaderRepository;
 
 @Controller
 public class PurchaseorderdetailControllerImp implements PurchaseorderdetailController {
@@ -23,7 +23,7 @@ public class PurchaseorderdetailControllerImp implements PurchaseorderdetailCont
     PurchaseorderdetailDelegate purchaseorderdetaildelegate;
     
     @Autowired
-    PurchaseorderheaderRepository purchaseorderheaderrepository;
+    PurchaseorderheaderDelegate purchaseorderheaderdelegate;
 
     @GetMapping("/purchaseorderdetails")
     public String index(Model model) {
@@ -34,7 +34,7 @@ public class PurchaseorderdetailControllerImp implements PurchaseorderdetailCont
     @GetMapping("/purchaseorderdetails/add")
     public String showSaveForm(Model model) {
         model.addAttribute("purchaseorderdetail", new Purchaseorderdetail());
-        model.addAttribute("purchaseorderheaders", purchaseorderheaderrepository.findAll());
+        model.addAttribute("purchaseorderheaders", purchaseorderheaderdelegate.findAll());
         model.addAttribute("pk", new PurchaseorderdetailPK());
         return "purchaseorderdetails/add-purchaseorderdetail";
     }
@@ -52,15 +52,15 @@ public class PurchaseorderdetailControllerImp implements PurchaseorderdetailCont
         return "redirect:/purchaseorderdetails/";
     }
 
-    @GetMapping("/purchaseorderdetails/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") PurchaseorderdetailPK id, Model model) {
-        model.addAttribute("purchaseorderdetail", purchaseorderdetaildelegate.findById(id));
-        model.addAttribute("purchaseorderheaders", purchaseorderheaderrepository.findAll());
+    @GetMapping("/purchaseorderdetails/edit/{headerid}-{detailid}")
+    public String showUpdateForm(@PathVariable("headerid") Integer headerid, @PathVariable("detailid") Integer detailid, Model model) {
+        model.addAttribute("purchaseorderdetail", purchaseorderdetaildelegate.findById(headerid, detailid));
+        model.addAttribute("purchaseorderheaders", purchaseorderheaderdelegate.findAll());
         return "purchaseorderdetails/update-purchaseorderdetail";
     }
 
-    @PostMapping("/purchaseorderdetails/edit/{id}")
-    public String updateShipmethod(@PathVariable("id") Integer id, @RequestParam(value = "action", required = true) String action, 
+    @PostMapping("/purchaseorderdetails/edit/{headerid}-{detailid}")
+    public String updateShipmethod(@PathVariable("headerid") Integer headerid, @PathVariable("detailid") Integer detailid, @RequestParam(value = "action", required = true) String action, 
             @Validated @ModelAttribute Purchaseorderdetail purchaseorderdetail, BindingResult bindingResult, Model model ) {
         if (!action.equals("Cancel")) {
             if (bindingResult.hasErrors()) {
@@ -71,9 +71,9 @@ public class PurchaseorderdetailControllerImp implements PurchaseorderdetailCont
         return "redirect:/purchaseorderdetails";
     }
 
-    @GetMapping("/purchaseorderdetails/del/{id}")
-    public String deleteShipmethod(@PathVariable("id") PurchaseorderdetailPK id, Model model) {
-        purchaseorderdetaildelegate.delete(purchaseorderdetaildelegate.findById(id));
+    @GetMapping("/purchaseorderdetails/del/{headerid}-{detailid}")
+    public String deleteShipmethod(@PathVariable("headerid") Integer headerid, @PathVariable("detailid") Integer detailid, Model model) {
+        purchaseorderdetaildelegate.delete(purchaseorderdetaildelegate.findById(headerid, detailid));
         return "redirect:/purchaseorderdetails";
     }
 }

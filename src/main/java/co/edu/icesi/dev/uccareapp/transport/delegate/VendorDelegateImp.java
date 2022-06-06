@@ -21,11 +21,10 @@ public class VendorDelegateImp implements VendorDelegate {
     }
     
     public void editVendor(Vendor vendor) {
-        resttemplate.put(URI, vendor);
+        resttemplate.put(URI + vendor.getBusinessentityid(), vendor);
     }
 
     public Vendor findById(Integer id) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+URI+id);
         return resttemplate.getForObject(URI + id, Vendor.class);
     }
 

@@ -21,7 +21,7 @@ public class ShipmethodDelegateImp implements ShipmethodDelegate {
     }
     
     public void editShipmethod(Shipmethod shipmethod) {
-        resttemplate.put(URI, shipmethod);
+        resttemplate.put(URI + shipmethod.getShipmethodid(), shipmethod);
     }
 
     public Shipmethod findById(Integer id) {
