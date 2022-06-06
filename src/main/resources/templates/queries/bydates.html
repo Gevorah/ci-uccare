@@ -24,53 +24,36 @@
         <div class="col-md-10">
           <div>
             <h2 class="col-md-4">Query by Date Range</h2>
-            <div class="form-group col-md-6">
-              <label for="reviewdate" class="col-form-label">Firts Date</label>
-              <input
-                type="date"
-                th:field="*{date1}"
-                class="form-control"
-                id="reviewdate"
-                placeholder="Date"
-              />
-              <span
-                th:if="${#fields.hasErrors('date1')}"
-                th:errors="*{date1}"
-                class="text-danger"
-              ></span>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="reviewdate" class="col-form-label">Second Date</label>
-              <input
-                type="date"
-                th:field="*{date2}"
-                class="form-control"
-                id="date2"
-                placeholder="Date"
-              />
-              <span
-                th:if="${#fields.hasErrors('date2')}"
-                th:errors="*{date2}"
-                class="text-danger"
-              ></span>
-            </div>
-            <p class="col-md-4">
-              <a href="/queries/queryrange" class="btn btn-primary">
-                <i class="fas fa-calendar ml-2"> Search</i>
-              </a>
-            </p>
-            <table class="table table-striped table-responsive-md">
-              <thead>
-                <tr>
-                  <th>Results</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each="result : ${results}">
-                  <td class="text-info" th:text="${result.toString}"></td>
-                </tr>
-              </tbody>
-            </table>
+            <form
+              action="#"
+              th:action="@{/queries/results/}"
+              th:object="${orderbydates}"
+              method="post"
+            >
+              <div class="form-group col-md-6">
+                <label for="date1" class="col-form-label">Firts Date</label>
+                <input
+                  type="date"
+                  th:field="*{date1}"
+                  class="form-control"
+                  id="date1"
+                  placeholder="Date"
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="date2" class="col-form-label">Second Date</label>
+                <input
+                  type="date"
+                  th:field="*{date2}"
+                  class="form-control"
+                  id="date2"
+                  placeholder="Date"
+                />
+              </div>
+              <div class="col-md-4 mt-3">
+                <input type="submit" name="action" class="btn btn-primary" value="Search" />
+              </div>
+            </form>
           </div>
         </div>
       </div>
