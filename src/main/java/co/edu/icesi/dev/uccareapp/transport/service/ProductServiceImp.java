@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +28,19 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public boolean editProduct(Product product) {
-        if (product == null || productDAO
+        if (product == null || !productDAO
             .existsById(product.getProductid()))
-        throw new NullPointerException("product is null or already exists");
+        throw new NullPointerException("Product is null or doesn't exists");
 
-        Product editproduct= productDAO.findById(product.getProductid()).get();
+        Product editproduct = productDAO.findById(product.getProductid()).get();
         editproduct.setClass_(product.getClass_());
         editproduct.setColor(product.getColor());
         editproduct.setDaystomanufacture(product.getDaystomanufacture());
         editproduct.setDiscontinueddate(product.getDiscontinueddate());
         editproduct.setFinishedgoodsflag(product.getFinishedgoodsflag());
+        editproduct.setListprice(product.getListprice());
         editproduct.setMakeflag(product.getMakeflag());
-        editproduct.setModifieddate(product.getModifieddate());
+        editproduct.setModifieddate(LocalDate.now());
         editproduct.setName(product.getName());
         editproduct.setProductid(product.getProductid());
         editproduct.setProductline(product.getProductline());

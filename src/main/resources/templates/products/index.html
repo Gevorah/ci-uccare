@@ -37,6 +37,8 @@
                   <th>Sell Start Date</th>
                   <th>Sell End Date</th>
                   <th>Discontinued Date</th>
+                  <th>Bill of Materials</th>
+                  <th>Reviews</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -54,7 +56,7 @@
                   <td class="text-info" th:text="${product.discontinueddate}"></td>
                   <td>
                     <a
-                      th:href="@{/product/edit/{id}(id=${product.productid})}"
+                      th:href="@{/products/{id}/billofmaterials(id=${product.productid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-edit ml-2"></i>
@@ -62,7 +64,23 @@
                   </td>
                   <td>
                     <a
-                      th:href="@{/product/del/{id}(id=${product.productid})}"
+                      th:href="@{/products/{id}/productreviews(id=${product.productid})}"
+                      class="btn btn-primary"
+                    >
+                      <i class="fas fa-edit ml-2"></i>
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      th:href="@{/products/edit/{id}(id=${product.productid})}"
+                      class="btn btn-primary"
+                    >
+                      <i class="fas fa-edit ml-2"></i>
+                    </a>
+                  </td>
+                  <td>
+                    <a
+                      th:href="@{/products/del/{id}(id=${product.productid})}"
                       class="btn btn-primary"
                     >
                       <i class="fas fa-trash-alt ml-2"></i>

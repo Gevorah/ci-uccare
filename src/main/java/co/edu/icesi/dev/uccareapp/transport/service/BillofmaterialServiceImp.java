@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class BillofmaterialServiceImp implements BillofmaterialService {
     public boolean editBillofmaterial(Billofmaterial billofmaterial) {
         if (billofmaterial == null || !billofmaterialDAO
             .existsById(billofmaterial.getBillofmaterialsid()))
-        throw new NullPointerException("Billofmaterial is null or already exists");
+        throw new NullPointerException("Billofmaterial is null or doesn't exists");
 
         Billofmaterial editBillofmaterial= billofmaterialDAO.findById(billofmaterial.getBillofmaterialsid()).get();
         editBillofmaterial.setBomlevel(billofmaterial.getBomlevel());
         editBillofmaterial.setEnddate(billofmaterial.getEnddate());
-        editBillofmaterial.setModifieddate(billofmaterial.getModifieddate());
+        editBillofmaterial.setModifieddate(LocalDate.now());
         editBillofmaterial.setPerassemblyqty(billofmaterial.getPerassemblyqty());
         editBillofmaterial.setProduct1(billofmaterial.getProduct1());
         editBillofmaterial.setProduct2(billofmaterial.getProduct2());

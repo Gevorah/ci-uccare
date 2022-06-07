@@ -26,27 +26,27 @@
             <h2 class="col-md-4">Query by Date Range</h2>
             <form
               action="#"
-              th:action="@{/queries/results/}"
-              th:object="${orderbydates}"
+              th:object="${daterange}"
+              th:action="@{/queries/query=range{start}+{end}(start=${daterange.start}, end=${daterange.end})}"
               method="post"
             >
               <div class="form-group col-md-6">
-                <label for="date1" class="col-form-label">Firts Date</label>
+                <label for="date1" class="col-form-label">Start Date</label>
                 <input
                   type="date"
-                  th:field="*{date1}"
+                  th:field="*{start}"
                   class="form-control"
-                  id="date1"
+                  id="start"
                   placeholder="Date"
                 />
               </div>
               <div class="form-group col-md-6">
-                <label for="date2" class="col-form-label">Second Date</label>
+                <label for="date2" class="col-form-label">End Date</label>
                 <input
                   type="date"
-                  th:field="*{date2}"
+                  th:field="*{end}"
                   class="form-control"
-                  id="date2"
+                  id="end"
                   placeholder="Date"
                 />
               </div>
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div>
-      <a href="/"><i class="fas fa-home ml-2"></i> Go back to main</a>
+      <a href="/queries"><i class="fas fa-home ml-2"></i> Go back</a>
     </div>
   </body>
 </html>

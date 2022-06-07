@@ -42,11 +42,6 @@
                     class="form-control"
                   ></option>
                 </select>
-                <span
-                  th:if="${#fields.hasErrors('id')}"
-                  th:errors="*{id}"
-                  class="text-danger"
-                ></span>
               </div>
               <div class="form-group col-md-6">
                 <label for="id" class="col-form-label">Detail Id</label>
@@ -55,7 +50,6 @@
                   type="number"
                   th:field="${pk.purchaseorderdetailid}"
                   class="form-control"
-                  id="duedate"
                   placeholder="0"
                 />
                 <span

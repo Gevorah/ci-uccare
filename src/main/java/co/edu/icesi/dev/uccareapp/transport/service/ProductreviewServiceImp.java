@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ProductreviewServiceImp implements ProductreviewService{
         Productreview editProductreview= productreviewDAO.findById(productreview.getProductreviewid()).get();
         editProductreview.setComments(productreview.getComments());
         editProductreview.setEmailaddress(productreview.getEmailaddress());
-        editProductreview.setModifieddate(productreview.getModifieddate());
+        editProductreview.setModifieddate(LocalDate.now());
         editProductreview.setProductreviewid(productreview.getProductreviewid());
         editProductreview.setRating(productreview.getRating());
         editProductreview.setReviewdate(productreview.getReviewdate());

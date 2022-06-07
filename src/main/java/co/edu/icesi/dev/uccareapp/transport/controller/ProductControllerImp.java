@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import co.edu.icesi.dev.uccareapp.transport.model.prod.Billofmaterial;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Product;
 import co.edu.icesi.dev.uccareapp.transport.service.ProductService;
 
@@ -73,5 +75,19 @@ public class ProductControllerImp implements ProductController{
         Product product = productservice.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
         productservice.delete(product);
         return "redirect:/products";
+    }
+    
+    @GetMapping("/products/{id}/productreviews")
+    public String productReviews(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("productreviews", productservice.findById(id).get().getProductreviews());
+        return "productreviews/index";
+    }
+
+    @GetMapping("/products/{id}/billofmaterials")
+    public String billOfMaterials(@PathVariable("id") Integer id, Model model) {
+        List<Billofmaterial> billofmaterials = productservice.findById(id).get().getBillofmaterials1();
+        billofmaterials.addAll(productservice.findById(id).get().getBillofmaterials2());
+        model.addAttribute("billofmaterials", billofmaterials);
+        return "billofmaterials/index";
     }
 }

@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.delegate;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,29 @@ public class PurchaseorderheaderDelegateImp implements PurchaseorderheaderDelega
 
     public void delete(Purchaseorderheader purchaseorderheader) {
         resttemplate.delete(URI + purchaseorderheader.getPurchaseorderid());
+    }
+
+    public Iterable<Object[]> findByDateRange(LocalDate start, LocalDate end) {
+        Object[][] matrix = resttemplate.getForObject(URI + "queries/query=range" + start + "+" + end, Object[][].class);
+
+        Iterable<Object[]> purchaseorderheaders = () -> new Iterator<Object[]>() {
+            private int index = 0;
+            @Override public boolean hasNext() { return matrix.length > index; }
+            @Override public Object[] next() { return matrix[index++]; }
+        };
+
+        return purchaseorderheaders;
+    }
+
+    public Iterable<Purchaseorderheader> findByTwoDetails() {
+        Purchaseorderheader[] array = resttemplate.getForObject(URI + "queries/query=two", Purchaseorderheader[].class);
+
+        Iterable<Purchaseorderheader> purchaseorderheaders = () -> new Iterator<Purchaseorderheader>() {
+            private int index = 0;
+            @Override public boolean hasNext() { return array.length > index; }
+            @Override public Purchaseorderheader next() { return array[index++]; }
+        };
+
+        return purchaseorderheaders;
     }
 }
