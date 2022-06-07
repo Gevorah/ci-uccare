@@ -128,6 +128,24 @@
                 ></span>
               </div>
               <div class="form-group col-md-6">
+                <label for="unitmeasure" class="col-form-label">Unit Mesure</label>
+                <div></div>
+                <select th:field="*{unitmeasure}">
+                  <option th:value="NULL" th:text="-Select-"></option>
+                  <option
+                    th:each="unitmeasure : ${unitmeasures}"
+                    th:value="${{unitmeasure}}"
+                    th:text="${unitmeasure.name}"
+                    class="form-control"
+                  ></option>
+                </select>
+                <span
+                  th:if="${#fields.hasErrors('unitmeasure')}"
+                  th:errors="*{unitmeasure}"
+                  class="text-danger"
+                ></span>
+              </div>
+              <div class="form-group col-md-6">
                 <label for="perassemblyqty" class="col-form-label">Per Assembly qty</label>
                 <input
                   type="number"

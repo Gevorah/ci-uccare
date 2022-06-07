@@ -16,6 +16,7 @@ import co.edu.icesi.dev.uccareapp.transport.dao.ProductreviewDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderdetailDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.PurchaseorderheaderDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.dao.ShipmethodDAOImp;
+import co.edu.icesi.dev.uccareapp.transport.dao.UnitmeasureDAO;
 import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAOImp;
 import co.edu.icesi.dev.uccareapp.transport.model.hr.Employee;
 import co.edu.icesi.dev.uccareapp.transport.model.person.Businessentity;
@@ -56,7 +57,8 @@ public class Application {
         PurchaseorderdetailDAOImp purchaseorderdetailDAO, 
         ProductDAOImp productDAO,
         ProductreviewDAOImp productreviewDAO,
-        BillofmaterialDAOImp billofmaterialDAO) {
+        BillofmaterialDAOImp billofmaterialDAO,
+        UnitmeasureDAO unitmeasuredao) {
         
         return (args) -> {
             
@@ -215,9 +217,11 @@ public class Application {
             productreviewDAO.save(productreview1);
 
             // Bills of Material
-            //Unitmeasure unitmeasure = new Unitmeasure();
-            //unitmeasure.setUnitmeasurecode("uma");
-            //unitmeasure.setName(" atomic mass unit");
+           /* Unitmeasure unitmeasure = new Unitmeasure();
+            unitmeasure.setUnitmeasurecode("uma");
+            unitmeasure.setName(" atomic mass unit");
+            
+            unitmeasuredao.save(unitmeasure);*/
 
             Billofmaterial billofmaterial1 = new Billofmaterial();
             billofmaterial1.setBillofmaterialsid(1);
@@ -227,7 +231,7 @@ public class Application {
             billofmaterial1.setPerassemblyqty(new BigDecimal("0.3"));
             billofmaterial1.setProduct1(product1);
             billofmaterial1.setProduct2(product2);
-            //billofmaterial1.setUnitmeasure(unitmeasure);
+           // billofmaterial1.setUnitmeasure(unitmeasure);
 
             billofmaterialDAO.save(billofmaterial1);
         };

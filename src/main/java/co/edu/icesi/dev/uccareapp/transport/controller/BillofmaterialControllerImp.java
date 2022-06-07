@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import co.edu.icesi.dev.uccareapp.transport.model.prod.Billofmaterial;
 import co.edu.icesi.dev.uccareapp.transport.service.BillofmaterialService;
 import co.edu.icesi.dev.uccareapp.transport.service.ProductService;
+import co.edu.icesi.dev.uccareapp.transport.service.UnitmeasureService;
 
 @Controller
 public class BillofmaterialControllerImp implements BillofmaterialController {
@@ -25,6 +26,9 @@ public class BillofmaterialControllerImp implements BillofmaterialController {
 
     @Autowired
     ProductService productservice;
+    
+    @Autowired
+    UnitmeasureService unitmeasureservice;
 
     @GetMapping("/billofmaterials")
     public String index(Model model) {
@@ -36,6 +40,7 @@ public class BillofmaterialControllerImp implements BillofmaterialController {
     public String showSaveForm(Model model) {
         model.addAttribute("billofmaterial", new Billofmaterial());
         model.addAttribute("products", productservice.findAll() );
+        model.addAttribute("unitmeasures", unitmeasureservice.findAll() );
         return "billofmaterials/add-billofmaterial";
     }
 
@@ -59,6 +64,7 @@ public class BillofmaterialControllerImp implements BillofmaterialController {
             throw new IllegalArgumentException("Invalid billofmaterial Id:" + id);
         model.addAttribute("billofmaterial", billofmaterialop.get());
         model.addAttribute("products", productservice.findAll());
+        model.addAttribute("unitmeasures", unitmeasureservice.findAll() );
         return "billofmaterials/update-billofmaterial";
     }
 
