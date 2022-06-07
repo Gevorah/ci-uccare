@@ -16,8 +16,8 @@ public class VendorDelegateImp implements VendorDelegate {
     @Autowired
     private RestTemplate resttemplate;
 
-    public void saveVendor(Vendor vendor) {
-        resttemplate.postForObject(URI, vendor, Vendor.class);
+    public Vendor saveVendor(Vendor vendor) {
+        return resttemplate.postForObject(URI, vendor, Vendor.class);
     }
     
     public void editVendor(Vendor vendor) {

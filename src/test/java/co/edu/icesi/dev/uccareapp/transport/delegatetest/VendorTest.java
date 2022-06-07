@@ -1,5 +1,6 @@
 package co.edu.icesi.dev.uccareapp.transport.delegatetest;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
@@ -31,11 +32,9 @@ public class VendorTest {
         vendor.setCreditrating(10);
         vendor.setPurchasingwebserviceurl("https:");
 
-        doAnswer(invocation -> {
-            Vendor arg0 = invocation.getArgument(0);
-            vendor.setName(arg0.getName());
-            return null;
-        }).when(vendordelegate).saveVendor(vendor);
+        doReturn(vendor).when(vendordelegate).saveVendor(any());
+
+        assertEquals(vendor, vendordelegate.saveVendor(vendor));
     }
 
     @Test
@@ -94,6 +93,7 @@ public class VendorTest {
         doReturn(vendors).when(vendordelegate).findAll();
 
         assertEquals(vendors, vendordelegate.findAll());
+   
     }
 
     @Test

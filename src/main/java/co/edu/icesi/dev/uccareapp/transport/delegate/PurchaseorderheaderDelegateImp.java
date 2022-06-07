@@ -17,8 +17,8 @@ public class PurchaseorderheaderDelegateImp implements PurchaseorderheaderDelega
     @Autowired
     private RestTemplate resttemplate;
 
-    public void savePurchaseorderheader(Purchaseorderheader purchaseorderheader) {
-        resttemplate.postForObject(URI, purchaseorderheader, Purchaseorderheader.class);
+    public Purchaseorderheader savePurchaseorderheader(Purchaseorderheader purchaseorderheader) {
+        return resttemplate.postForObject(URI, purchaseorderheader, Purchaseorderheader.class);
     }
     
     public void editPurchaseorderheader(Purchaseorderheader purchaseorderheader) {

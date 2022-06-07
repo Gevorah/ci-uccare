@@ -16,8 +16,8 @@ public class PurchaseorderdetailDelegateImp implements PurchaseorderdetailDelega
     @Autowired
     private RestTemplate resttemplate;
 
-    public void savePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
-        resttemplate.postForObject(URI, purchaseorderdetail, Purchaseorderdetail.class);
+    public Purchaseorderdetail savePurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {
+        return resttemplate.postForObject(URI, purchaseorderdetail, Purchaseorderdetail.class);
     }
     
     public void editPurchaseorderdetail(Purchaseorderdetail purchaseorderdetail) {

@@ -16,8 +16,8 @@ public class ShipmethodDelegateImp implements ShipmethodDelegate {
     @Autowired
     private RestTemplate resttemplate;
 
-    public void saveShipmethod(Shipmethod shipmethod) {
-        resttemplate.postForObject(URI, shipmethod, Shipmethod.class);
+    public Shipmethod saveShipmethod(Shipmethod shipmethod) {
+        return resttemplate.postForObject(URI, shipmethod, Shipmethod.class);
     }
     
     public void editShipmethod(Shipmethod shipmethod) {
