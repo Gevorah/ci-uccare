@@ -41,12 +41,6 @@ public class ShipmethodTest {
         shipmethod.setShiprate(new BigDecimal("0.1"));
         shipmethod.setName("Ocean");
 
-        
-        shipmethod.setShipmethodid(1);
-        shipmethod.setShipbase(new BigDecimal("0.1"));
-        shipmethod.setShiprate(new BigDecimal("0.1"));
-        shipmethod.setName("FOUR");
-
         ObjectMapper objectMapper = new ObjectMapper();
 
         mockMvc.perform(post("/api/shipmethods")
