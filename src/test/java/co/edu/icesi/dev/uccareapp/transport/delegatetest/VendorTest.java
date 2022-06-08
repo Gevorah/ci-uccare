@@ -3,23 +3,28 @@ package co.edu.icesi.dev.uccareapp.transport.delegatetest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Iterator;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import co.edu.icesi.dev.uccareapp.transport.dao.VendorDAO;
 import co.edu.icesi.dev.uccareapp.transport.delegate.VendorDelegate;
 import co.edu.icesi.dev.uccareapp.transport.model.prchasing.Vendor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 public class VendorTest {
     @Mock
     private VendorDelegate vendordelegate; 
@@ -37,8 +42,7 @@ public class VendorTest {
         assertEquals(vendor, vendordelegate.saveVendor(vendor));
     }
 
-    @Test
-    void editVendor() throws Exception {
+    @Test void editVendor() throws Exception {
         Vendor vendor = new Vendor();
         vendor.setBusinessentityid(0);
         vendor.setName("Nate");
@@ -50,6 +54,10 @@ public class VendorTest {
             vendor.setName(arg0.getName());
             return null;
         }).when(vendordelegate).editVendor(vendor);
+
+        vendordelegate.editVendor(vendor);
+
+        verify(vendordelegate).editVendor(vendor);
     }
 
     @Test
@@ -104,6 +112,10 @@ public class VendorTest {
         vendor.setCreditrating(10);
         vendor.setPurchasingwebserviceurl("https:");
 
-        doReturn(Optional.of(vendor)).when(vendordelegate).findById(anyInt());
+        doAnswer(invocation -> {return null;}).when(vendordelegate).delete(vendor);
+
+        vendordelegate.delete(vendor);
+
+        verify(vendordelegate).delete(vendor); 
     }
 }
